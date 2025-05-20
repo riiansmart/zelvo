@@ -1,0 +1,142 @@
+.main-nav {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-primary);
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* Top bar with TaskFlow branding */
+.top-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 2rem;
+  background-color: var(--bg-primary);
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* Logo and branding */
+.logo-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-wrapper a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 8px rgba(var(--accent-primary-rgb), 0.6);
+  margin-left: 8px;
+}
+
+/* User section with navigation links */
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.nav-link {
+  background-color: transparent;
+  border: none;
+  color: var(--text-primary);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1rem;
+}
+
+.nav-link:hover {
+  background-color: var(--bg-secondary);
+  color: var(--accent-primary);
+}
+
+.logout-button {
+  color: var(--priority-high);
+}
+
+/* VSCode-style Menu Bar */
+.menu-bar {
+  display: flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 8px;
+  background-color: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  font-size: 13px;
+}
+
+.menu-item {
+  padding: 0 8px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  color: var(--text-secondary);
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+}
+
+.menu-item:hover {
+  background-color: var(--bg-hover, color-mix(in srgb, var(--bg-secondary) 90%, var(--text-primary)));
+}
+
+.menu-item.active {
+  background-color: var(--bg-hover, color-mix(in srgb, var(--bg-secondary) 90%, var(--text-primary)));
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 24px;
+  margin: 0 4px;
+}
+
+.theme-toggle::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  background: var(--accent-primary);
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+.theme-toggle {
+  background: var(--bg-secondary);
+  border-radius: 24px;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+}
+
+.light-mode .theme-toggle::before {
+  left: 26px;
+}
+
+.light-mode .theme-toggle {
+  background: rgba(var(--accent-primary-rgb), 0.2);
+}
+
+.theme-toggle:hover::before {
+  box-shadow: 0 0 4px var(--accent-primary);
+} 

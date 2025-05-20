@@ -1,0 +1,96 @@
+.cursorrules
+.cursorignore
+.cursorignorerules
+.cursorignorerules
+.cursorignorerules
+.cursorignorerules
+.cursorignorerules
+
+node_modules
+.fake
+
+application.properties
+# Maven
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# Eclipse
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Node
+node_modules/
+dist/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Frontend build
+/frontend/dist
+/frontend/.env
+/frontend/.env.*
+!/frontend/.env.example
+
+# Backend properties with sensitive info
+/backend/src/main/resources/application.properties
+/backend/src/main/resources/application-*.properties
+*.env
+.env.*
+!.env.example
+
+# Logs
+logs/
+*.log
+
+# Database
+*.sql.gz
+*.dump
+
+# OS specific
+.DS_Store
+Thumbs.db
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Debug
+.attach_pid*
+
+# TypeScript
+*.tsbuildinfo
+
+# Prisma
+generated/
+
+# Cursor files
+.cursor/
+*.cursor
+
+# Docker and Nginx specific files
+Dockerfile
+docker-compose.yml
+.dockerignore
+nginx.conf
+docker/
+docker-compose.override.yml

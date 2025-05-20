@@ -1,0 +1,1521 @@
+/* Cyberpunk Theme CSS */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap');
+
+:root {
+    /* Dark mode variables (default) */
+    --bg-primary: #0a0a0f;
+    --bg-secondary: #141420;
+    --text-primary: #e0e0e0;
+    --text-secondary: #9b9ba7;
+    --accent-primary: #ff3a4c;
+    --accent-secondary: #ff7080;
+    --border-color: #222236;
+    --shadow: 0 0 15px rgba(255, 58, 76, 0.15);
+    --accent-primary-rgb: 255, 58, 76;
+    --text-secondary-rgb: 155, 155, 167;
+    --priority-high: #ff3a4c;
+    --priority-medium: #ff9e44;
+    --priority-low: #36d7b7;
+    --status-backlog: #5d4bff;
+    --status-todo: #36d7b7;
+    --status-in-progress: #ff9e44;
+    --status-done: #5d4bff;
+    --status-cancelled: #9b9ba7;
+    --table-header-bg: #141420;
+    --table-row-bg: #1a1a28;
+    --table-hover: #222236;
+    --table-border: #222236;
+    --table-header-text: #e0e0e0;
+    --glow-intensity: 1;
+    --scan-line-opacity: 0.1;
+}
+
+.light-mode {
+    /* Light mode overrides */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f6f8fb;
+    --text-primary: #101820;
+    --text-secondary: #505868;
+    --accent-primary: #239653;
+    --accent-secondary: #27a56c;
+    --border-color: #e0e8f0;
+    --shadow: 0 0 15px rgba(46, 204, 113, 0.2);
+    --accent-primary-rgb: 46, 204, 113;
+    --text-secondary-rgb: 80, 88, 104;
+    --priority-high: #ff3a4c;
+    --priority-medium: #ff9e44;
+    --priority-low: #36d7b7;
+    --status-backlog: #5d4bff;
+    --status-todo: #36d7b7;
+    --status-in-progress: #ff9e44;
+    --status-done: #5d4bff;
+    --status-cancelled: #9b9ba7;
+    --table-header-bg: #f6f8fb;
+    --table-row-bg: #ffffff;
+    --table-hover: #f0f7fb;
+    --table-border: #e0e8f0;
+    --table-header-text: #101820;
+    --glow-intensity: 0.4;
+    --scan-line-opacity: 0.03;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+
+body {
+    font-family: 'Rajdhani', sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Cyberpunk-style scan lines */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        rgba(255, 255, 255, var(--scan-line-opacity)) 1px,
+        transparent 2px
+    );
+    pointer-events: none;
+    z-index: 10000;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2.5rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1.5rem;
+    position: relative;
+}
+
+.logo {
+    font-size: 2.5rem;
+    font-weight: 700;
+    position: relative;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 10px rgba(var(--accent-primary-rgb), 0.7);
+}
+
+.logo::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-primary), transparent);
+}
+
+.user-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.user-section .nav-link {
+    display: inline-block;
+    /* reset gap for uniform sizing */
+    gap: 0;
+}
+
+.nav-link {
+    /* unify link and button styling */
+    background-color: transparent;
+    border: none;
+    color: var(--text-primary);
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.nav-link:hover {
+    background-color: var(--bg-secondary);
+    color: var(--accent-primary);
+}
+
+/* Theme toggle styles moved to Navigation.css */
+
+.welcome-section {
+    margin-bottom: 2rem;
+}
+
+.welcome-text {
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+    display: inline-block;
+    position: relative;
+}
+
+.welcome-text::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: var(--accent-primary);
+    box-shadow: 0 0 10px var(--accent-primary);
+}
+
+/* New utility for heading underlines */
+.heading-underline {
+  position: relative; /* Needed for pseudo-element positioning */
+  display: inline-block; /* Ensure it only takes width of content */
+  padding-bottom: 8px; /* Add space for the underline */
+}
+
+.heading-underline::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%; /* Center the underline */
+    transform: translateX(-50%); /* Center the underline */
+    width: 50px; /* Adjust width as needed */
+    height: 3px; /* Adjust height as needed */
+    background-color: var(--accent-primary);
+    box-shadow: 0 0 8px rgba(var(--accent-primary-rgb), 0.7); /* Optional glow */
+}
+
+.welcome-description {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+}
+
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--bg-secondary);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-color);
+    position: relative;
+    flex-wrap: wrap;
+    overflow: visible;
+}
+
+.toolbar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(var(--accent-primary-rgb), 0.03), 
+        transparent
+    );
+    z-index: 0;
+    opacity: var(--glow-intensity);
+    animation: shine 3s infinite linear;
+}
+
+@keyframes shine {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+.search-container {
+    position: relative;
+    flex-grow: 1;
+    margin-right: 1rem;
+    z-index: 1;
+    min-width: 0;
+}
+
+.search-input {
+    width: 100%;
+    padding: 0.8rem 1rem 0.8rem 2.5rem;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1rem;
+    min-width: 0;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 2px rgba(var(--accent-primary-rgb), 0.2);
+}
+
+.search-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+    z-index: 2;
+}
+
+.filter-options {
+    display: flex;
+    gap: 0.75rem;
+    z-index: 1;
+    flex-wrap: wrap;
+}
+
+.filter-button {
+    padding: 0.7rem 1rem;
+    border-radius: 6px;
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+}
+
+.filter-button:hover {
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+}
+
+.filter-button.active {
+    background-color: var(--accent-primary);
+    color: var(--bg-primary);
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 10px rgba(var(--accent-primary-rgb), 0.3);
+}
+
+/* Task List Styles */
+.task-list {
+    background-color: var(--bg-secondary);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-color);
+    overflow-x: auto;
+    overflow-y: hidden;
+    position: relative;
+}
+
+.task-list::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40%;
+    height: 100%;
+    background: radial-gradient(
+        ellipse at right,
+        rgba(var(--accent-primary-rgb), 0.05),
+        transparent 70%
+    );
+    z-index: 0;
+    opacity: var(--glow-intensity);
+    pointer-events: none;
+}
+
+.task-list-header {
+    display: grid;
+    grid-template-columns: 40px 80px minmax(200px, 1fr) 130px 140px 100px 140px 100px;
+    background-color: var(--table-header-bg);
+    padding: 0.875rem 1rem;
+    border-bottom: 2px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 5;
+}
+
+.task-list-header-item {
+    color: var(--table-header-text);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    user-select: none;
+    cursor: pointer;
+    transition: color 0.2s;
+    padding: 0 0.5rem;
+    box-sizing: border-box;
+}
+
+.task-list-header-item:hover {
+    color: var(--accent-primary);
+}
+
+.task-list-body {
+    position: relative;
+}
+
+.task-item {
+    display: grid;
+    grid-template-columns: 40px 80px minmax(200px, 1fr) 130px 140px 100px 140px 100px;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--table-border);
+    align-items: center;
+    position: relative;
+    transition: background-color 0.2s;
+}
+
+.task-item:nth-child(odd) {
+    background-color: var(--table-row-bg);
+}
+
+.task-item:nth-child(even) {
+    background-color: var(--bg-secondary);
+}
+
+.task-item:hover {
+    background-color: var(--table-hover);
+}
+
+.task-cell {
+    padding: 0 0.5rem;
+    box-sizing: border-box;
+}
+
+/* Checkbox */
+.task-checkbox {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--border-color);
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.task-checkbox:checked {
+    background-color: var(--accent-primary);
+    border-color: var(--accent-primary);
+}
+
+.task-checkbox:checked::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--bg-primary);
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.task-checkbox:hover {
+    border-color: var(--accent-primary);
+}
+
+/* Task ID */
+.task-id {
+    font-family: 'Courier New', monospace;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    padding: 0.2rem 0.4rem;
+    background-color: rgba(var(--text-secondary-rgb), 0.1);
+    border-radius: 4px;
+    display: inline-block;
+}
+
+/* Task Title */
+.task-title {
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+.task-title-tooltip {
+    position: relative;
+}
+
+.task-title-tooltip:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: 0;
+    top: 100%;
+    background-color: var(--bg-secondary);
+    padding: 0.5rem;
+    border-radius: 4px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-color);
+    z-index: 10;
+    max-width: 400px;
+    white-space: normal;
+    font-weight: normal;
+}
+
+/* Task Type */
+.task-type {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.task-type-icon {
+    font-size: 0.9rem;
+}
+
+/* Status Pills */
+.status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.status-backlog {
+    background-color: rgba(93, 75, 255, 0.1);
+    color: var(--status-backlog);
+    border: 1px solid rgba(93, 75, 255, 0.3);
+}
+
+.status-todo {
+    background-color: rgba(54, 215, 183, 0.1);
+    color: var(--status-todo);
+    border: 1px solid rgba(54, 215, 183, 0.3);
+}
+
+.status-in-progress {
+    background-color: rgba(255, 158, 68, 0.1);
+    color: var(--status-in-progress);
+    border: 1px solid rgba(255, 158, 68, 0.3);
+}
+
+.status-done {
+    background-color: rgba(93, 75, 255, 0.1);
+    color: var(--status-done);
+    border: 1px solid rgba(93, 75, 255, 0.3);
+}
+
+.status-cancelled {
+    background-color: rgba(155, 155, 167, 0.1);
+    color: var(--status-cancelled);
+    border: 1px solid rgba(155, 155, 167, 0.3);
+}
+
+/* Priority */
+.priority-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+}
+
+.priority-high {
+    color: var(--priority-high);
+}
+
+.priority-medium {
+    color: var(--priority-medium);
+}
+
+.priority-low {
+    color: var(--priority-low);
+}
+
+.priority-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.dot-high {
+    background-color: var(--priority-high);
+    box-shadow: 0 0 5px var(--priority-high);
+}
+
+.dot-medium {
+    background-color: var(--priority-medium);
+    box-shadow: 0 0 5px var(--priority-medium);
+}
+
+.dot-low {
+    background-color: var(--priority-low);
+    box-shadow: 0 0 5px var(--priority-low);
+}
+
+/* Due Date */
+.task-due {
+    white-space: nowrap;
+    font-size: 0.9rem;
+}
+
+.overdue {
+    color: var(--priority-high);
+    font-weight: 600;
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.action-button {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.action-button:hover {
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+    box-shadow: 0 0 5px rgba(var(--accent-primary-rgb), 0.3);
+}
+
+.edit-button:hover {
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+}
+
+.delete-button:hover {
+    border-color: var(--priority-high);
+    color: var(--priority-high);
+}
+
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background-color: var(--bg-secondary);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.page-info {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.page-controls {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.page-button {
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.page-button:hover {
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+}
+
+.page-button.active {
+    background-color: var(--accent-primary);
+    color: var(--bg-primary);
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 10px rgba(var(--accent-primary-rgb), 0.3);
+}
+
+.page-button.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Global floating create-task button */
+.add-task-button {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: var(--accent-primary);
+    color: white;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 15px rgba(var(--accent-primary-rgb), 0.4);
+    cursor: pointer;
+    font-size: 1.5rem;
+    z-index: 100;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.add-task-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(var(--accent-primary-rgb), 0.6);
+}
+
+/* Override add-task-button when inside its container: flow with content */
+.add-task-container {
+    position: relative;
+    margin-top: 2rem;
+    /* align button to bottom-right corner of wrapper */
+    text-align: right;
+}
+.add-task-container .add-task-button {
+    /* remove fixed positioning so it flows in normal document flow */
+    position: relative;
+    bottom: auto;
+    right: auto;
+}
+
+.glow-effect {
+    position: relative;
+}
+
+.glow-effect::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: inherit;
+    box-shadow: 0 0 15px var(--accent-primary);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.glow-effect:hover::after {
+    opacity: 0.7;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .task-list-header, .task-item {
+        grid-template-columns: 40px minmax(200px, 1fr) 140px 100px 100px;
+    }
+    
+    .task-header-id, .task-header-type, .task-header-date,
+    .task-cell-id, .task-cell-type, .task-cell-date {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .task-list-header, .task-item {
+        grid-template-columns: 40px minmax(150px, 1fr) 120px 80px;
+    }
+    
+    .task-header-actions,
+    .task-cell-actions {
+        display: none;
+    }
+    
+    .container {
+        padding: 1rem;
+    }
+    
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .toolbar {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .filter-options {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .pagination {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .task-list-header, .task-item {
+        grid-template-columns: minmax(150px, 1fr) 120px;
+    }
+    
+    .task-header-checkbox,
+    .task-cell-checkbox {
+        display: none;
+    }
+    
+    .status-pill {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.7rem;
+    }
+}
+
+/* Authentication Pages */
+.auth-page {
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+.auth-card {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  padding: 2rem;
+  width: 100%;
+  max-width: 400px;
+}
+
+.auth-header {
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+
+.auth-header h1.logo {
+  margin-bottom: 1rem;
+}
+
+.auth-header .description {
+  color: var(--text-secondary);
+  margin-top: 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  font-weight: 600;
+}
+
+.auth-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.5rem;
+}
+
+.auth-tab {
+  padding: 0.5rem 1rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.auth-tab:hover {
+  color: var(--accent-primary);
+}
+
+.auth-tab.active {
+  color: var(--accent-primary);
+  border-color: var(--accent-primary);
+}
+
+.form-group {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.input-icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-secondary);
+}
+
+.auth-input {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 2.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.auth-input:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 2px rgba(var(--accent-primary-rgb), 0.2);
+}
+
+.auth-button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: var(--accent-primary);
+  color: var(--bg-primary);
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.auth-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 15px rgba(var(--accent-primary-rgb), 0.4);
+}
+
+.error-message {
+  margin-top: 1rem;
+  color: var(--priority-high);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+/* Styling for filter-tags under toolbar */
+.filter-tags {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.filter-tag {
+    padding: 0.7rem 1rem;
+    border-radius: 6px;
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: inline-flex;
+    align-items: center;
+    transition: all 0.2s ease;
+}
+
+.filter-tag:hover {
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+}
+
+.filter-tag.active {
+    background-color: var(--accent-primary);
+    color: var(--bg-primary);
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 10px rgba(var(--accent-primary-rgb), 0.3);
+}
+
+/* Task form and edit-task page styles */
+.task-form-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+.cyberpunk-form {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: var(--shadow);
+}
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+.form-input,
+.form-select,
+.form-textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 2px rgba(var(--accent-primary-rgb), 0.2);
+}
+.form-textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+.form-row {
+  display: flex;
+  gap: 1rem;
+}
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+.cancel-button {
+  background-color: var(--bg-secondary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.cancel-button:hover {
+  color: var(--accent-primary);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 10px rgba(var(--accent-primary-rgb), 0.3);
+}
+.submit-button {
+  background-color: var(--accent-primary);
+  color: var(--bg-primary);
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.submit-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 15px rgba(var(--accent-primary-rgb), 0.4);
+}
+.form-checkbox {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* Holographic enhancements for DateTimePicker */
+.react-datetime-picker {
+  background: rgba(var(--text-secondary-rgb), 0.05) !important;
+  border: 1px solid var(--accent-primary) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 0 15px rgba(var(--accent-primary-rgb), 0.6) !important;
+  backdrop-filter: blur(6px) saturate(150%);
+}
+.react-datetime-picker:focus-within {
+  box-shadow: 0 0 20px rgba(var(--accent-primary-rgb), 0.8) !important;
+}
+.react-datetime-picker__inputGroup {
+  display: flex;
+  gap: 0.3rem;
+  padding: 0.5rem;
+}
+.react-datetime-picker__inputGroup__divider {
+  color: var(--accent-secondary);
+}
+.react-datetime-picker__button {
+  background: transparent !important;
+  color: var(--accent-secondary) !important;
+}
+.react-datetime-picker__button:enabled:hover {
+  color: var(--accent-primary) !important;
+}
+
+/* Holographic Calendar */
+.react-calendar {
+  background: rgba(var(--bg-secondary), 0.7);
+  backdrop-filter: blur(6px) saturate(120%);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(var(--accent-primary-rgb), 0.5);
+}
+.react-calendar__navigation {
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+.react-calendar__navigation button {
+  background: transparent;
+  color: var(--accent-primary);
+}
+.react-calendar__navigation button:enabled:hover,
+.react-calendar__navigation button:enabled:focus {
+  color: var(--accent-secondary);
+}
+.react-calendar__tile {
+  background: transparent;
+  border-radius: 4px;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.react-calendar__tile:hover {
+  background: rgba(var(--accent-primary-rgb), 0.15);
+}
+.react-calendar__tile--active {
+  background: rgba(var(--accent-primary-rgb), 0.4) !important;
+  box-shadow: 0 0 8px rgba(var(--accent-primary-rgb), 0.9);
+  color: var(--bg-primary) !important;
+}
+
+/* Holographic Clock */
+.react-clock {
+  background: rgba(var(--bg-secondary), 0.7);
+  border: 1px solid var(--accent-primary);
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(var(--accent-primary-rgb), 0.7);
+  backdrop-filter: blur(6px) saturate(130%);
+}
+.react-clock__face {
+  background: transparent;
+}
+.react-clock__hand--hour,
+.react-clock__hand--minute {
+  width: 4px;
+  border-radius: 2px;
+  background: var(--accent-secondary);
+}
+.react-clock__hand--second {
+  background: var(--accent-primary);
+}
+.react-clock__hour__mark__body,
+.react-clock__minute__mark__body {
+  background: var(--text-secondary);
+}
+.react-clock__hour__mark--active .react-clock__hour__mark__body {
+  background: var(--accent-primary);
+}
+.react-clock__hour__number {
+  fill: var(--text-primary);
+}
+
+/* Prevent clipping of date/time overlays */
+.task-form-container,
+.cyberpunk-form,
+.form-row,
+.form-group {
+  overflow: visible !important;
+}
+
+/* Position calendar and clock overlays above other elements */
+.react-datetime-picker {
+  position: relative;
+  z-index: 1;
+}
+.react-datetime-picker__calendar,
+.react-datetime-picker__clock {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 0.25rem;
+  z-index: 9999 !important;
+}
+
+/* Flicker effect for Create/Edit Task page titles */
+.page-header .page-title {
+    /* keep theme accent color and static glow */
+    color: var(--accent-primary);
+    text-shadow:
+        0 0 5px rgba(var(--accent-primary-rgb), 0.8),
+        0 0 10px rgba(var(--accent-primary-rgb), 0.6),
+        0 0 20px rgba(var(--accent-primary-rgb), 0.4);
+    /* disable animation */
+    animation: none !important;
+}
+
+/* Center the task page headers and add vertical padding */
+.page-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 2rem 0;
+}
+
+/* Add dedicated CTA button style */
+.cta-button {
+  display: inline-block; /* Allow centering via text-align on parent */
+  background-color: var(--accent-primary);
+  color: var(--bg-primary); /* Ensure high contrast text */
+  border: none;
+  padding: 0.75rem 2rem; /* Adjust padding (was py-3 px-8) */
+  border-radius: 8px; /* Example, adjust as needed (was rounded-lg) */
+  font-weight: 700; /* Was font-bold */
+  font-size: 1.125rem; /* Example, adjust as needed (was text-lg) */
+  text-transform: none; /* Buttons are often uppercase, override if needed */
+  letter-spacing: normal; /* Override if needed */
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.cta-button:hover {
+  /* Slightly darker/different accent or increased shadow */
+  background-color: var(--accent-secondary); /* Example hover */
+  box-shadow: 0 0 20px rgba(var(--accent-primary-rgb), 0.6);
+  transform: translateY(-2px);
+}
+
+.card {
+  background-color: rgba(var(--bg-secondary-rgb, 20, 20, 32), 0.8);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1.5rem 2rem;
+  box-shadow: 0 0 10px rgba(var(--accent-primary-rgb), 0.3);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 0 20px rgba(var(--accent-primary-rgb), 0.6);
+  transform: translateY(-4px);
+}
+
+.card p {
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+
+.card .font-semibold {
+  color: var(--accent-primary);
+}
+
+/* =======================
+   OAuth (GitHub) Button
+   ======================= */
+
+.oauth-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.github-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #1cca90; /* Green */
+  color: #ffffff;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: var(--shadow);
+}
+
+.github-button:hover {
+  background-color: #0aad5c; /* Slightly darker green */
+  transform: translateY(-2px);
+  box-shadow: 0 0 15px rgba(46, 204, 113, 0.4);
+}
+
+.github-button i {
+  /* Ensure icon and text spacing remains consistent */
+  font-size: 1rem;
+}
+
+/* Back to Home link */
+.back-home-container {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.back-home-link {
+  color: var(--accent-secondary);
+  font-size: 0.9rem;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.back-home-link:hover {
+  background-color: rgba(var(--accent-primary-rgb), 0.1);
+  color: var(--accent-primary);
+}
+
+/* OR separator */
+.or-container {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+.or-text {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+}
+
+/* Light Mode Overrides for MDEditor Preview */
+.light-mode .wmde-markdown {
+  background-color: var(--bg-secondary) !important; /* Match wrapper */
+  color: var(--text-primary) !important;
+}
+.light-mode .wmde-markdown h1,
+.light-mode .wmde-markdown h2,
+.light-mode .wmde-markdown h3,
+.light-mode .wmde-markdown h4,
+.light-mode .wmde-markdown h5,
+.light-mode .wmde-markdown h6 {
+  color: var(--text-primary) !important;
+  border-bottom-color: var(--border-color) !important;
+}
+.light-mode .wmde-markdown code {
+  background-color: var(--bg-tertiary) !important;
+  color: var(--accent-secondary) !important; /* Using accent for code */
+  border-color: var(--border-color) !important;
+}
+.light-mode .wmde-markdown pre {
+  background-color: var(--bg-tertiary) !important;
+  border-color: var(--border-color) !important;
+}
+.light-mode .wmde-markdown pre code {
+  color: var(--text-primary) !important;
+  background-color: transparent !important; /* Ensure pre background shows */
+}
+.light-mode .wmde-markdown blockquote {
+  border-left-color: var(--border-color) !important;
+  color: var(--text-secondary) !important;
+  background-color: var(--bg-tertiary) !important;
+}
+.light-mode .wmde-markdown hr {
+  background-color: var(--border-color) !important;
+}
+.light-mode .wmde-markdown th,
+.light-mode .wmde-markdown td {
+  border-color: var(--border-color) !important;
+}
+.light-mode .wmde-markdown th {
+  background-color: var(--bg-tertiary) !important;
+}
+.light-mode .wmde-markdown tr:nth-child(even) {
+  background-color: var(--bg-tertiary) !important;
+}
+.light-mode .wmde-markdown a {
+  color: var(--accent-primary) !important;
+}
+.light-mode .wmde-markdown a:hover {
+  color: var(--accent-secondary) !important;
+  border-bottom-color: var(--accent-secondary) !important;
+}
+.light-mode .wmde-markdown ul li::marker,
+.light-mode .wmde-markdown ol li::marker {
+  color: var(--text-secondary) !important;
+}
+
+/* Menu Bar Styles */
+.menu-bar {
+  background-color: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.menu-bar button {
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+}
+
+.menu-bar button:hover {
+  background-color: var(--bg-hover);
+}
+
+.menu-item {
+  position: relative;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.menu-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  box-shadow: var(--shadow);
+  min-width: 200px;
+  z-index: 1000;
+}
+
+.menu-dropdown-item {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+}
+
+.menu-dropdown-item:hover {
+  background-color: var(--bg-hover);
+  color: var(--accent-primary);
+}
+
+.menu-separator {
+  height: 1px;
+  background-color: var(--border-color);
+  margin: 0.25rem 0;
+}
+
+/* Panel Layout Styles */
+.dashboard-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/* Panel specific styles */
+.panel {
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-secondary);
+  border: none;
+}
+
+/* Panel resize handle - VS Code style */
+.panel-resize-handle {
+  width: 1px !important;
+  background-color: var(--border-color);
+  position: relative;
+  cursor: col-resize;
+  transition: background-color 0.2s;
+}
+
+.panel-resize-handle:hover,
+.panel-resize-handle:active {
+  background-color: var(--accent-primary);
+}
+
+/* Add hover effect area around the resize handle */
+.panel-resize-handle::before {
+  content: '';
+  position: absolute;
+  left: -2px;
+  width: 5px;
+  height: 100%;
+  cursor: col-resize;
+}
+
+.panel-content {
+  flex: 1;
+  overflow: auto;
+  padding: 1rem;
+  background-color: var(--bg-primary);
+}
+
+/* Timeline panel styles */
+.timeline-panel {
+  border-top: 1px solid var(--border-color);
+  background-color: var(--bg-secondary);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.timeline-resizer {
+  position: absolute;
+  top: -3px;
+  left: 0;
+  right: 0;
+  height: 6px;
+  cursor: ns-resize;
+  background: transparent;
+  z-index: 10;
+}
+
+.timeline-resizer:hover {
+  background-color: var(--accent-primary);
+  opacity: 0.5;
+}
+
+.timeline-content {
+  flex: 1;
+  overflow: auto;
+  background-color: var(--bg-primary);
+}
+
+.timeline-container {
+  height: 12rem;
+  border-top: 1px solid var(--border-color);
+  background-color: var(--bg-secondary);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Status bar styles */
+.status-bar {
+  height: 24px;
+  background-color: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  padding: 0 0.5rem;
+}
+
+/* Hero Message styles */
+.hero-message {
+  margin-top: 1.25rem;
+  display: block;
+}

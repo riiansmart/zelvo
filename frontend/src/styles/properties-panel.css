@@ -1,0 +1,625 @@
+/* Properties Panel Styles */
+.property-select-content {
+    min-width: 200px;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    animation: slideIn 0.1s ease-out;
+    z-index: 1000;
+    position: relative;
+    margin-top: 4px;
+  }
+  
+  .property-select-item {
+    padding: 6px 8px;
+    margin: 2px;
+    border-radius: 3px;
+    cursor: pointer;
+    user-select: none;
+    font-size: 13px;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    outline: none;
+  }
+  
+  .property-select-item[data-highlighted] {
+    background-color: color-mix(in srgb, var(--bg-secondary) 90%, var(--text-primary));
+    color: var(--text-primary);
+  }
+  
+  .property-select-item[data-state="checked"] {
+    background-color: color-mix(in srgb, var(--bg-secondary) 90%, var(--text-primary));
+    color: var(--text-primary);
+  }
+  
+  .property-select-item:focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: -1px;
+  }
+  
+  .property-group {
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .property-group:has(.property-value[data-state="open"]) {
+    z-index: 1001;
+  }
+  
+  .property-group:has(.property-value:not([data-state="open"])) {
+    z-index: 1;
+  }
+  
+  .property-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+    font-weight: 500;
+  }
+  
+  .property-value {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 8px;
+    background-color: color-mix(in srgb, var(--bg-secondary) 80%, var(--bg-primary));
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 13px;
+    color: var(--text-primary);
+    min-height: 32px;
+  }
+  
+  .property-value:hover {
+    background-color: color-mix(in srgb, var(--bg-secondary) 90%, var(--text-primary));
+    border-color: color-mix(in srgb, var(--border-color) 70%, var(--text-primary));
+  }
+  
+  .property-value:focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: -1px;
+  }
+  
+  .property-value[data-state="open"] {
+    background-color: color-mix(in srgb, var(--bg-secondary) 90%, var(--text-primary));
+    border-color: color-mix(in srgb, var(--border-color) 70%, var(--text-primary));
+  }
+  
+  .property-value-content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .property-value-text {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  .property-icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    opacity: 0.7;
+    transition: transform 0.2s ease;
+  }
+  
+  .property-value[data-state="open"] .property-icon {
+    transform: rotate(180deg);
+  }
+  
+  /* Status and Priority Indicators */
+  .status-indicator,
+  .priority-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  
+  .priority-indicator {
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  }
+  
+  /* Status Colors */
+  .status-todo { background-color: var(--status-todo); }
+  .status-in-progress { 
+    background-color: var(--status-in-progress);
+    box-shadow: 0 0 4px color-mix(in srgb, var(--status-in-progress) 40%, transparent);
+  }
+  .status-review { 
+    background-color: var(--status-review);
+    box-shadow: 0 0 4px color-mix(in srgb, var(--status-review) 40%, transparent);
+  }
+  .status-done { 
+    background-color: var(--status-done);
+    box-shadow: 0 0 4px color-mix(in srgb, var(--status-done) 40%, transparent);
+  }
+  
+  /* Priority Colors */
+  .priority-low { background-color: var(--priority-low); }
+  .priority-medium { background-color: var(--priority-medium); }
+  .priority-high { background-color: var(--priority-high); }
+  .priority-critical { background-color: var(--priority-critical); }
+  
+  /* Points Badge */
+  .points-badge {
+    background-color: color-mix(in srgb, var(--bg-secondary) 80%, var(--bg-primary));
+    color: var(--text-primary);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  
+  /* Assignee Avatar */
+  .assignee-avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-primary);
+    text-transform: uppercase;
+  }
+  
+  .assignee-avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  /* Animation */
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+      transform-origin: top;
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+      transform-origin: top;
+    }
+  }
+  
+  /* Scrollbar Styles */
+  .property-select-content ::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  .property-select-content ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .property-select-content ::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border: 2px solid var(--bg-secondary);
+    border-radius: 5px;
+  }
+  
+  .property-select-content ::-webkit-scrollbar-thumb:hover {
+    background: color-mix(in srgb, var(--border-color) 70%, var(--text-primary));
+  }
+  
+  /* Dropdown Portal Positioning */
+  [data-radix-popper-content-wrapper] {
+    z-index: 1100 !important;
+    position: relative;
+  }
+  
+  /* Ensure proper layering for nested elements */
+  .property-select-viewport {
+    position: relative;
+    z-index: 1;
+  }
+  
+  /* Properties Panel Base */
+  .properties-panel {
+    @apply h-full overflow-y-auto bg-primary border-l border-default;
+  }
+  
+  .properties-panel::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  .properties-panel::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+  }
+  
+  .properties-panel::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border: 2px solid var(--bg-primary);
+    border-radius: 5px;
+  }
+  
+  .properties-panel::-webkit-scrollbar-thumb:hover {
+    background: color-mix(in srgb, var(--border-color) 70%, var(--text-primary));
+  }
+  
+  /* Panel sections */
+  .property-section {
+    @apply p-4 border-b border-default last:border-b-0 relative;
+  }
+  
+  .property-section + .property-section {
+    @apply pt-3;
+  }
+  
+  /* Labels */
+  .property-label {
+    @apply text-xs font-medium text-muted mb-1.5 uppercase tracking-wide;
+  }
+  
+  /* Values */
+  .property-value {
+    @apply relative flex items-center justify-between p-2 rounded-md
+           bg-secondary border border-default text-sm text-primary
+           hover:bg-hover hover:border-muted transition-all duration-200
+           focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-1;
+  }
+  
+  .property-value[data-state="open"] {
+    @apply bg-hover border-muted;
+  }
+  
+  /* Value content */
+  .property-value-content {
+    @apply flex items-center gap-2 min-w-0 flex-1;
+  }
+  
+  .property-value-text {
+    @apply truncate flex-1;
+  }
+  
+  /* Icons */
+  .property-icon {
+    @apply w-4 h-4 text-muted flex-shrink-0 transition-transform duration-200;
+  }
+  
+  .property-value[data-state="open"] .property-icon {
+    @apply rotate-180;
+  }
+  
+  /* Status and Priority Indicators */
+  .status-indicator,
+  .priority-indicator {
+    @apply w-2.5 h-2.5 flex-shrink-0;
+  }
+  
+  .status-indicator {
+    @apply rounded-full shadow-sm;
+  }
+  
+  .priority-indicator {
+    @apply rounded-sm shadow-sm;
+  }
+  
+  /* Status Colors */
+  .status-TODO {
+    @apply bg-gray-400;
+  }
+  
+  .status-IN_PROGRESS {
+    @apply bg-blue-500;
+  }
+  
+  .status-REVIEW {
+    @apply bg-purple-500;
+  }
+  
+  .status-DONE {
+    @apply bg-green-500;
+  }
+  
+  /* Priority Colors */
+  .priority-LOW {
+    @apply bg-gray-400;
+  }
+  
+  .priority-MEDIUM {
+    @apply bg-yellow-500;
+  }
+  
+  .priority-HIGH {
+    @apply bg-red-500;
+  }
+  
+  /* Task ID */
+  .task-id {
+    @apply text-sm text-muted font-mono;
+  }
+  
+  /* Scrollbar */
+  .properties-panel::-webkit-scrollbar {
+    @apply w-1.5;
+  }
+  
+  .properties-panel::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  
+  .properties-panel::-webkit-scrollbar-thumb {
+    @apply bg-default rounded-full hover:bg-muted transition-colors duration-200;
+  }
+  
+  /* Empty state */
+  .no-task {
+    @apply flex items-center justify-center h-full text-muted text-sm;
+  }
+  
+  /* Dropdown positioning */
+  [data-radix-popper-content-wrapper] {
+    @apply z-[1000] !important;
+  }
+  
+  /* Ensure proper stacking for nested dropdowns */
+  .property-section {
+    @apply relative;
+  }
+  
+  .property-section:has(.property-value[data-state="open"]) {
+    @apply z-[1001];
+  }
+  
+  .property-section:has(.property-value:not([data-state="open"])) {
+    @apply z-[1];
+  }
+  
+  /* Animations */
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Light mode adjustments */
+  .light-mode .properties-panel .property-value {
+    @apply bg-white border-gray-200 text-gray-700;
+  }
+  
+  .light-mode .properties-panel .property-value:hover {
+    @apply bg-gray-50 border-gray-300;
+  }
+  
+  .light-mode .properties-panel .property-value[data-state="open"] {
+    @apply bg-gray-50 border-gray-300;
+  }
+  
+  /* Dropdown Base */
+  .dropdown-trigger {
+    width: 100%;
+    height: 24px;
+    padding: 0 8px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 2px;
+    color: var(--text-primary);
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    user-select: none;
+    transition: border-color 0.1s ease;
+  }
+  
+  .dropdown-trigger:hover {
+    border-color: color-mix(in srgb, var(--border-color) 70%, var(--text-primary));
+  }
+  
+  .dropdown-trigger:focus {
+    outline: 1px solid var(--accent-primary);
+    outline-offset: -1px;
+  }
+  
+  .dropdown-trigger[data-state="open"] {
+    border-color: var(--accent-primary);
+  }
+  
+  /* Dropdown Content */
+  .dropdown-content {
+    min-width: 160px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 2px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    margin-top: 4px;
+    overflow: hidden;
+    animation: slideIn 0.1s ease-out;
+    z-index: 1000;
+  }
+  
+  .dropdown-item {
+    padding: 6px 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.1s ease;
+    color: var(--text-primary);
+  }
+  
+  .dropdown-item:hover {
+    background: color-mix(in srgb, var(--bg-secondary) 80%, var(--bg-primary));
+  }
+  
+  .dropdown-item[data-highlighted] {
+    background: color-mix(in srgb, var(--bg-secondary) 90%, var(--text-primary));
+  }
+  
+  .dropdown-item:active {
+    background: color-mix(in srgb, var(--accent-primary) 70%, var(--bg-primary));
+  }
+  
+  /* Status Colors */
+  .status-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  
+  .status-todo { background: var(--status-todo); }
+  .status-in-progress { background: var(--status-in-progress); }
+  .status-review { background: var(--status-review); }
+  .status-done { background: var(--status-done); }
+  
+  /* Priority Colors */
+  .priority-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  
+  .priority-low { background: var(--priority-low); }
+  .priority-medium { background: var(--priority-medium); }
+  .priority-high { background: var(--priority-high); }
+  .priority-critical { background: var(--priority-critical); }
+  
+  /* Date Input */
+  .date-input {
+    width: 100%;
+    height: 24px;
+    padding: 0 8px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 2px;
+    color: var(--text-primary);
+    font-size: 13px;
+  }
+  
+  .date-input::-webkit-calendar-picker-indicator {
+    filter: invert(0.8);
+  }
+  
+  /* Labels */
+  .labels-container {
+    @apply flex flex-wrap gap-2;
+  }
+  
+  .label {
+    @apply inline-flex items-center gap-1 text-xs px-2 py-1 rounded-full
+           bg-secondary text-primary border border-default;
+  }
+  
+  .label-remove {
+    @apply p-0.5 hover:text-accent rounded-full transition-colors;
+  }
+  
+  .add-label {
+    @apply inline-flex items-center gap-1 text-xs px-2 py-1 rounded-full
+           border border-dashed border-default text-muted hover:text-primary
+           hover:border-accent transition-colors;
+  }
+  
+  /* Dependencies */
+  .dependency-item {
+    @apply flex items-center justify-between gap-2 text-sm px-3 py-2
+           bg-secondary rounded border border-default;
+  }
+  
+  .dependency-remove {
+    @apply p-1 text-muted hover:text-accent rounded transition-colors;
+  }
+  
+  .add-dependency {
+    @apply flex items-center gap-2 text-sm px-3 py-2 w-full
+           border border-dashed border-default rounded
+           text-muted hover:text-primary hover:border-accent
+           transition-colors;
+  }
+  
+  /* Ensure focus outline uses light mode accent */
+  .light-mode .properties-panel .property-value:focus-visible,
+  .light-mode .properties-panel .dropdown-trigger:focus,
+  .light-mode .properties-panel .date-input:focus {
+     outline-color: var(--accent-primary);
+     box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent-primary) 20%, transparent); /* Adjusted shadow for light */
+  }
+  
+  /* Ensure dropdowns don't overflow */
+  .property-section {
+    @apply relative;
+  }
+  
+  /* Add spacing between sections */
+  .property-section + .property-section {
+    @apply mt-4;
+  }
+  
+  /* Status colors */
+  .status-TODO {
+    @apply bg-gray-400;
+  }
+  
+  .status-IN_PROGRESS {
+    @apply bg-blue-500;
+  }
+  
+  .status-REVIEW {
+    @apply bg-purple-500;
+  }
+  
+  .status-DONE {
+    @apply bg-green-500;
+  }
+  
+  /* Priority colors */
+  .priority-LOW {
+    @apply bg-gray-400;
+  }
+  
+  .priority-MEDIUM {
+    @apply bg-yellow-500;
+  }
+  
+  .priority-HIGH {
+    @apply bg-red-500;
+  }
+  
+  /* Scrollbar styling */
+  .properties-panel {
+    scrollbar-width: thin;
+  }
+  
+  .properties-panel::-webkit-scrollbar {
+    @apply w-2;
+  }
+  
+  .properties-panel::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  
+  .properties-panel::-webkit-scrollbar-thumb {
+    @apply bg-default rounded-full;
+  }
+  
+  /* Ensure proper spacing in dropdown triggers */
+  .SelectTrigger {
+    @apply h-9;
+  } 

@@ -1,0 +1,143 @@
+/* Taskflow Dashboard Styles */
+@import './cyberpunk.css';
+
+/* Add any additional dashboard-specific styles here */
+
+/* Tabs Bar */
+.tabs-bar {
+  display: flex;
+  align-items: center;
+  gap: 1px;
+  padding: 0 0.5rem;
+  background-color: var(--bg-primary);
+  border-bottom: 1px solid var(--border-color);
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.tabs-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background-color: var(--bg-secondary);
+  border-top: 2px solid transparent;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  user-select: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: fit-content;
+  position: relative;
+}
+
+.tab:hover {
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+.tab.active {
+  background-color: var(--bg-tertiary);
+  border-top-color: var(--accent-primary);
+  color: var(--text-primary);
+}
+
+.tab button {
+  opacity: 0.5;
+  transition: all 0.2s ease;
+}
+
+.tab:hover button,
+.tab.active button {
+  opacity: 1;
+}
+
+.tab button:hover {
+  background-color: var(--bg-secondary);
+  color: var(--accent-primary);
+}
+
+/* Task Badges */
+.task-badges {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.task-badge {
+  transition: all 0.2s ease;
+}
+
+.task-badge:hover {
+  background-color: var(--bg-secondary);
+}
+
+/* Status Colors */
+.text-todo {
+  @apply text-gray-400;
+}
+
+.text-in-progress {
+  @apply text-blue-500;
+}
+
+.text-review {
+  @apply text-purple-500;
+}
+
+.text-done {
+  @apply text-green-500;
+}
+
+.bg-todo {
+  background-color: var(--status-todo);
+}
+
+.bg-in-progress {
+  background-color: var(--status-in-progress);
+}
+
+.bg-review {
+  background-color: var(--status-review);
+}
+
+.bg-done {
+  background-color: var(--status-done);
+}
+
+/* Priority Colors */
+.text-low {
+  color: var(--priority-low);
+}
+
+.text-medium {
+  color: var(--priority-medium);
+}
+
+.text-high {
+  color: var(--priority-high);
+}
+
+.text-critical {
+  color: var(--priority-critical);
+}
+
+.bg-low {
+  background-color: var(--priority-low);
+}
+
+.bg-medium {
+  background-color: var(--priority-medium);
+}
+
+.bg-high {
+  background-color: var(--priority-high);
+}
+
+.bg-critical {
+  background-color: var(--priority-critical);
+} 

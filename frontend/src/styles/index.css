@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  /* Use theme variables for color, not Tailwind classes */
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+/* === Theme utility classes based on CSS variables === */
+.bg-primary { background-color: var(--bg-primary) !important; }
+.bg-secondary { background-color: var(--bg-secondary) !important; }
+.bg-tertiary { background-color: var(--bg-tertiary, var(--bg-secondary)); }
+
+.text-primary { color: var(--text-primary) !important; }
+.text-secondary { color: var(--text-secondary) !important; }
+
+.border-default { border-color: var(--border-color) !important; }
+
+.bg-accent { background-color: var(--accent-primary) !important; }
+.text-accent { color: var(--accent-primary) !important; }
+
+/* Hover helpers */
+.hover\:bg-secondary:hover { background-color: var(--bg-secondary) !important; }
+.hover\:bg-accent:hover { background-color: var(--accent-primary) !important; }
+
+/* Focus ring helpers */
+.focus-ring-accent:focus {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
+/* End theme utility classes */
+
+.border-accent { border-color: var(--accent-primary) !important; }
+
+/* Ring helpers for Tailwind ring utilities */
+.focus\:ring-accent:focus {
+  --tw-ring-color: var(--accent-primary);
+}
+
+.focus\:ring-offset-secondary:focus {
+  --tw-ring-offset-color: var(--bg-secondary);
+}
