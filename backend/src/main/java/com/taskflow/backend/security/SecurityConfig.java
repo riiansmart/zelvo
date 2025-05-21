@@ -38,7 +38,15 @@ public class SecurityConfig {
                 .cors(cors -> {})
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers("/api/v1/auth/**", "/oauth2/**", "/login/oauth2/code/*").permitAll()
+                        .requestMatchers(
+                                "/api/v1/auth/**",
+                                "/oauth2/**",
+                                "/login/oauth2/code/*",
+                                // Swagger UI v3 (OpenAPI)
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html"
+                        ).permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/categories/**").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
