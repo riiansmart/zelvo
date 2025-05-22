@@ -56,7 +56,6 @@ export default function HomePage() {
   );
   */
 
-  // Filter tasks based on search term and priority
   const filteredTasks = tasks.filter(task => {
     const matchesSearch = task.title.toLowerCase().includes(searchTerm.toLowerCase())
     const matchesPriority = filterPriority === 'ALL' || task.priority === filterPriority
