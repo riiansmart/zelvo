@@ -1,100 +1,49 @@
 /**
  * LandingPage.tsx
- * Main landing page component that introduces TaskFlow to new users.
- * Features a modern, responsive design with feature highlights and testimonials.
+ * Main landing page component with hero section, cards, and footer.
  */
 
-import { Link } from 'react-router-dom'  // Router link component
-// import React from 'react' // Removed unused React import
-import { Navigation } from '../components/navigation/Navigation'  // Top navigation bar
+import React from 'react'
+import { Navigation } from '../components/navigation/Navigation'
+import '../styles/landing-page.css'
 
 /**
  * LandingPage Component
- * Displays the public landing page with:
- * - Welcome message and description
- * - Key features list
- * - User testimonials
- * - Call-to-action button
- * 
- * Uses CSS variables for theming and responsive design
+ * Landing page with navigation, hero section, cards, and footer
  * 
  * @returns {JSX.Element} The landing page component
  */
 export default function LandingPage() {
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: 'var(--bg-primary)' }}>
+    <div className="landing-page">
       {/* Top Navigation */}
       <Navigation />
 
       {/* Main Content Area */}
-      <main className="container" style={{ padding: '2rem 0', textAlign: 'center' }}>
-        {/* Hero Section */}
-        <h1 className="welcome-text">Welcome to TaskFlow</h1>
-        <p className="welcome-description" style={{ marginBottom: '2rem' }}>
-          Manage your tasks efficiently and stay productive.
-        </p>
+      <main className="landing-container">
+                {/* Hero Section */}        <section className="hero-section">          <div className="hero-content">            {/* Left side - Figure/Wireframe */}            <div className="hero-figure">              {/* Wireframe figure will go here */}            </div>                        {/* Right side - Text content */}            <div className="hero-text">              <h1 className="hero-title">                Organize the chaos.<br />                Ship faster. <span style={{ color: '#D3DEA1' }}>Stay in flow.</span>              </h1>              <p className="hero-description">                Taskflow is your cybernetic command center—                built for devs, creatives, and remote teams                who need control without friction.              </p>              <div className="hero-cta">                <button className="cta-button primary">Get Started</button>                <button className="cta-button secondary">Learn More</button>              </div>            </div>          </div>        </section>
 
-        {/* Features Section */}
-        <section style={{ marginBottom: '4rem' }}>
-          <h2 className="welcome-text" style={{ fontSize: '1.5rem' }}>Features</h2>
-          <ul style={{ 
-            listStyleType: 'disc', 
-            listStylePosition: 'inside', 
-            maxWidth: '600px', 
-            margin: '1rem auto', 
-            textAlign: 'left' 
-          }}>
-            <li>Organize tasks with priority and status filters</li>
-            <li>Dark and light mode experience</li>
-            <li>Easy search, filter, and pagination</li>
-          </ul>
-        </section>
-
-        {/* Testimonials Section */}
-        <section style={{ marginBottom: '4rem' }}>
-          <h2 className="welcome-text" style={{ fontSize: '1.5rem' }}>Testimonials</h2>
-          <div style={{ 
-            display: 'flex', 
-            justifyContent: 'center', 
-            flexWrap: 'wrap', 
-            gap: '2rem' 
-          }}>
-            {/* First Testimonial */}
-            <div style={{ 
-              backgroundColor: 'var(--bg-secondary)', 
-              padding: '1.5rem', 
-              borderRadius: '8px', 
-              maxWidth: '300px', 
-              boxShadow: 'var(--shadow)' 
-            }}>
-              <p>"TaskFlow helped me stay on track and boosted productivity!"</p>
-              <p style={{ marginTop: '1rem', fontWeight: '600' }}>- Alex</p>
-            </div>
-
-            {/* Second Testimonial */}
-            <div style={{ 
-              backgroundColor: 'var(--bg-secondary)', 
-              padding: '1.5rem', 
-              borderRadius: '8px', 
-              maxWidth: '300px', 
-              boxShadow: 'var(--shadow)' 
-            }}>
-              <p>"The cyberpunk theme looks awesome and the UI is intuitive."</p>
-              <p style={{ marginTop: '1rem', fontWeight: '600' }}>- Jamie</p>
-            </div>
+        {/* Three Cards Section */}
+        <section className="cards-section">
+          <div className="cards-container">
+            <div className="feature-card"></div>
+            <div className="feature-card"></div>
+            <div className="feature-card"></div>
           </div>
         </section>
 
-        {/* Call-to-Action Button */}
-        <div>
-          <Link 
-            to="/register" 
-            className="filter-button" 
-            style={{ padding: '0.7rem 1.5rem', fontWeight: 600 }}
-          >
-            Get Started
-          </Link>
-        </div>
+        {/* Footer Section */}
+        <section className="footer-section">
+          <div className="footer-content">
+            <p className="footer-text">
+              Works seamlessly with<br />
+              tools you already use
+            </p>
+            <div className="integration-input">
+              <input type="text" className="tools-input" placeholder="" />
+            </div>
+          </div>
+        </section>
       </main>
     </div>
   )

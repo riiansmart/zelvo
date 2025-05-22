@@ -7,7 +7,6 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom'  // Router utilities
 import { useAuth } from '../../hooks/useAuth'                      // Authentication context
 import { useTheme } from '../../context/ThemeContext'              // Theme context
-import Diamond3D from '../Diamond3D'                               // Logo component
 import '../../styles/components/Navigation.css'                    // Navigation styles
 
 /**
@@ -45,47 +44,38 @@ export function Navigation() {
   }
 
   return (
-    <nav className="main-nav">
-      {/* Main Navigation Container */}
-      <div className="top-nav">
-        {/* Logo and Brand Section */}
-        <div className="logo-wrapper">
-          <Link to="/" className="flex items-center">
-            <Diamond3D />
-            <span className="logo">TaskFlow</span>
-          </Link>
-        </div>
-
-        {/* User Controls Section */}
-        <div className="user-section">
-          {/* Home link always visible */}
-          <Link to="/" className="nav-link">Home</Link>
-          
-          {/* Conditional Navigation Links */}
-          {user ? (
-            <>
-              {/* Authenticated User Links */}
-              <Link to="/dashboard" className="nav-link">Dashboard</Link>
-              <button onClick={handleLogout} className="nav-link logout-button">Logout</button>
-            </>
-          ) : (
-            /* Non-authenticated User Links - Hidden on auth pages */
-            !isAuthPage && (
-              <>
-                <Link to="/login" className="nav-link">Login</Link>
-                <Link to="/register" className="nav-link">Register</Link>
-              </>
-            )
-          )}
-          
-          {/* Theme Toggle Button */}
-          <button
-            type="button"
-            aria-label="Toggle theme"
-            className="theme-toggle"
-            onClick={toggleTheme}
-          />
-        </div>
+    <nav className="taskflow-nav">
+      <div className="taskflow-header">
+        <Link to="/" className="taskflow-logo">
+          <div className="logo-container">
+            <div className="main-title">
+              <span className="letter">T</span>
+              <span className="letter">A</span>
+              <span className="letter">S</span>
+              <span className="letter">K</span>
+              <span className="letter">F</span>
+              <span className="letter">L</span>
+              <span className="letter">O</span>
+              <span className="letter">W</span>
+                            <div className="subtitle-overlay">                <span className="subtitle-letter">E</span>                <span className="subtitle-letter">N</span>                <span className="subtitle-letter">G</span>                <span className="subtitle-letter">I</span>                <span className="subtitle-letter">N</span>                <span className="subtitle-letter">E</span>                <span className="subtitle-letter">E</span>                <span className="subtitle-letter">R</span>                <span className="subtitle-letter">E</span>                <span className="subtitle-letter">D</span>                <span className="subtitle-space"> </span>                <span className="subtitle-letter">F</span>                <span className="subtitle-letter">O</span>                <span className="subtitle-letter">R</span>                <span className="subtitle-space"> </span>                <span className="subtitle-letter">C</span>                <span className="subtitle-letter">H</span>                <span className="subtitle-letter">A</span>                <span className="subtitle-letter">O</span>                <span className="subtitle-letter">S</span>                <span className="subtitle-letter">.</span>                <span className="subtitle-space"> </span>                <span className="subtitle-letter">D</span>                <span className="subtitle-letter">E</span>                <span className="subtitle-letter">S</span>                <span className="subtitle-letter">I</span>                <span className="subtitle-letter">G</span>                <span className="subtitle-letter">N</span>                <span className="subtitle-letter">E</span>                <span className="subtitle-letter">D</span>                <span className="subtitle-space"> </span>                <span className="subtitle-letter">F</span>                <span className="subtitle-letter">O</span>                <span className="subtitle-letter">R</span>                <span className="subtitle-space"> </span>                <span className="subtitle-letter">C</span>                <span className="subtitle-letter">O</span>                <span className="subtitle-letter">N</span>                <span className="subtitle-letter">T</span>                <span className="subtitle-letter">R</span>                <span className="subtitle-letter">O</span>                <span className="subtitle-letter">L</span>                <span className="subtitle-letter">.</span>              </div>
+            </div>
+          </div>
+        </Link>
+        
+        {/* Login link for unauthenticated users */}
+        {!user && (
+          <div className="auth-controls">
+            <Link to="/login" className="login-link">LOGIN</Link>
+          </div>
+        )}
+        
+        {/* Hidden user controls for authenticated users - only show on dashboard */}
+        {user && location.pathname === '/dashboard' && (
+          <div className="user-controls">
+            <Link to="/profile" className="nav-link">Profile</Link>
+            <button onClick={handleLogout} className="nav-link logout-button">Logout</button>
+          </div>
+        )}
       </div>
     </nav>
   )

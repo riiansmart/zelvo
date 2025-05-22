@@ -1,0 +1,367 @@
+/* ===========================
+   TASKFLOW Landing Page Styles
+   Modern Hero & Feature Cards
+   =========================== */
+
+/* Global page styles */
+body {
+  background: #181715 !important;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.landing-page {
+  background: #181715;
+  height: 100vh;
+  width: 100%;
+  color: white;
+  overflow: hidden;
+}
+
+.landing-container {
+  width: 100%;
+  height: calc(100vh - 160px);
+  background: #181715;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===========================
+   HERO SECTION
+   =========================== */
+
+.hero-section {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  padding: 2rem 2rem 1rem;
+  background: #181715;
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.hero-content {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  width: 100%;
+  z-index: 2;
+  position: relative;
+}
+
+.hero-figure {
+  flex: 0 0 300px;
+  height: 300px;
+  border: 1px solid #D3DEA1;
+  background: transparent;
+  position: relative;
+}
+
+.hero-text {
+  flex: 1;
+  text-align: left;
+}
+
+.hero-title {
+  font-size: 3.2rem;
+  font-weight: 400;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  color: #ffffff;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.hero-description {
+  font-size: 1.1rem;
+  line-height: 1.4;
+  color: #b0b0b0;
+  margin-bottom: 2rem;
+  font-weight: 400;
+  max-width: 500px;
+}
+
+.hero-cta {
+  display: flex;
+  gap: 1.2rem;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.cta-button {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 0.7rem 1.8rem;
+  border-radius: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid #D3DEA1;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #D3DEA1;
+  color: #181715;
+}
+
+.cta-button.primary {
+  background: #D3DEA1;
+  color: #181715;
+  border: 1px solid #D3DEA1;
+}
+
+.cta-button.primary:hover {
+  background: #C5D091;
+  border-color: #C5D091;
+}
+
+.cta-button.secondary {
+  background: transparent;
+  color: #D3DEA1;
+  border: 1px solid #D3DEA1;
+}
+
+.cta-button.secondary:hover {
+  background: rgba(211, 222, 161, 0.1);
+  color: #D3DEA1;
+}
+
+/* ===========================
+   CARDS SECTION
+   =========================== */
+
+.cards-section {
+  padding: 1rem 2rem;
+  background: #181715;
+  flex-shrink: 0;
+}
+
+.cards-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.feature-card {
+  background: transparent;
+  border: 1px solid #D3DEA1;
+  border-radius: 4px;
+  height: 120px;
+  transition: all 0.2s ease;
+}
+
+.feature-card:hover {
+  border-color: #E0E8B1;
+  box-shadow: 0 0 20px rgba(211, 222, 161, 0.2);
+}
+
+/* ===========================
+   FOOTER SECTION
+   =========================== */
+
+.footer-section {
+  padding: 1rem 2rem 2rem;
+  background: #181715;
+  flex-shrink: 0;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  padding-left: 2rem;
+}
+
+.footer-text {
+  font-size: 1.1rem;
+  color: #ffffff;
+  line-height: 1.3;
+  margin: 0;
+}
+
+.integration-input {
+  width: 100%;
+  max-width: 600px;
+}
+
+.tools-input {
+  width: 100%;
+  padding: 0.8rem;
+  background: transparent;
+  border: 1px solid #D3DEA1;
+  border-radius: 4px;
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.tools-input:focus {
+  outline: none;
+  border-color: #E0E8B1;
+  box-shadow: 0 0 20px rgba(211, 222, 161, 0.2);
+}
+
+.tools-input::placeholder {
+  color: #666666;
+}
+
+/* ===========================
+   RESPONSIVE DESIGN
+   =========================== */
+
+@media (min-width: 1600px) {
+  .landing-container {
+    height: calc(100vh - 180px);
+  }
+}
+
+@media (max-width: 1400px) {
+  .landing-container {
+    height: calc(100vh - 160px);
+  }
+}
+
+@media (max-width: 1200px) {
+  .landing-container {
+    height: calc(100vh - 120px);
+  }
+  
+  .hero-section {
+    padding: 1.5rem 2rem 1rem;
+  }
+  
+  .hero-figure {
+    flex: 0 0 250px;
+    height: 250px;
+  }
+  
+  .hero-title {
+    font-size: 2.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .landing-container {
+    height: calc(100vh - 80px);
+  }
+  
+  .hero-section {
+    padding: 1rem 2rem 0.5rem;
+  }
+  
+  .hero-content {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .hero-figure {
+    flex: none;
+    width: 100%;
+    height: 180px;
+  }
+  
+  .hero-text {
+    text-align: center;
+  }
+  
+  .hero-title {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .hero-description {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .hero-cta {
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  .cta-button {
+    font-size: 0.8rem;
+    padding: 0.6rem 1.5rem;
+  }
+  
+  .cards-container {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .feature-card {
+    height: 100px;
+  }
+  
+  .footer-section {
+    padding: 0.5rem 2rem 1.5rem;
+  }
+  
+  .footer-text {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .landing-container {
+    height: calc(100vh - 70px);
+  }
+  
+  .hero-section {
+    padding: 0.5rem 1rem 0.5rem;
+  }
+  
+  .hero-title {
+    font-size: 2rem;
+    margin-bottom: 0.8rem;
+  }
+  
+  .hero-description {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+  
+  .hero-cta {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  
+  .cta-button {
+    font-size: 0.75rem;
+    padding: 0.5rem 1.2rem;
+    width: 100%;
+  }
+  
+  .cards-container {
+    gap: 0.8rem;
+  }
+  
+  .feature-card {
+    height: 80px;
+  }
+  
+  .footer-section {
+    padding: 0.5rem 1rem 1rem;
+  }
+  
+  .footer-text {
+    font-size: 0.9rem;
+  }
+  
+  .tools-input {
+    padding: 0.6rem;
+    font-size: 0.8rem;
+  }
+} 
