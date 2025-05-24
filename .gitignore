@@ -1,41 +1,16 @@
+# Development environment
+.idea/
+.vscode/
+*.code-workspace
+.DS_Store
+Thumbs.db
+.cursor/
+*.cursor
 .cursorrules
 .cursorignore
 .cursorignorerules
-.cursorignorerules
-.cursorignorerules
-.cursorignorerules
-.cursorignorerules
 
-node_modules
-.fake
-
-application.properties
-# Maven
-target/
-!.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
-
-# IntelliJ IDEA
-.idea/
-*.iws
-*.iml
-*.ipr
-
-# Eclipse
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-
-# VS Code
-.vscode/
-*.code-workspace
-
-# Node
+# Node.js
 node_modules/
 dist/
 npm-debug.log*
@@ -43,54 +18,93 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# Frontend build
-/frontend/dist
-/frontend/.env
-/frontend/.env.*
-!/frontend/.env.example
-
-# Backend properties with sensitive info
-/backend/src/main/resources/application.properties
-/backend/src/main/resources/application-*.properties
-*.env
+# Environment files
+.env
 .env.*
 !.env.example
+*.env
+env/
+.env.local
+.env.*.local
+.env.development
+.env.test
+.env.production
 
-# Logs
+# Docker related
+**/Dockerfile
+**/Dockerfile.*
+docker-compose*.yml
+.docker/
+.dockerignore
+**/docker/
+**/nginx.conf
+**/nginx/*.conf
+
+# Frontend specific
+/frontend/dist/
+/frontend/.env*
+!/frontend/.env.example
+/frontend/build/
+/frontend/.cache/
+
+# Backend specific
+/backend/target/
+/backend/build/
+/backend/dist/
+/backend/.env*
+!/backend/.env.example
+/backend/src/main/resources/application*.properties
+!/backend/src/main/resources/application-example.properties
+
+# Maven
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+*.jar
+*.war
+*.ear
+
+# Logs and databases
 logs/
 *.log
-
-# Database
-*.sql.gz
+*.sql
+*.sqlite
+*.db
 *.dump
+*.gz
 
-# OS specific
-.DS_Store
-Thumbs.db
-
-# Runtime data
-pids
-*.pid
-*.seed
-*.pid.lock
-
-# Debug
-.attach_pid*
+# IDE specific
+*.iws
+*.iml
+*.ipr
+.project
+.classpath
+.settings/
+.factorypath
+.springBeans
+.sts4-cache
+.apt_generated/
 
 # TypeScript
 *.tsbuildinfo
+tsconfig.tsbuildinfo
 
 # Prisma
 generated/
+prisma/migrations/
+*.prisma.backup
 
-# Cursor files
-.cursor/
-*.cursor
+# Testing
+coverage/
+.nyc_output/
+junit.xml
+test-report/
 
-# Docker and Nginx specific files
-Dockerfile
-docker-compose.yml
-.dockerignore
-nginx.conf
-docker/
-docker-compose.override.yml
+# Temporary files
+*.swp
+*.swo
+*~
+*.tmp
+*.bak
+*.cache
