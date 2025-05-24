@@ -5,7 +5,6 @@
 
 import React from 'react'
 import { Navigation } from '../components/navigation/Navigation'
-import figureImage from '../assets/figure.png'
 import '../styles/landing-page.css'
 
 /**
@@ -22,32 +21,7 @@ export default function LandingPage() {
 
       {/* Main Content Area */}
       <main className="landing-container">
-        {/* Hero Section */}
-        <section className="hero-section">
-          <div className="hero-content">
-            {/* Left side - Figure/Wireframe */}
-            <div className="hero-figure">
-              <img src={figureImage} alt="Taskflow wireframe figure" className="hero-figure-img" />
-            </div>
-
-            {/* Right side - Text content */}
-            <div className="hero-text">
-              <h1 className="hero-title">
-                Organize the chaos.<br />
-                Ship faster.{' '}
-                <span style={{ color: '#D3DEA1' }}>Stay in flow.</span>
-              </h1>
-              <p className="hero-description">
-                Taskflow is your cybernetic command center—built for devs, 
-                creatives, and remote teams who need control without friction.
-              </p>
-              <div className="hero-cta">
-                <button className="cta-button primary">Get Started</button>
-                <button className="cta-button secondary">Learn More</button>
-              </div>
-            </div>
-          </div>
-        </section>
+                {/* Hero Section */}        <section className="hero-section">          <div className="hero-content">            {/* Left side - Figure/Wireframe */}            <div className="hero-figure">              {/* Wireframe figure will go here */}            </div>                        {/* Right side - Text content */}            <div className="hero-text">              <h1 className="hero-title">                Organize the chaos.<br />                Ship faster. <span style={{ color: '#D3DEA1' }}>Stay in flow.</span>              </h1>              <p className="hero-description">                Taskflow is your cybernetic command center—                built for devs, creatives, and remote teams                who need control without friction.              </p>              <div className="hero-cta">                <button className="cta-button primary">Get Started</button>                <button className="cta-button secondary">Learn More</button>              </div>            </div>          </div>        </section>
 
         {/* Three Cards Section */}
         <section className="cards-section">

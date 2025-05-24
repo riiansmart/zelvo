@@ -57,12 +57,12 @@
 
 .taskflow-logo .letter {
   font-family: 'Khand', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 13rem;
-  font-weight: 900;
+  font-size: 6rem;
+  font-weight: 700;
   color: #000000;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  line-height: .5;
+  line-height: 0.5;
   flex: 1;
   text-align: center;
   margin: 0;
@@ -200,7 +200,7 @@ body {
 /* Responsive adjustments */
 @media (min-width: 1600px) {
   .taskflow-logo .letter {
-    font-size: 15rem;
+    font-size: 7rem;
   }
   
   .main-title {
@@ -221,7 +221,7 @@ body {
 
 @media (max-width: 1400px) {
   .taskflow-logo .letter {
-    font-size: 12rem;
+    font-size: 5.5rem;
   }
   
     .subtitle-overlay {    font-size: 0.9rem;  }    .subtitle-letter {    font-size: 0.9rem;  }
@@ -229,7 +229,7 @@ body {
 
 @media (max-width: 1200px) {
   .taskflow-logo .letter {
-    font-size: 10rem;
+    font-size: 4.5rem;
   }
   
   .main-title {
@@ -254,7 +254,7 @@ body {
   }
   
   .taskflow-logo .letter {
-    font-size: 8rem;
+    font-size: 3rem;
   }
   
   .main-title {
@@ -289,7 +289,7 @@ body {
   }
   
   .taskflow-logo .letter {
-    font-size: 6rem;
+    font-size: 2.5rem;
   }
   
   .main-title {
