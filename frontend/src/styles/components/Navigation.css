@@ -10,9 +10,7 @@
   left: 0;
   right: 0;
   z-index: 1000;
-  height: 240px;
-  display: flex;
-  align-items: flex-end;
+  height: 160px;
 }
 
 .taskflow-header {
@@ -22,20 +20,16 @@
   width: 100%;
   padding: 0;
   height: 100%;
-  margin: 0;
 }
 
 .taskflow-logo {
   text-decoration: none;
   display: flex;
   align-items: flex-end;
+  gap: 0;
   width: 100%;
   justify-content: center;
   height: 100%;
-  margin: 0;
-  padding: 0;
-  position: relative;
-  bottom: -10px; /* Push slightly below container */
 }
 
 .logo-container {
@@ -45,16 +39,16 @@
   width: 100%;
   justify-content: center;
   height: 100%;
-  margin: 0;
-  padding: 0;
 }
 
 .main-title {
   display: flex;
   align-items: flex-end;
+  gap: 0.4rem;
   width: 100%;
   justify-content: space-evenly;
   padding: 0 3rem;
+  line-height: 0.6;
   margin: 0;
   height: 100%;
   position: relative;
@@ -63,20 +57,17 @@
 
 .taskflow-logo .letter {
   font-family: 'Khand', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 11rem;
+  font-size: 13rem;
   font-weight: 900;
   color: #000000;
   text-transform: uppercase;
-  letter-spacing: -0.02em;
-  line-height: 0.7; /* Reduced line height */
+  letter-spacing: 0.05em;
+  line-height: .5;
   flex: 1;
   text-align: center;
   margin: 0;
   padding: 0;
   vertical-align: bottom;
-  -webkit-text-stroke: 2px black;
-  display: inline-block;
-  transform: translateY(10px); /* Push down slightly */
 }
 
 /* Remove dot styles since dots are removed */
@@ -91,8 +82,8 @@
   transform: translate(-50%, -50%);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 1rem;
-  font-weight: 700;
-  color: #ff6500;
+  font-weight: 600;
+  color: #865a3c;
   text-align: center;
   text-transform: uppercase;
   white-space: nowrap;
@@ -113,10 +104,10 @@
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 1rem;
   font-weight: 700;
-  color: #ff6500;
+  color: #ff6600;
   text-transform: uppercase;
   text-shadow: 
-    0 0 8px #ff6500,
+    0 0 8px #fc443e,
     0 0 15px #ff6500,
     0 0 25px #ff6500;
 }
@@ -203,42 +194,21 @@
 
 /* Add body padding to account for fixed navbar */
 body {
-  padding-top: 240px;
+  padding-top: 160px;
 }
 
 /* Responsive adjustments */
 @media (min-width: 1600px) {
   .taskflow-logo .letter {
-    font-size: 13rem;
+    font-size: 15rem;
   }
   
-  .taskflow-nav {
-    height: 280px;
+  .main-title {
+    gap: 0.5rem;
+    padding: 0 4rem;
   }
   
-  body {
-    padding-top: 280px;
-  }
-}
-
-@media (max-width: 1400px) {
-  .taskflow-logo .letter {
-    font-size: 10rem;
-  }
-  
-  .taskflow-nav {
-    height: 220px;
-  }
-  
-  body {
-    padding-top: 220px;
-  }
-}
-
-@media (max-width: 1200px) {
-  .taskflow-logo .letter {
-    font-size: 8rem;
-  }
+    .subtitle-overlay {    font-size: 1.2rem;  }    .subtitle-letter {    font-size: 1.2rem;  }
   
   .taskflow-nav {
     height: 180px;
@@ -249,13 +219,42 @@ body {
   }
 }
 
+@media (max-width: 1400px) {
+  .taskflow-logo .letter {
+    font-size: 12rem;
+  }
+  
+    .subtitle-overlay {    font-size: 0.9rem;  }    .subtitle-letter {    font-size: 0.9rem;  }
+}
+
+@media (max-width: 1200px) {
+  .taskflow-logo .letter {
+    font-size: 10rem;
+  }
+  
+  .main-title {
+    gap: 0.3rem;
+    padding: 0 2rem;
+  }
+  
+  .taskflow-nav {
+    height: 120px;
+  }
+  
+  body {
+    padding-top: 120px;
+  }
+  
+    .subtitle-overlay {    font-size: 0.8rem;  }    .subtitle-letter {    font-size: 0.8rem;  }
+}
+
 @media (max-width: 768px) {
   .taskflow-nav {
     height: 80px;
   }
   
   .taskflow-logo .letter {
-    font-size: 3rem;
+    font-size: 8rem;
   }
   
   .main-title {
@@ -263,13 +262,7 @@ body {
     padding: 0 1rem;
   }
   
-  .subtitle-overlay {
-    font-size: 0.5rem;
-  }
-  
-  .subtitle-letter {
-    font-size: 0.5rem;
-  }
+    .subtitle-overlay {    font-size: 0.5rem;  }    .subtitle-letter {    font-size: 0.5rem;  }
   
   .user-controls {
     gap: 0.5rem;
@@ -296,7 +289,7 @@ body {
   }
   
   .taskflow-logo .letter {
-    font-size: 2.5rem;
+    font-size: 6rem;
   }
   
   .main-title {
@@ -304,13 +297,7 @@ body {
     padding: 0 0.5rem;
   }
   
-  .subtitle-overlay {
-    font-size: 0.4rem;
-  }
-  
-  .subtitle-letter {
-    font-size: 0.4rem;
-  }
+    .subtitle-overlay {    font-size: 0.4rem;  }    .subtitle-letter {    font-size: 0.4rem;  }
   
   .user-controls {
     gap: 0.3rem;
