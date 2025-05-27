@@ -27,26 +27,23 @@ export default function LandingPage() {
       {/* Main Content Area */}
       <main className="landing-container">
         <div className="main-content">
-          {/* Hero Figure - anchored to main content */}
-          <div className="hero-figure">
-            <img
-              src={figureImage}
-              alt="Taskflow wireframe figure"
-              className="hero-figure-img"
-            />
-          </div>
-
           {/* Hero Section */}
           <section className="hero-section">
+            <div className="hero-figure">
+              <img
+                src={figureImage}
+                alt="Taskflow wireframe figure"
+                className="hero-figure-img"
+              />
+            </div>
             <div className="hero-content">
               {/* Right side - Text content */}
               <div className="hero-text">
-                <h1 className="hero-title">
+                <h2 className="hero-title">
                   Organize the chaos.
                   <br />
-                  Ship faster.{" "}
-                  <span style={{ color: "#e79a0a" }}>Stay in flow.</span>
-                </h1>
+                  Ship faster. <span style={{ color: "#e79a0a" }}>Stay in flow.</span>
+                </h2>
                 <p className="hero-description">
                   Taskflow is your cybernetic command center—built for devs,
                   creatives, and remote teams who need control without friction.
@@ -58,6 +55,7 @@ export default function LandingPage() {
               </div>
             </div>
           </section>
+
           {/* Three Cards Section */}
           <section className="cards-section">
             <div className="cards-container">
@@ -75,7 +73,7 @@ export default function LandingPage() {
               </div>
               <div className="feature-card">
                 <p className="feature-card-text">
-                  Your team can get things done faster with Taskflow.
+                  We're a team of developers, designers, and remote teams who need control without friction.
                 </p>
               </div>
             </div>
