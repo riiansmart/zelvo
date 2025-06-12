@@ -108,3 +108,4 @@ test-report/
 *.tmp
 *.bak
 *.cache
+.fake
