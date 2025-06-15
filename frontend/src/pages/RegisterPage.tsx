@@ -5,6 +5,7 @@
  */
 
 import React, { useState } from 'react';
+import "../styles/auth.css";
 import { Navigation } from '../components/navigation/Navigation';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { registerUser } from '../services/authService';
@@ -81,9 +82,9 @@ export default function RegisterPage() {
   const isCurrentPath = (path: string) => location.pathname === path;
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <div className="auth-page">
       <Navigation />
-      <main style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem' }}>
+      <main className="auth-container">
         <div className="auth-card">
           <div className="auth-header">
             <h1 className="logo">TaskFlow</h1>
@@ -152,7 +153,7 @@ export default function RegisterPage() {
               
             <button 
               type="submit" 
-              className="auth-button"
+              className="auth-button cta-button primary"
               disabled={isLoading}
             >
               {isLoading ? (
