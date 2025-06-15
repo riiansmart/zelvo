@@ -56,13 +56,15 @@
   text-shadow: 0 0 6px rgba(231, 154, 10, 0.3);
 }
 
+/* Match landing page hero-description style */
 .auth-header .description,
 .hero-message {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 1rem;
+  font-family: 'Khand', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(1.1rem, 1.5vw, 1.4rem);
+  line-height: 1.4;
   color: #b86212;
   text-align: center;
-  margin: 0;
+  margin: 0 0 1.2rem 0;
 }
 
 /* ===========================
@@ -159,10 +161,13 @@
   text-align: center;
 }
 
+/* Back to Home link typography */
 .back-home-link {
+  font-family: 'Khand', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(1.1rem, 1.5vw, 1.4rem);
   color: #b86212;
-  font-size: 0.9rem;
   text-decoration: none;
+  letter-spacing: 0.03em;
 }
 
 .back-home-link:hover {
