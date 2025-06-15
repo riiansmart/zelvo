@@ -4,6 +4,7 @@
  */
 
 import React from "react";
+import { Link } from "react-router-dom";
 import { Navigation } from "../components/navigation/Navigation";
 import figureImage from "../assets/figure.png";
 import figmaLogo from "../assets/Figma Logo Full Color.png";
@@ -49,7 +50,7 @@ export default function LandingPage() {
                   creatives, and remote teams who need control without friction.
                 </p>
                 <div className="hero-cta">
-                  <button className="cta-button primary">Get Started</button>
+                  <Link to="/register" className="cta-button primary">Get Started</Link>
                   <button className="cta-button secondary">Learn More</button>
                 </div>
               </div>

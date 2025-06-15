@@ -1,0 +1,218 @@
+/* ===========================
+   TASKFLOW Auth Pages Styles
+   Reuses Landing Page theme for Login & Register pages
+   =========================== */
+
+@import './landing-page.css';
+
+.auth-page {
+  background: #20201f;
+  color: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.auth-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  width: 100%;
+}
+
+.auth-card {
+  background: linear-gradient(135deg, #232323 60%, #353a4a 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  width: 100%;
+  max-width: 420px;
+  padding: 2rem 2.2rem;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.18);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ===========================
+   HEADER
+   =========================== */
+.auth-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.auth-header .logo {
+  font-family: 'Khand', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #e79a0a;
+  margin: 0;
+  text-shadow: 0 0 6px rgba(231, 154, 10, 0.3);
+}
+
+/* Match landing page hero-description style */
+.auth-header .description,
+.hero-message {
+  font-family: 'Khand', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(1.1rem, 1.5vw, 1.4rem);
+  line-height: 1.4;
+  color: #b86212;
+  text-align: center;
+  margin: 0 0 1.2rem 0;
+}
+
+/* ===========================
+   NAV TABS
+   =========================== */
+.auth-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.auth-tab {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #a7a7a7;
+  text-decoration: none;
+  padding-bottom: 0.25rem;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.auth-tab:hover {
+  color: #e79a0a;
+}
+
+.auth-tab.active {
+  color: #e79a0a;
+  border-color: #e79a0a;
+}
+
+/* ===========================
+   FORM INPUTS
+   =========================== */
+.form-group {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.input-icon {
+  position: absolute;
+  top: 50%;
+  left: 0.8rem;
+  transform: translateY(-50%);
+  color: #b86212;
+  pointer-events: none;
+}
+
+.auth-input {
+  width: 100%;
+  padding: 0.75rem 0.75rem 0.75rem 2.5rem;
+  border-radius: 8px;
+  border: 1px solid #333;
+  background: #1b1b1b;
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  transition: border-color 0.2s;
+}
+
+.auth-input:focus {
+  outline: none;
+  border-color: #e79a0a;
+  box-shadow: 0 0 0 2px rgba(231, 154, 10, 0.25);
+}
+
+/* ===========================
+   BUTTONS
+   =========================== */
+.auth-button {
+  width: 100%;
+}
+
+/* Leverage existing CTA primary */
+.auth-button.cta-button.primary {
+  margin-top: 0.25rem;
+}
+
+.error-message {
+  color: #ff6b6b;
+  font-size: 0.875rem;
+  text-align: center;
+  margin-top: -0.5rem;
+}
+
+/* ===========================
+   OTHER COMPONENTS
+   =========================== */
+.back-home-container {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+/* Back to Home link typography */
+.back-home-link {
+  font-family: 'Khand', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(1.1rem, 1.5vw, 1.4rem);
+  color: #b86212;
+  text-decoration: none;
+  letter-spacing: 0.03em;
+}
+
+.back-home-link:hover {
+  color: #e79a0a;
+}
+
+/* Centered OR separator */
+.or-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+.or-text {
+  font-size: 1.1rem;
+  color: #a7a7a7;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-align: center;
+}
+
+.oauth-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.github-button {
+  background: #333;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 0.65rem 1rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.github-button:hover {
+  background: #444;
+  transform: translateY(-2px);
+} 
