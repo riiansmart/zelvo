@@ -15,3 +15,46 @@ body {
     line-height: 1.6;
     color: #ffffff;
 }
+
+/* Theme Variables */
+:root {
+  /* Backgrounds */
+  --bg-primary: #20201f;
+  --bg-secondary: #232323;
+  --bg-tertiary: #2b2b2b;
+  --bg-hover: rgba(255, 255, 255, 0.05);
+
+  /* Text */
+  --text-primary: #ffffff;
+  --text-secondary: #a7a7a7;
+
+  /* Accent */
+  --accent-primary: #e79a0a;
+  --accent-primary-rgb: 231, 154, 10;
+  --accent-secondary: #c9610c;
+
+  /* Border */
+  --border-color: rgba(255, 255, 255, 0.1);
+
+  /* Status Colors */
+  --status-todo: #575757;
+  --status-in-progress: #c9610c;
+  --status-review: #6c3cb3;
+  --status-done: #39b96d;
+
+  /* Priority Colors */
+  --priority-low: #39b96d;
+  --priority-medium: #e79a0a;
+  --priority-high: #e64f4f;
+  --priority-critical: #ff3a4c;
+}
+
+/* Light mode overrides (optional) */
+.light-mode {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f2f2f2;
+  --bg-tertiary: #e5e5e5;
+  --text-primary: #181715;
+  --text-secondary: #4a4a4a;
+  --border-color: rgba(0, 0, 0, 0.08);
+}

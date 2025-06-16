@@ -81,7 +81,7 @@
 .subtitle-overlay {
   position: absolute;
   top: 115%;
-  left: 42%;
+  left: 50%;            /* Center horizontally */
   transform: translate(-50%, -50%);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 1rem;
@@ -97,10 +97,9 @@
     0 0 15px #82cc79,
     0 0 25px #b6f19f;
   padding: 0;
-  width: 80%;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: center; /* Center letters group */
+  gap: 0.35rem;
 }
 
 .subtitle-letter {
@@ -412,4 +411,41 @@ body {
 .logo-container,
 .main-title {
   justify-content: flex-start !important;
+}
+
+/* Smaller profile/logout links */
+.user-controls .nav-link {
+  font-size: 0.75rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+}
+
+.user-controls .logout-button {
+  padding: 0.4rem 0.8rem;
+}
+
+/* Neon tagline style buttons */
+.user-controls .nav-link,
+.user-controls .logout-button {
+  background: transparent;
+  border: 1px solid #e79a0a;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #e79a0a;
+  letter-spacing: 0.06em;
+  padding: 0.15rem 0.45rem;
+  text-shadow:
+    0 0 8px #e79a0a,
+    0 0 15px #ffae4d,
+    0 0 25px #ff9100;
+  transition: opacity 0.2s ease;
+}
+
+.user-controls .nav-link:hover,
+.user-controls .logout-button:hover {
+  opacity: 0.8;
+  cursor: pointer;
+  border-color: #e68b4f;
 }
