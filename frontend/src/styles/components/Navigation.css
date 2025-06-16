@@ -428,17 +428,17 @@ body {
 .user-controls .nav-link,
 .user-controls .logout-button {
   background: transparent;
-  border: 1px solid #56c921;
+  border: 1px solid #e79a0a;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 0.65rem;
   font-weight: 600;
   text-transform: uppercase;
-  color: #56c921;
+  color: #e79a0a;
   letter-spacing: 0.06em;
   padding: 0.15rem 0.45rem;
   text-shadow:
-    0 0 8px #8fff80,
-    0 0 15px #9dff64,
+    0 0 8px #e79a0a,
+    0 0 15px #ffae4d,
     0 0 25px #ff9100;
   transition: opacity 0.2s ease;
 }
@@ -447,4 +447,5 @@ body {
 .user-controls .logout-button:hover {
   opacity: 0.8;
   cursor: pointer;
+  border-color: #e68b4f;
 }
