@@ -74,6 +74,7 @@ export function Navigation() {
               <span className="letter">L</span>
               <span className="letter">O</span>
               <span className="letter">W</span>
+              {location.pathname !== "/dashboard" && (
               <div className="subtitle-overlay">
                 {" "}
                 <span className="subtitle-letter">E</span>{" "}
@@ -120,6 +121,7 @@ export function Navigation() {
                 <span className="subtitle-letter">L</span>{" "}
                 <span className="subtitle-letter">.</span>{" "}
               </div>
+              )}
             </div>
           </div>
         </Link>
