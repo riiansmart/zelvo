@@ -10,15 +10,15 @@
   left: 0;
   right: 0;
   z-index: 1000;
-  height: 160px;
+  height: clamp(70px, 10vw + 60px, 160px);
 }
 
 .taskflow-header {
   display: flex;
-  justify-content: center;
+  justify-content: center !important;
   align-items: flex-end;
   width: 100%;
-  padding: 0;
+  padding: 0 !important;
   height: 100%;
 }
 
@@ -60,7 +60,7 @@
 .taskflow-logo .letter {
   flex: unset;
   font-family: 'Khand', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 11rem;
+  font-size: clamp(2.5rem, 11vw, 11rem);
   font-weight: 900;
   color: #302b26;
   text-transform: uppercase;
@@ -80,11 +80,11 @@
 
 .subtitle-overlay {
   position: absolute;
-  top: 115%;
+  top: 115% !important;
   left: 50%;            /* Center horizontally */
   transform: translate(-50%, -50%);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 1rem;
+  font-size: clamp(0.6rem, 1.2vw + 0.2rem, 1rem);
   font-weight: 500;
   color: #45ac01;
   text-align: center;
@@ -121,10 +121,10 @@
 .auth-controls {
   display: flex;
   align-items: center;
-  position: absolute;
-  right: 60rem;
-  top: 11.5rem;
-  /* Or use static/relative positioning if you want it in the flow */
+  position: absolute !important;
+  right: 60rem !important;
+  top: 11.5rem !important;
+  margin-left: 0 !important;
 }
 
 .login-link {
@@ -158,9 +158,10 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  position: absolute;
-  right: 2rem;
-  top: 1rem;
+  position: absolute !important;
+  right: 2rem !important;
+  top: 1rem !important;
+  margin-left: 0 !important;
 }
 
 .nav-link {
@@ -192,7 +193,7 @@
 
 /* Add body padding to account for fixed navbar */
 body {
-  padding-top: 160px;
+  padding-top: clamp(70px, 10vw + 60px, 160px);
 }
 
 /* Responsive adjustments */
@@ -319,7 +320,7 @@ body {
   }
 
   .main-title {
-    gap: 0.1rem;
+    gap: 0.05rem;
     padding: 0 0.5rem;
   }
 
@@ -357,12 +358,12 @@ body {
   border: none;
   outline: none;
   font: inherit;
-  padding: 0;
+  padding: 0 !important;
 }
 
 .login-dropdown {
   position: absolute;
-  top: 110%;
+  top: calc(100% + 0.5rem);
   right: 0;
   min-width: 160px;
   background: linear-gradient(135deg, #232323 60%, #353a4a 100%);
@@ -449,3 +450,105 @@ body {
   cursor: pointer;
   border-color: #e68b4f;
 }
+
+/* -------------------------------------------------- */
+/* Responsive Enhancements – placed at the bottom so   */
+/* they override earlier static rules                 */
+/* -------------------------------------------------- */
+
+/* Scale the navbar height with the viewport */
+.taskflow-nav {
+  height: clamp(70px, 10vw + 60px, 160px);
+}
+
+/* Ensure body padding matches the dynamic navbar height */
+body {
+  padding-top: clamp(70px, 10vw + 60px, 160px);
+}
+
+/* Flexible layout ‑ keep logo on the left and controls on the right */
+.taskflow-header {
+  justify-content: center !important;
+  padding: 0 !important;
+}
+
+/* Let the header stretch full-width while keeping original left alignment rules */
+.taskflow-header.container {
+  width: 100%;
+}
+
+/* Remove absolute positioning so the controls participate in the flex layout */
+.auth-controls,
+.user-controls {
+  position: static !important;
+  right: auto !important;
+  top: auto !important;
+  margin-left: auto;
+}
+
+/* Scale logo letters so they always fit within the viewport */
+.taskflow-logo .letter {
+  font-size: clamp(2.5rem, 11vw, 11rem);
+}
+
+/* Make the tagline scale as well */
+.subtitle-overlay {
+  top: 100%;
+  font-size: clamp(0.6rem, 1.2vw + 0.2rem, 1rem);
+}
+
+/* Adjust dropdown placement now that auth-controls is static */
+.login-dropdown {
+  top: calc(100% + 0.5rem);
+  right: 0;
+}
+
+/* Ensure the dropdown trigger has a sensible hit-area on touch devices */
+.dropdown-trigger {
+  padding: 0 !important;
+}
+
+/* Reduce horizontal gap between huge letters on very small screens */
+@media (max-width: 480px) {
+  .main-title {
+    gap: 0.05rem;
+  }
+}
+
+/* -------------------------------------------------- */
+
+/* ------------------------------ */
+/* Final Overrides                */
+/* ------------------------------ */
+
+/* Keep header centered even after earlier declarations */
+.taskflow-header {
+  justify-content: center !important;
+  padding: 0 !important;
+}
+
+/* Ensure controls remain absolutely positioned */
+.auth-controls {
+  position: absolute !important;
+  right: 60rem !important;
+  top: 11.5rem !important;
+  margin-left: 0 !important;
+}
+
+.user-controls {
+  position: absolute !important;
+  right: 2rem !important;
+  top: 1rem !important;
+  margin-left: 0 !important;
+}
+
+/* Place subtitle  just below letters */
+.subtitle-overlay {
+  top: 115% !important;
+}
+
+/* Dropdown trigger original padding */
+.dropdown-trigger {
+  padding: 0 !important;
+}
+/* ------------------------------ */

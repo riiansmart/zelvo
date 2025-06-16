@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { ChevronRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
 
 interface MenuBarProps {
   onViewChange: (view: string) => void;
@@ -15,6 +17,10 @@ interface MenuItem {
 
 export function MenuBar({ onViewChange, onTimelineToggle }: MenuBarProps) {
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
+
+  // Auth context and navigation
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
   const menus: Record<string, MenuItem[]> = {
     file: [
@@ -58,7 +64,7 @@ export function MenuBar({ onViewChange, onTimelineToggle }: MenuBarProps) {
         {Object.entries(menus).map(([name, items]) => (
           <div key={name} className="relative">
             <button
-              className={`px-4 h-full text-sm hover:bg-hover transition-colors duration-150
+              className={`px-4 h-full text-sm font-bold hover:bg-hover transition-colors duration-150
                 ${activeMenu === name ? 'bg-hover text-primary' : 'text-secondary hover:text-primary'}`}
               onClick={() => handleMenuClick(name)}
             >
@@ -76,7 +82,7 @@ export function MenuBar({ onViewChange, onTimelineToggle }: MenuBarProps) {
                       className="w-full px-4 py-1.5 text-left text-sm text-secondary hover:text-primary hover:bg-hover flex items-center justify-between group transition-colors duration-150"
                       onClick={() => handleMenuItemClick(item.action)}
                     >
-                      <span>{item.label}</span>
+                      <span className="font-normal">{item.label}</span>
                       {item.submenu && (
                         <ChevronRight className="w-4 h-4 text-muted group-hover:text-primary" />
                       )}
@@ -87,6 +93,29 @@ export function MenuBar({ onViewChange, onTimelineToggle }: MenuBarProps) {
             )}
           </div>
         ))}
+
+        {/* Spacer */}
+        <div className="ml-auto flex items-center">
+          {user && (
+            <>
+              <button
+                className="px-4 h-full text-sm font-bold text-secondary hover:text-primary hover:bg-hover transition-colors duration-150"
+                onClick={() => navigate('/profile')}
+              >
+                Profile
+              </button>
+              <button
+                className="px-4 h-full text-sm font-bold text-secondary hover:text-primary hover:bg-hover transition-colors duration-150"
+                onClick={() => {
+                  logout();
+                  navigate('/login');
+                }}
+              >
+                Logout
+              </button>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );

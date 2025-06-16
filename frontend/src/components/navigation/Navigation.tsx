@@ -150,17 +150,7 @@ export function Navigation() {
           </div>
         )}
 
-        {/* Hidden user controls for authenticated users - only show on dashboard */}
-        {user && location.pathname === "/dashboard" && (
-          <div className="user-controls">
-            <Link to="/profile" className="nav-link">
-              Profile
-            </Link>
-            <button onClick={handleLogout} className="nav-link logout-button">
-              Logout
-            </button>
-          </div>
-        )}
+        {/* Removed user controls duplicate on dashboard - now handled by MenuBar */}
       </div>
     </nav>
   );
