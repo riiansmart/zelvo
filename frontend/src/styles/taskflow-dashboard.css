@@ -500,8 +500,8 @@
 .dashboard-container {
   display: flex;
   flex-direction: column;
-  margin-top: 160px; /* Push below fixed navbar */
-  height: calc(100vh - 160px);
+  margin-top: 180px; /* Ensure clear space below navbar */
+  height: calc(100vh - 180px);
   width: 100%;
   background: #181715;
   color: #ffffff;
