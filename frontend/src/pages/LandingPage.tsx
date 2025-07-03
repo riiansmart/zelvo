@@ -10,8 +10,65 @@ import figureImage from "../assets/figure.png";
 import figmaLogo from "../assets/Figma Logo Full Color.png";
 import githubLogo from "../assets/GitHub_Logo_White.png";
 import githubcatLogo from "../assets/github-mark-white.png";
+import { Rocket, CheckCircle, UsersRound } from "lucide-react";
+import heroScreenshot from "../assets/zelvo_dashboard_light.png";
+import backgroundImage from "../assets/Zelvo_LandingPage_Background.png";
 
 import "../styles/landing-page.css";
+
+// -------------------------
+// FAQ data & helper types
+// -------------------------
+type FaqItem = {
+  q: string;
+  a: string;
+};
+
+const FAQ_CONTENT: FaqItem[] = [
+  {
+    q: "Is Taskflow really free?",
+    a: "Yes! All core features are free during beta. Paid plans with team-level permissions arrive later, but there will always be a generous free tier."
+  },
+  {
+    q: "Does it replace Jira or Trello?",
+    a: "Taskflow focuses on dev-centric workflow, but you can keep Jira/Trello if you like—our two-way sync means issues stay in lock-step." 
+  },
+  {
+    q: "Will my data be secure?",
+    a: "Absolutely. All traffic is encrypted via TLS 1.3 and data is stored with AES-256 at rest. You own your data & can export anytime." 
+  },
+  {
+    q: "Do you have desktop / mobile apps?",
+    a: "Yes. macOS, Windows, and Linux apps ship alongside the web app. iOS & Android are in public TestFlight/Play beta." 
+  }
+];
+
+// Dummy testimonials data
+const TESTIMONIALS = [
+  {
+    quote:
+      "Taskflow cut our stand-up time in half and replaced three different tools.",
+    name: "Samira K.",
+    role: "Engineering Manager"
+  },
+  {
+    quote: "The cyberpunk UI makes project management… actually fun 🤘.",
+    name: "Alex P.",
+    role: "Full-Stack Developer"
+  },
+  {
+    quote: "We shipped our MVP two weeks faster after moving to Taskflow.",
+    name: "Jamie L.",
+    role: "Startup Founder"
+  }
+];
+
+// Pricing tiers
+const PLANS = [
+  { name: "Free Beta", price: "$0", perks: ["Unlimited tasks", "2 teammates", "Community support"] },
+  { name: "Pro", price: "$9", perks: ["Unlimited teammates", "Advanced integrations", "Priority support"] },
+  { name: "Enterprise", price: "Contact", perks: ["SSO / SCIM", "Custom SLA", "Dedicated manager"] }
+];
 
 /**
  * LandingPage Component
@@ -22,90 +79,131 @@ import "../styles/landing-page.css";
 export default function LandingPage() {
   return (
     <div className="landing-page">
+      {/* Background Image */}
+      <img 
+        src={backgroundImage} 
+        alt="Background" 
+        className="landing-page-background"
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 400,
+          width: '75vw',
+          height: '100vh',
+          objectFit: 'cover',
+          zIndex: 1,
+          pointerEvents: 'none'
+        }}
+      />
+      
       {/* Top Navigation */}
       <Navigation />
 
       {/* Main Content Area */}
       <main className="landing-container">
         <div className="main-content">
-          {/* Hero Section */}
-          <section className="hero-section">
-            <div className="hero-figure">
-              <img
-                src={figureImage}
-                alt="Taskflow wireframe figure"
-                className="hero-figure-img"
-              />
-            </div>
-            <div className="hero-content">
-              {/* Right side - Text content */}
-              <div className="hero-text">
-                <h2 className="hero-title">
-                  Organize the chaos.
-                  <br />
-                  Ship faster. <span style={{ color: "#e79a0a" }}>Stay in flow.</span>
-                </h2>
-                <p className="hero-description">
-                  Taskflow is your cybernetic command center—built for devs,
-                  creatives, and remote teams who need control without friction.
-                </p>
-                <div className="hero-cta">
-                  <Link to="/register" className="cta-button primary">Get Started</Link>
-                  <button className="cta-button secondary">Learn More</button>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Three Cards Section */}
-          <section className="cards-section">
-            <div className="cards-container">
-              <div className="feature-card">
-                <p className="feature-card-text">
-                  Taskflow is your cybernetic command center—built for devs,
-                  creatives, and remote teams who need control without friction.
-                </p>
-              </div>
-              <div className="feature-card">
-                <p className="feature-card-text">
-                  Our task management tool helps you stay focused, get things
-                  done, and achieve your goals.
-                </p>
-              </div>
-              <div className="feature-card">
-                <p className="feature-card-text">
-                  We're a team of developers, designers, and remote teams who need control without friction.
-                </p>
-              </div>
-            </div>
-          </section>
-
-          {/* Footer Section */}
-          <section className="footer-section">
-            <div className="footer-content" style={{ alignItems: "center" }}>
-              <p
-                className="footer-text"
-                style={{ textAlign: "center", marginBottom: "1.2rem" }}
-              >
-                Works seamlessly with tools you already use
+          {/* Hero Section (Figma-aligned) */}
+          <section className="zelvo-hero" id="home">
+            {/* Hero Text Content - Centered */}
+            <div className="zelvo-hero-text">
+              <h1 className="zelvo-hero-title">
+                Boost Your <span className="gradient-text">Productivity</span>,
+                <br />
+                Simplify Your Life
+              </h1>
+              <p className="zelvo-hero-subtitle">
+                We're here to simplify the intricacies of your life, providing a user-friendly platform that not only manages your tasks effortlessly but also enhances your overall efficiency.
               </p>
-              <div className="footer-logos">
-                <img src={figmaLogo} alt="Figma Logo" className="partner-logo" />
-                <img
-                  src={githubLogo}
-                  alt="GitHub Logo"
-                  className="partner-logo"
-                />
-                <img
-                  src={githubcatLogo}
-                  alt="GitHub Cat Logo"
-                  className="partner-logo"
-                />
+              <div className="zelvo-hero-buttons">
+                <Link to="/register" className="zelvo-btn-primary">Get Started</Link>
+                <button className="zelvo-btn-outline" type="button">Preview Platform</button>
               </div>
+            </div>
+
+            {/* Dashboard Image - Below Text */}
+            <div className="zelvo-hero-image">
+              <img src={heroScreenshot} alt="Zelvo dashboard preview" />
             </div>
           </section>
         </div>
       </main>
+
+      
     </div>
   );
 }
+
+// -------------------------
+// Accordion Item component
+// -------------------------
+
+interface AccordionProps {
+  item: FaqItem;
+  defaultOpen?: boolean;
+}
+
+const AccordionItem: React.FC<AccordionProps> = ({ item, defaultOpen = false }) => {
+  const [isOpen, setIsOpen] = React.useState(defaultOpen);
+  const [maxHeight, setMaxHeight] = React.useState<string>(defaultOpen ? 'none' : '0px');
+
+  const contentRef = React.useRef<HTMLDivElement>(null);
+
+  const buttonId = React.useId();
+  const panelId = `panel-${buttonId}`;
+
+  React.useEffect(() => {
+    if (!contentRef.current) return;
+    if (isOpen) {
+      const scrollH = contentRef.current.scrollHeight;
+      setMaxHeight(scrollH + 'px');
+    } else {
+      setMaxHeight('0px');
+    }
+  }, [isOpen]);
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
+    if (e.key === ' ' || e.key === 'Enter') {
+      e.preventDefault();
+      setIsOpen((prev) => !prev);
+    }
+    if (e.key === 'Escape') {
+      setIsOpen(false);
+    }
+  };
+
+  return (
+    <>
+      <button
+        id={buttonId}
+        className="faq-question"
+        aria-expanded={isOpen}
+        aria-controls={panelId}
+        onClick={() => setIsOpen((prev) => !prev)}
+        onKeyDown={handleKeyDown}
+      >
+        <span>{item.q}</span>
+        <svg
+          className={`faq-arrow ${isOpen ? 'open' : ''}`}
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          aria-hidden="true"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+      <div
+        id={panelId}
+        role="region"
+        aria-labelledby={buttonId}
+        ref={contentRef}
+        className={`faq-answer ${isOpen ? 'open' : ''}`}
+        style={{ maxHeight }}
+      >
+        {item.a}
+      </div>
+    </>
+  );
+};
+
