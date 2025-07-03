@@ -11,6 +11,8 @@ import figmaLogo from "../assets/Figma Logo Full Color.png";
 import githubLogo from "../assets/GitHub_Logo_White.png";
 import githubcatLogo from "../assets/github-mark-white.png";
 import { Rocket, CheckCircle, UsersRound } from "lucide-react";
+import heroScreenshot from "../assets/zelvo_dashboard_light.png";
+import backgroundImage from "../assets/Zelvo_LandingPage_Background.png";
 
 import "../styles/landing-page.css";
 
@@ -77,173 +79,56 @@ const PLANS = [
 export default function LandingPage() {
   return (
     <div className="landing-page">
+      {/* Background Image */}
+      <img 
+        src={backgroundImage} 
+        alt="Background" 
+        className="landing-page-background"
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 400,
+          width: '75vw',
+          height: '100vh',
+          objectFit: 'cover',
+          zIndex: 1,
+          pointerEvents: 'none'
+        }}
+      />
+      
       {/* Top Navigation */}
       <Navigation />
 
       {/* Main Content Area */}
       <main className="landing-container">
         <div className="main-content">
-          {/* Hero Section */}
-          <section className="hero-section">
-            <div className="hero-figure">
-              <img
-                src={figureImage}
-                alt="Taskflow wireframe figure"
-                className="hero-figure-img"
-              />
-            </div>
-            <div className="hero-content">
-              {/* Right side - Text content */}
-              <div className="hero-text">
-                <h2 className="hero-title">
-                  Organize the chaos.
-                  <br />
-                  Ship faster. <span style={{ color: "#e79a0a" }}>Stay in flow.</span>
-                </h2>
-                <p className="hero-description">
-                  Taskflow is your cybernetic command center—built for devs,
-                  creatives, and remote teams who need control without friction.
-                </p>
-                <div className="hero-cta">
-                  <Link to="/register" className="cta-button primary">Get Started</Link>
-                  <button className="cta-button secondary">Learn More</button>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Three Cards Section – deeper feature blurbs */}
-          <section className="cards-section">
-            <div className="cards-container">
-              <div className="feature-card">
-                <p className="feature-card-text">
-                  Taskflow is your cybernetic command center—built for devs,
-                  creatives, and remote teams who need control without friction.
-                </p>
-              </div>
-              <div className="feature-card">
-                <p className="feature-card-text">
-                  Our task management tool helps you stay focused, get things
-                  done, and achieve your goals.
-                </p>
-              </div>
-              <div className="feature-card">
-                <p className="feature-card-text">
-                  We're a team of developers, designers, and remote teams who need control without friction.
-                </p>
-              </div>
-            </div>
-          </section>
-
-          {/* Benefits Grid Section */}
-          <section className="benefits-section">
-            <h3 className="benefits-title">Why Taskflow?</h3>
-            <ul className="benefits-grid" role="list">
-              <li className="benefit-card">
-                <Rocket className="benefit-icon" aria-hidden="true" />
-                <h4 className="benefit-heading">Ship Faster</h4>
-                <p className="benefit-text">Automate busy-work and keep your team in flow.</p>
-              </li>
-              <li className="benefit-card">
-                <CheckCircle className="benefit-icon" aria-hidden="true" />
-                <h4 className="benefit-heading">Stay Aligned</h4>
-                <p className="benefit-text">Real-time sync with GitHub, Figma, and Slack.</p>
-              </li>
-              <li className="benefit-card">
-                <UsersRound className="benefit-icon" aria-hidden="true" />
-                <h4 className="benefit-heading">Scale Collaboration</h4>
-                <p className="benefit-text">From solo maker to enterprise—permissions that grow.</p>
-              </li>
-            </ul>
-          </section>
-
-          {/* Integrations Section */}
-          <section className="integrations-section">
-            <div className="integrations-content" style={{ alignItems: "center" }}>
-              <p className="integrations-text" style={{ textAlign: "center", marginBottom: "1.2rem" }}>
-                Works seamlessly with tools you already use
+          {/* Hero Section (Figma-aligned) */}
+          <section className="zelvo-hero" id="home">
+            {/* Hero Text Content - Centered */}
+            <div className="zelvo-hero-text">
+              <h1 className="zelvo-hero-title">
+                Boost Your <span className="gradient-text">Productivity</span>,
+                <br />
+                Simplify Your Life
+              </h1>
+              <p className="zelvo-hero-subtitle">
+                We're here to simplify the intricacies of your life, providing a user-friendly platform that not only manages your tasks effortlessly but also enhances your overall efficiency.
               </p>
-              <div className="integrations-logos">
-                <img src={figmaLogo} alt="Figma Logo" className="partner-logo" />
-                <img src={githubLogo} alt="GitHub Logo" className="partner-logo" />
-                <img src={githubcatLogo} alt="GitHub Cat Logo" className="partner-logo" />
+              <div className="zelvo-hero-buttons">
+                <Link to="/register" className="zelvo-btn-primary">Get Started</Link>
+                <button className="zelvo-btn-outline" type="button">Preview Platform</button>
               </div>
             </div>
-          </section>
 
-          {/* Testimonials Section */}
-          <section className="testimonials-section">
-            <h3 className="testimonials-title">Loved by teams worldwide</h3>
-            <ul className="testimonials-slider" role="list" aria-live="polite">
-              {TESTIMONIALS.map((t, idx) => (
-                <li key={idx} className="testimonial-card">
-                  <p className="testimonial-quote">“{t.quote}”</p>
-                  <p className="testimonial-author">{t.name} · {t.role}</p>
-                </li>
-              ))}
-            </ul>
-          </section>
-
-          {/* Pricing Section */}
-          <section className="pricing-section">
-            <h3 className="pricing-title">Simple, transparent pricing</h3>
-            <div className="pricing-grid">
-              {PLANS.map((plan) => (
-                <div key={plan.name} className={`pricing-card ${plan.name === 'Free Beta' ? 'highlight' : ''}`}>
-                  <h4 className="plan-name">{plan.name}</h4>
-                  <p className="plan-price">{plan.price}<span className="plan-price-period">/mo</span></p>
-                  <ul className="plan-perks">
-                    {plan.perks.map((perk) => (
-                      <li key={perk} className="perk-item">{perk}</li>
-                    ))}
-                  </ul>
-                  <button className="plan-cta">{plan.name === 'Free Beta' ? 'Get Started' : 'Join Waitlist'}</button>
-                </div>
-              ))}
+            {/* Dashboard Image - Below Text */}
+            <div className="zelvo-hero-image">
+              <img src={heroScreenshot} alt="Zelvo dashboard preview" />
             </div>
           </section>
-
-          {/* FAQ Section – answers last-minute questions */}
-          <section className="faq-section">
-            <h3 className="faq-title">Frequently Asked Questions</h3>
-
-            <ul className="faq-list" role="list">
-              {FAQ_CONTENT.map((item, idx) => (
-                <li key={item.q} className="faq-item">
-                  <AccordionItem item={item} defaultOpen={idx === 0} />
-                </li>
-              ))}
-            </ul>
-          </section>
-
-          {/* Site Footer */}
-          <footer className="site-footer" role="contentinfo">
-            <div className="footer-inner">
-              <div className="footer-brand">
-                <span className="brand-name">TASKFLOW</span>
-                <p className="brand-tag">Engineered for chaos. Designed for control.</p>
-              </div>
-
-              <nav className="footer-nav" aria-label="Footer Navigation">
-                <ul className="footer-links" role="list">
-                  <li><Link to="/" className="footer-link">Home</Link></li>
-                  <li><Link to="/register" className="footer-link">Sign&nbsp;Up</Link></li>
-                  <li><a href="https://github.com" target="_blank" rel="noreferrer" className="footer-link">GitHub</a></li>
-                  <li><a href="#" className="footer-link">Privacy</a></li>
-                  <li><a href="#" className="footer-link">Terms</a></li>
-                </ul>
-              </nav>
-
-              <div className="footer-copy">
-                © {new Date().getFullYear()} Taskflow. All rights reserved.
-              </div>
-            </div>
-          </footer>
         </div>
       </main>
 
-      {/* Sticky CTA Banner */}
-      <StickyCta />
+      
     </div>
   );
 }
@@ -322,27 +207,3 @@ const AccordionItem: React.FC<AccordionProps> = ({ item, defaultOpen = false }) 
   );
 };
 
-// Sticky CTA component
-const StickyCta: React.FC = () => {
-  const [visible, setVisible] = React.useState(false);
-
-  React.useEffect(() => {
-    const onScroll = () => {
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const scrolled = window.scrollY;
-      if (docHeight <= 0) return;
-      setVisible(scrolled / docHeight > 0.7);
-    };
-    window.addEventListener('scroll', onScroll);
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
-  if (!visible) return null;
-
-  return (
-    <div className="sticky-cta" role="complementary">
-      <span className="sticky-text">Ready to organize the chaos?</span>
-      <Link to="/register" className="sticky-button">Get Started</Link>
-    </div>
-  );
-};
