@@ -13,6 +13,7 @@ import githubcatLogo from "../assets/github-mark-white.png";
 import { Rocket, CheckCircle, UsersRound } from "lucide-react";
 import heroScreenshot from "../assets/zelvo_dashboard_light.png";
 import backgroundImage from "../assets/Zelvo_LandingPage_Background.png";
+import heroBlurImage from "../assets/Zelvo_HeroImage_Blur.png";
 
 import "../styles/landing-page.css";
 
@@ -84,16 +85,6 @@ export default function LandingPage() {
         src={backgroundImage} 
         alt="Background" 
         className="landing-page-background"
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 400,
-          width: '75vw',
-          height: '100vh',
-          objectFit: 'cover',
-          zIndex: 1,
-          pointerEvents: 'none'
-        }}
       />
       
       {/* Top Navigation */}
@@ -123,6 +114,11 @@ export default function LandingPage() {
             {/* Dashboard Image - Below Text */}
             <div className="zelvo-hero-image">
               <img src={heroScreenshot} alt="Zelvo dashboard preview" />
+              <img 
+                src={heroBlurImage} 
+                alt="Hero blur overlay" 
+                className="zelvo-hero-blur-overlay"
+              />
             </div>
           </section>
         </div>
