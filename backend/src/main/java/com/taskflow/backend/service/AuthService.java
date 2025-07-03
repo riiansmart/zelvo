@@ -97,7 +97,11 @@ public class AuthService {
         }
 
         User user = new User();
-        user.setName(request.getName());
+        user.setFirstName(request.getFirstName());
+        user.setLastName(request.getLastName());
+        // Keep legacy 'name' column in sync for backward compatibility
+        user.setName(request.getFirstName() + " " + request.getLastName());
+
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setRole("USER");
