@@ -78,9 +78,14 @@ export function Navigation() {
               </Link>
             </>
           ) : (
-            <button className="zelvo-login" onClick={handleLogout}>
-              Logout
-            </button>
+            <>
+              <Link to="/dashboard" className="zelvo-login">
+                Dashboard
+              </Link>
+              <button className="zelvo-login" onClick={handleLogout}>
+                Logout
+              </button>
+            </>
           )}
 
           <button

@@ -31,7 +31,10 @@ import { OAuthRedirectPage } from './pages/OAuthRedirectPage';
 import ProfilePage from './pages/ProfilePage';
 import NotFoundPage from './pages/NotFoundPage';
 import { Layout } from './components/Layout';
-import { TaskFlowDashboard } from './components/TaskFlowDashboard';
+import DashboardPage from './pages/DashboardPage';
+import TasksPage from './pages/TasksPage';
+import CalendarPage from './pages/CalendarPage';
+import SettingsPage from './pages/SettingsPage';
 
 /**
  * Main application component that defines the routing structure.
@@ -79,9 +82,13 @@ function App() {
       <Route
         element={user ? <Layout /> : <Navigate to="/login" replace />}
       >
-        {/* Dashboard - Main application interface 
-            Central hub for task management and visualization */}
-        <Route path="/dashboard" element={<TaskFlowDashboard />} />
+        {/* Dashboard - Redesigned main interface */}
+        <Route path="/dashboard" element={<DashboardPage />} />
+
+        {/* New placeholder pages */}
+        <Route path="/tasks" element={<TasksPage />} />
+        <Route path="/calendar" element={<CalendarPage />} />
+        <Route path="/settings" element={<SettingsPage />} />
         
         {/* Profile - User settings and information 
             Handles user preferences and account management */}

@@ -6,7 +6,7 @@
 
 import { Task, ActivityLog } from '../types/task.types'  // Task type definitions
 import { FileText, X, Edit2, Eye, Check, Copy } from 'lucide-react'  // UI icons
-import '../styles/taskflow-dashboard.css'  // Component styles
+import '../styles/dashboard.css'  // Component styles
 import MDEditor from '@uiw/react-md-editor'  // Markdown editor component
 import { useState } from 'react'
 import { useTheme } from '../context/ThemeContext'  // Theme context for editor styling
