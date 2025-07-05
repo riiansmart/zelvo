@@ -8,6 +8,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { registerUser } from '../services/authService';
 import { RegisterRequest } from '../types/Auth';
 import { ErrorMessage } from '../components/ui/CommonComponents';
+import registerImg from '../assets/registerImg.png';
 
 interface RegisterForm {
   firstName: string;
@@ -80,33 +81,59 @@ export default function RegisterPage() {
       </Link>
       <div className="flex flex-1 flex-col lg:flex-row">
         {/* Left Hero Section */}
-        <aside className="hidden lg:flex lg:w-1/2 bg-gradient-to-r from-blue-600 to-indigo-700 text-white items-center justify-center p-10">
-          <div className="max-w-md">
-            <h1 className="text-4xl font-bold mb-2 text-center">Zelvo</h1>
-            <p className="text-lg text-indigo-100 mb-8 text-center">
-              Effortless Task and Project Management in One Smart Platform.
+        <aside className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-blue-600 via-indigo-700 to-purple-800 text-white flex-col items-center justify-center p-10 relative overflow-hidden">
+          {/* Hero Content */}
+          <div className="text-center z-10 mb-8">
+            <h1 className="text-4xl font-bold mb-4">Welcome to Zelvo</h1>
+            <p className="text-lg text-blue-100 mb-6 max-w-md">
+              Join thousands of users who streamline their workflow with our intuitive task management platform.
             </p>
-
-            <ul className="space-y-4 text-white">
-              <li className="flex items-center">
-                <i className="fas fa-check-circle text-xl mr-3" aria-hidden="true"></i>
-                <span>Streamlined Task Control</span>
-              </li>
-              <li className="flex items-center">
-                <i className="fas fa-check-circle text-xl mr-3" aria-hidden="true"></i>
-                <span>User-friendly Interface</span>
-              </li>
-              <li className="flex items-center">
-                <i className="fas fa-check-circle text-xl mr-3" aria-hidden="true"></i>
-                <span>Powerful Integrations</span>
-              </li>
-            </ul>
           </div>
+
+          {/* Feature highlights - Enlarged and Centered */}
+          <div className="flex flex-col gap-6 text-center z-10">
+            <div className="flex items-center justify-center gap-4 text-blue-100">
+              <i className="fas fa-check-circle text-green-400 text-2xl" aria-hidden="true"></i>
+              <span className="text-lg font-medium">Streamlined Task Control</span>
+            </div>
+            <div className="flex items-center justify-center gap-4 text-blue-100">
+              <i className="fas fa-check-circle text-green-400 text-2xl" aria-hidden="true"></i>
+              <span className="text-lg font-medium">Intuitive Interface</span>
+            </div>
+            <div className="flex items-center justify-center gap-4 text-blue-100">
+              <i className="fas fa-check-circle text-green-400 text-2xl" aria-hidden="true"></i>
+              <span className="text-lg font-medium">Powerful Integrations</span>
+            </div>
+          </div>
+
+          {/* Subtle Background Image */}
+          <div className="absolute inset-0 flex items-center justify-center opacity-15">
+            <img 
+              src={registerImg} 
+              alt="Task management visualization" 
+              className="w-full h-full object-cover"
+            />
+          </div>
+
+          {/* Background decorative elements */}
+          <div className="absolute top-10 left-10 w-32 h-32 bg-white/5 rounded-full blur-xl"></div>
+          <div className="absolute bottom-10 right-10 w-40 h-40 bg-purple-400/10 rounded-full blur-2xl"></div>
         </aside>
 
         {/* Right Form Section */}
         <main className="flex-1 flex items-center justify-center bg-gray-50 py-10 px-4">
           <div className="w-full max-w-md">
+            {/* Mobile Hero Image */}
+            <div className="lg:hidden mb-8 flex justify-center">
+              <div className="w-48 h-36 rounded-xl overflow-hidden shadow-lg">
+                <img 
+                  src={registerImg} 
+                  alt="Task management visualization" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+
             <h2 className="text-2xl font-bold text-center text-gray-900 mb-1">
               Create your account
             </h2>

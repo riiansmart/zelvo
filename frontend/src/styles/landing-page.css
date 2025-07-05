@@ -401,7 +401,7 @@ html, body {
 
 .zelvo-hero-blur-overlay {
   position: absolute !important;
-  top: 398px;
+  bottom: 0;
   left: 20px;
   width: calc(100% - 40px) !important;
   max-width: calc(1069px - 40px) !important;
@@ -421,10 +421,6 @@ html, body {
     min-height: 100vh;
     padding: 90px 2rem 2rem 2rem;
   }
-  
-  .zelvo-hero-blur-overlay {
-    top: 378px;
-  }
 }
 
 @media (max-width: 900px) {
@@ -443,7 +439,6 @@ html, body {
   }
 
   .zelvo-hero-blur-overlay {
-    top: 348px;
     left: 16px;
     width: calc(100% - 32px) !important;
   }
@@ -454,30 +449,6 @@ html, body {
   }
 
   /* Background image responsive - no changes needed */
-}
-
-@media (max-width: 1200px) {
-  .zelvo-hero-blur-overlay {
-    top: 368px;
-  }
-}
-
-@media (max-width: 950px) {
-  .zelvo-hero-blur-overlay {
-    top: 358px;
-  }
-}
-
-@media (max-width: 768px) {
-  .zelvo-hero-blur-overlay {
-    top: 328px;
-  }
-}
-
-@media (max-width: 480px) {
-  .zelvo-hero-blur-overlay {
-    top: 268px;
-  }
 }
 
 /* ===========================
