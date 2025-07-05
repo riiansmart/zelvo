@@ -85,24 +85,29 @@ export default function RegisterPage() {
           {/* Hero Content */}
           <div className="text-center z-10 mb-8">
             <h1 className="text-4xl font-bold mb-4">Welcome to Zelvo</h1>
-            <p className="text-lg text-blue-100 mb-6 max-w-md">
+            <p className="text-lg text-blue-100 mb-6 max-w-md mx-auto">
               Join thousands of users who streamline their workflow with our intuitive task management platform.
             </p>
           </div>
 
-          {/* Feature highlights - Enlarged and Centered */}
-          <div className="flex flex-col gap-6 text-center z-10">
-            <div className="flex items-center justify-center gap-4 text-blue-100">
-              <i className="fas fa-check-circle text-green-400 text-2xl" aria-hidden="true"></i>
-              <span className="text-lg font-medium">Streamlined Task Control</span>
+          {/* Feature highlights - Centered with consistent width */}
+          <div className="flex flex-col items-center gap-6 z-10 w-full max-w-md mx-auto relative">
+            <div className="absolute left-1/2 -translate-x-[150px] flex flex-col gap-[24px]">
+              <i className="fas fa-check-circle text-green-400 text-3xl" aria-hidden="true"></i>
+              <i className="fas fa-check-circle text-green-400 text-3xl" aria-hidden="true"></i>
+              <i className="fas fa-check-circle text-green-400 text-3xl" aria-hidden="true"></i>
             </div>
-            <div className="flex items-center justify-center gap-4 text-blue-100">
-              <i className="fas fa-check-circle text-green-400 text-2xl" aria-hidden="true"></i>
-              <span className="text-lg font-medium">Intuitive Interface</span>
-            </div>
-            <div className="flex items-center justify-center gap-4 text-blue-100">
-              <i className="fas fa-check-circle text-green-400 text-2xl" aria-hidden="true"></i>
-              <span className="text-lg font-medium">Powerful Integrations</span>
+            
+            <div className="flex flex-col gap-[24px] items-center pl-8 pt-1">
+              <div className="h-8 flex items-center">
+                <span className="text-lg font-medium text-blue-100">Streamlined Task Control</span>
+              </div>
+              <div className="h-8 flex items-center">
+                <span className="text-lg font-medium text-blue-100">Intuitive Interface</span>
+              </div>
+              <div className="h-8 flex items-center">
+                <span className="text-lg font-medium text-blue-100">Powerful Integrations</span>
+              </div>
             </div>
           </div>
 
@@ -134,10 +139,10 @@ export default function RegisterPage() {
               </div>
             </div>
 
-            <h2 className="text-2xl font-bold text-center text-gray-900 mb-1">
+            <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-2">
               Create your account
             </h2>
-            <p className="text-sm text-gray-600 text-center mb-8">
+            <p className="text-base md:text-lg text-gray-600 text-center mb-10">
               Start managing your tasks efficiently
             </p>
 
@@ -221,23 +226,15 @@ export default function RegisterPage() {
                 <div className="flex-1 h-px bg-gray-300" />
               </div>
 
-              {/* Social Buttons */}
-              <div className="grid grid-cols-2 gap-4">
-                <button
-                  type="button"
-                  className="flex items-center justify-center gap-2 border border-gray-300 rounded-lg py-2.5 shadow-sm bg-white hover:bg-gray-50 transition-colors"
-                >
-                  <i className="fab fa-google text-red-500" aria-hidden="true"></i>
-                  <span className="text-sm font-medium text-gray-700">Google</span>
-                </button>
-                <button
-                  type="button"
-                  className="flex items-center justify-center gap-2 border border-gray-300 rounded-lg py-2.5 shadow-sm bg-white hover:bg-gray-50 transition-colors"
-                >
-                  <i className="fab fa-github text-gray-800" aria-hidden="true"></i>
-                  <span className="text-sm font-medium text-gray-700">GitHub</span>
-                </button>
-              </div>
+              {/* Social Button */}
+              <button
+                type="button"
+                onClick={() => { window.location.href = 'http://localhost:8081/oauth2/authorization/github' }}
+                className="w-full flex items-center justify-center gap-2 border border-gray-300 rounded-lg px-3 py-2 shadow-sm bg-white hover:bg-gray-50 transition-colors"
+              >
+                <i className="fab fa-github text-gray-800 text-sm" aria-hidden="true"></i>
+                <span className="text-xs font-medium text-gray-700">GitHub</span>
+              </button>
 
               {/* Already have account */}
               <p className="text-center text-sm text-gray-600 mt-6">
