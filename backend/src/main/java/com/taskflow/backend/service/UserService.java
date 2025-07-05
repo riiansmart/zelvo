@@ -57,8 +57,15 @@ public class UserService {
     public User updateUser(User user) {
         User currentUser = getCurrentUser(); // Get the user from DB based on security context
         
-        // Update allowed fields (e.g., name, settings)
-        if (user.getName() != null) {
+        // Update allowed fields (e.g., first/last name, settings)
+        if (user.getFirstName() != null) {
+             currentUser.setFirstName(user.getFirstName());
+        }
+        if (user.getLastName() != null) {
+             currentUser.setLastName(user.getLastName());
+        }
+        if (user.getName() != null && (user.getFirstName() == null || user.getLastName() == null)) {
+             // If legacy name field provided, still allow updating
              currentUser.setName(user.getName());
         }
         if (user.getSettings() != null) {

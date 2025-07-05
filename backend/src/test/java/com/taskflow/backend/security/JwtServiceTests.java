@@ -1,12 +1,12 @@
 package com.taskflow.backend.security;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import com.taskflow.backend.model.User;
 import com.taskflow.backend.service.JwtService;
-
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 class JwtServiceTests {
 

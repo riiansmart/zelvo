@@ -261,7 +261,18 @@ html, body {
   background: #FFFFFF;
 }
 
-/* Background Image now handled by React img element */
+/* Landing Page Background Image - Stationary */
+.landing-page-background {
+  position: fixed;
+  top: 0;
+  left: 34%;
+  transform: translateX(-25%);
+  width: 75vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: 1;
+  pointer-events: none;
+}
 
 
 
@@ -305,7 +316,7 @@ html, body {
   line-height: 1.6;
   color: #6c7380;
   margin-bottom: 1.5rem;
-  max-width: 650px;
+  max-width: 7000px;
   text-align: center;
 }
 
@@ -388,6 +399,21 @@ html, body {
   position: relative;
 }
 
+.zelvo-hero-blur-overlay {
+  position: absolute !important;
+  bottom: 0;
+  left: 20px;
+  width: calc(100% - 40px) !important;
+  max-width: calc(1069px - 40px) !important;
+  height: auto;
+  border-radius: 12px;
+  pointer-events: none;
+  z-index: 2;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
 /* Responsive tweaks */
 @media (max-width: 1440px) {
   .zelvo-hero {
@@ -412,15 +438,16 @@ html, body {
     padding: 16px;
   }
 
+  .zelvo-hero-blur-overlay {
+    left: 16px;
+    width: calc(100% - 32px) !important;
+  }
+
   .zelvo-hero-buttons {
     flex-direction: column;
     gap: 1rem;
   }
 
-  /* Background image responsive - no changes needed */
-}
-
-@media (max-width: 480px) {
   /* Background image responsive - no changes needed */
 }
 

@@ -8,7 +8,7 @@ import { ChevronDown, ChevronRight } from 'lucide-react'  // Icons for expand/co
 import * as Collapsible from '@radix-ui/react-collapsible'  // Accessible collapsible UI
 import { useState } from 'react'
 import { Task, TaskStatus } from '../types/task.types'  // Task type definitions
-import '../styles/taskflow-dashboard.css'   // Component styles
+import '../styles/dashboard.css'   // Component styles
 
 /**
  * Props for the ExplorerPanel component

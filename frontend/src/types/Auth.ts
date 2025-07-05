@@ -1,7 +1,8 @@
 import { User } from "./task.types";
 
 export interface RegisterRequest {
-  name: string;
+  firstName: string;
+  lastName: string;
   email: string;
   password: string;
 }
