@@ -16,13 +16,19 @@ api.interceptors.request.use(
     // Get token from localStorage
     const token = localStorage.getItem('token'); 
     
-    if (token) {
-      // If token exists, add the Authorization header
+    // Define endpoints that should NOT receive the auth header
+    const publicEndpoints = ['/auth/login', '/auth/register'];
+
+    const isPublicEndpoint = publicEndpoints.some((endpoint) =>
+      config.url?.includes(endpoint)
+    );
+
+    if (token && !isPublicEndpoint) {
+      // If token exists and the request is not to a public endpoint, add the Authorization header
       config.headers.Authorization = `Bearer ${token}`;
       console.log('Interceptor added Auth header'); // Optional: for debugging
     } else {
-      // Optional: Handle requests that should fail if no token exists
-       console.log('Interceptor: No token found'); // Optional: for debugging
+      console.log('Interceptor: Public endpoint or no token, skipping Auth header'); // Optional: for debugging
     }
     return config; // Return the modified config
   },

@@ -65,155 +65,163 @@ export default function LoginPage() {
     }
   };
 
-  const isCurrentPath = (path: string) => location.pathname === path || (path === '/login' && location.pathname === '/');
-
   return (
-    <div className="min-h-screen flex flex-col relative">
-      {/* Back to Home button */}
-      <Link
-        to="/"
-        className="absolute top-4 right-4 flex items-center gap-2 text-blue-600 font-medium hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-        aria-label="Back to Home"
-      >
-        <i className="fas fa-arrow-left" aria-hidden="true"></i>
-        <span className="hidden sm:inline">Back</span>
-      </Link>
+    <div className="min-h-screen bg-gray-50 flex">
+      {/* Left Hero Section */}
+      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden">
+        {/* Background Image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${loginImg})` }}
+        />
+        
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-black bg-opacity-40" />
+        
+        {/* Content */}
+        <div className="relative z-10 flex flex-col justify-center items-center px-16 py-20 text-center text-white">
+          <div className="max-w-md">
+            <h1 className="text-4xl font-bold text-white mb-4">
+              Welcome to Zelvo
+            </h1>
+            <p className="text-xl text-gray-100">
+              Streamline your task and project management.
+            </p>
+          </div>
+        </div>
+      </div>
 
-      <div className="flex flex-1 flex-col lg:flex-row">
-        {/* Left Hero Section */}
-        <aside className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-blue-600 via-indigo-700 to-purple-800 text-white flex-col items-center justify-center p-10 relative overflow-hidden">
-          {/* Hero Content */}
-          <div className="text-center z-10 mb-8">
-            <h1 className="text-4xl font-bold mb-4">Welcome to Zelvo</h1>
-            <p className="text-lg text-blue-100 mb-6 max-w-md">
+      {/* Right Form Section */}
+      <div className="w-full lg:w-1/2 flex items-center justify-center px-4 py-12">
+        <div className="w-full max-w-md">
+          {/* Mobile Hero Section */}
+          <div className="lg:hidden mb-8 text-center">
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">Welcome to Zelvo</h1>
+            <p className="text-gray-600 text-sm">
               Streamline your task and project management.
             </p>
           </div>
 
-          {/* Subtle Background Image */}
-          <div className="absolute inset-0 flex items-center justify-center opacity-15">
-            <img 
-              src={loginImg} 
-              alt="Login illustration" 
-              className="w-full h-full object-cover"
-            />
+          {/* Form Header */}
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold text-gray-900 mb-2">
+              Sign in to Zelvo
+            </h2>
+            <p className="text-gray-600">
+              Start managing your tasks efficiently
+            </p>
           </div>
 
-          {/* Background decorative elements */}
-          <div className="absolute top-10 left-10 w-32 h-32 bg-white/5 rounded-full blur-xl"></div>
-          <div className="absolute bottom-10 right-10 w-40 h-40 bg-purple-400/10 rounded-full blur-2xl"></div>
-        </aside>
+          {/* Login Form */}
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Email */}
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                Email address
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                placeholder="Enter your email"
+                value={form.email}
+                onChange={handleChange}
+                required
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#3a74d3] focus:border-transparent"
+              />
+            </div>
 
-        {/* Right Form Section */}
-        <main className="flex-1 flex items-center justify-center bg-gray-50 py-10 px-4">
-          <div className="w-full max-w-md">
-            {/* Mobile Hero Image */}
-            <div className="lg:hidden mb-8 flex justify-center">
-              <div className="w-48 h-36 rounded-xl overflow-hidden shadow-lg">
-                <img 
-                  src={loginImg} 
-                  alt="Login illustration" 
-                  className="w-full h-full object-cover"
+            {/* Password */}
+            <div>
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+                Password
+              </label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                placeholder="Enter your password"
+                value={form.password}
+                onChange={handleChange}
+                required
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#3a74d3] focus:border-transparent"
+              />
+            </div>
+
+            {/* Remember me and Forgot password */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <input
+                  id="remember"
+                  name="remember"
+                  type="checkbox"
+                  className="h-4 w-4 text-[#3a74d3] border-gray-300 rounded focus:ring-[#3a74d3]"
                 />
+                <label htmlFor="remember" className="ml-2 block text-sm text-gray-700">
+                  Remember me
+                </label>
+              </div>
+              <Link 
+                to="/forgot-password" 
+                className="text-sm text-[#3a74d3] font-medium hover:text-[#2d5cb8]"
+              >
+                Forgot your password?
+              </Link>
+            </div>
+
+            {/* Error Message */}
+            {error && <ErrorMessage message={error} />}
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="w-full bg-[#3a74d3] hover:bg-[#2d5cb8] text-white font-medium py-3 px-4 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#3a74d3] disabled:opacity-50"
+            >
+              {isLoading ? (
+                <span className="flex items-center justify-center">
+                  <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Processing...
+                </span>
+              ) : (
+                'Sign in'
+              )}
+            </button>
+
+            {/* Social Login Divider */}
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-300" />
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-2 bg-gray-50 text-gray-500">Or continue with</span>
               </div>
             </div>
 
-            <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-2">
-              Sign in to Zelvo
-            </h2>
-            <p className="text-base md:text-lg text-gray-600 text-center mb-10">
-              Start managing your tasks efficiently
+            {/* Social Login Button */}
+            <button
+              type="button"
+              className="flex items-center justify-center gap-2 w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-700 font-medium hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+              onClick={() => { window.location.href = 'http://localhost:8081/oauth2/authorization/github' }}
+            >
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M10 0C4.477 0 0 4.484 0 10.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0110 4.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0020 10.017C20 4.484 15.522 0 10 0z" clipRule="evenodd" />
+              </svg>
+              <span className="text-sm">GitHub</span>
+            </button>
+
+            {/* Register Link */}
+            <p className="text-center text-sm text-gray-600">
+              Don't have an account?{' '}
+              <Link to="/register" className="text-[#3a74d3] font-medium hover:text-[#2d5cb8]">
+                Register now
+              </Link>
             </p>
-
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="space-y-1">
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  placeholder="Enter your email"
-                  value={form.email}
-                  onChange={handleChange}
-                  required
-                  className="w-full rounded-lg border border-gray-300 p-2.5 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  aria-label="Email address"
-                />
-              </div>
-
-              <div className="space-y-1">
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  placeholder="Enter your password"
-                  value={form.password}
-                  onChange={handleChange}
-                  required
-                  className="w-full rounded-lg border border-gray-300 p-2.5 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  aria-label="Password"
-                />
-              </div>
-
-              <div className="flex items-center justify-between">
-                <div className="flex items-center">
-                  <input
-                    id="remember"
-                    name="remember"
-                    type="checkbox"
-                    className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                  />
-                  <label htmlFor="remember" className="ml-2 block text-sm text-gray-700">
-                    Remember me
-                  </label>
-                </div>
-                <Link to="/forgot-password" className="text-sm text-blue-600 hover:text-blue-500">
-                  Forgot your password?
-                </Link>
-              </div>
-
-              {error && <ErrorMessage message={error} />}
-
-              <button
-                type="submit"
-                disabled={isLoading}
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-75"
-              >
-                {isLoading ? (
-                  <span>
-                    <i className="fas fa-spinner fa-spin mr-2" aria-hidden="true"></i>Processing...
-                  </span>
-                ) : (
-                  'Sign in'
-                )}
-              </button>
-
-              <div className="relative my-6">
-                <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-gray-300"></div>
-                </div>
-                <div className="relative flex justify-center text-sm">
-                  <span className="bg-white px-2 text-gray-500">Or continue with</span>
-                </div>
-              </div>
-
-              <button
-                type="button"
-                onClick={() => { window.location.href = 'http://localhost:8081/oauth2/authorization/github' }}
-                className="w-full flex items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white px-3 py-2 text-xs font-medium text-gray-700 hover:bg-gray-50"
-              >
-                <i className="fab fa-github text-gray-800 text-sm" aria-hidden="true"></i>
-                GitHub
-              </button>
-
-              <p className="mt-6 text-center text-sm text-gray-600">
-                Don't have an account?{' '}
-                <Link to="/register" className="font-medium text-blue-600 hover:text-blue-500">
-                  Register now
-                </Link>
-              </p>
-            </form>
-          </div>
-        </main>
+          </form>
+        </div>
       </div>
     </div>
   );
