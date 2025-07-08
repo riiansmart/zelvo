@@ -1,11 +1,13 @@
 import { useState, useRef, useEffect } from 'react';
 import { useTheme } from '../context/ThemeContext';
+import { useAuth } from '../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
-import { Sun, Settings, UserCircle } from 'lucide-react';
+import { Sun, Settings, UserCircle, LogOut } from 'lucide-react';
 import '../styles/dashboard.css';
 
 const ProfileDropdown = () => {
   const { toggleTheme } = useTheme();
+  const { logout } = useAuth();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -21,6 +23,12 @@ const ProfileDropdown = () => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+    setOpen(false);
+  };
 
   return (
     <div className="profile-dropdown" ref={dropdownRef}>
@@ -41,6 +49,10 @@ const ProfileDropdown = () => {
           <button className="dropdown-item" onClick={() => navigate('/settings')} aria-label="Settings">
             <Settings size={16} />
             <span>Settings</span>
+          </button>
+          <button className="dropdown-item dropdown-item-logout" onClick={handleLogout} aria-label="Logout">
+            <LogOut size={16} />
+            <span>Logout</span>
           </button>
         </div>
       )}

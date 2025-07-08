@@ -168,7 +168,10 @@ const TasksPage: React.FC = () => {
 
         {/* Page Header */}
         <div className="page-header">
-          <h1 className="welcome-text">Tasks</h1>
+          <div>
+            <h1 className="welcome-text">Tasks</h1>
+            <p className="welcome-description">Organize and efficiently track your tasks.</p>
+          </div>
           <div className="week-selector">
             <select 
               value={selectedWeek} 

@@ -2,38 +2,43 @@ import { ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/dashboard.css';
 
-const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-
-function generateCalendar(year: number, month: number) {
-  const firstDay = new Date(year, month, 1).getDay();
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
-  const weeks: Array<number | null>[] = [];
-  let currentDay = 1 - firstDay;
-  while (currentDay <= daysInMonth) {
-    const week: Array<number | null> = [];
-    for (let i = 0; i < 7; i++) {
-      if (currentDay < 1 || currentDay > daysInMonth) {
-        week.push(null);
-      } else {
-        week.push(currentDay);
-      }
-      currentDay++;
-    }
-    weeks.push(week);
-  }
-  return weeks;
-}
-
 const CalendarCard = () => {
   const navigate = useNavigate();
   const today = new Date();
-  const weeks = generateCalendar(today.getFullYear(), today.getMonth());
+  const year = today.getFullYear();
+  const month = today.getMonth();
+  
+  // Get first day of month and number of days
+  const firstDay = new Date(year, month, 1);
+  const lastDay = new Date(year, month + 1, 0);
+  const firstDayOfWeek = firstDay.getDay();
+  const daysInMonth = lastDay.getDate();
+  
+  // Create array of days for the calendar
+  const days = [];
+  
+  // Add empty cells for days before the first day of the month
+  for (let i = 0; i < firstDayOfWeek; i++) {
+    days.push(null);
+  }
+  
+  // Add all days of the month
+  for (let day = 1; day <= daysInMonth; day++) {
+    days.push(day);
+  }
+
+  const monthNames = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ];
+
+  const dayNames = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 
   return (
-    <div className="card calendar-card">
+    <div className="card">
       <div className="card-header">
         <h2 className="card-title">
-          {today.toLocaleString('default', { month: 'long' })} {today.getFullYear()}
+          {monthNames[month]} {year}
         </h2>
         <button
           className="card-action"
@@ -44,23 +49,32 @@ const CalendarCard = () => {
         </button>
       </div>
 
-      <div className="calendar-grid">
-        {dayNames.map((name) => (
-          <div key={name} className="calendar-day-name">
-            {name}
-          </div>
-        ))}
-        {weeks.flat().map((day, idx) => {
-          const isToday = day === today.getDate();
-          return (
-            <div
-              key={idx}
-              className={`calendar-day ${isToday ? 'today' : ''}`}
-            >
-              {day || ''}
+      <div className="dashboard-calendar">
+        {/* Day headers */}
+        <div className="dashboard-calendar-header">
+          {dayNames.map((name, index) => (
+            <div key={index} className="dashboard-calendar-day-header">
+              {name}
             </div>
-          );
-        })}
+          ))}
+        </div>
+        
+        {/* Calendar grid */}
+        <div className="dashboard-calendar-grid">
+          {days.map((day, index) => {
+            const isToday = day === today.getDate();
+            return (
+              <div
+                key={index}
+                className={`dashboard-calendar-cell ${
+                  day ? 'dashboard-calendar-day' : 'dashboard-calendar-empty'
+                } ${isToday ? 'dashboard-calendar-today' : ''}`}
+              >
+                {day || ''}
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
