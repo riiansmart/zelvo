@@ -297,24 +297,24 @@
 }
 
 .task-item {
-  padding: 0.25rem 0.5rem;
+  padding: 0.125rem 0.375rem;
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.2s ease;
-  font-size: 0.75rem;
-  color: #ffffff;
+  font-size: 0.65rem;
   font-weight: 500;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  min-height: 20px;
+  min-height: 16px;
   display: flex;
   align-items: center;
+  border: 1px solid transparent;
 }
 
 .task-item:hover {
   transform: translateY(-1px);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   opacity: 0.9;
 }
 
@@ -436,18 +436,45 @@
   text-transform: capitalize;
 }
 
+.task-popup-category {
+  margin-bottom: 1rem;
+}
+
+.category-display {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.category-indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.category-text {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #6c757d;
+  text-transform: capitalize;
+}
+
 .task-popup-description,
-.task-popup-due-date {
+.task-popup-due-date,
+.task-popup-category {
   margin-bottom: 1rem;
 }
 
 .task-popup-description:last-child,
-.task-popup-due-date:last-child {
+.task-popup-due-date:last-child,
+.task-popup-category:last-child {
   margin-bottom: 0;
 }
 
 .task-popup-description h4,
-.task-popup-due-date h4 {
+.task-popup-due-date h4,
+.task-popup-category h4 {
   font-size: 0.875rem;
   font-weight: 600;
   color: #333333;
@@ -492,8 +519,9 @@
   }
 
   .task-item {
-    font-size: 0.7rem;
-    padding: 0.2rem 0.4rem;
+    font-size: 0.6rem;
+    padding: 0.1rem 0.3rem;
+    min-height: 15px;
   }
 
   .more-tasks {
@@ -537,9 +565,9 @@
   }
 
   .task-item {
-    font-size: 0.65rem;
-    padding: 0.15rem 0.3rem;
-    min-height: 18px;
+    font-size: 0.55rem;
+    padding: 0.08rem 0.25rem;
+    min-height: 14px;
   }
 
   .more-tasks {
@@ -612,9 +640,9 @@
   }
 
   .task-item {
-    font-size: 0.6rem;
-    padding: 0.1rem 0.2rem;
-    min-height: 16px;
+    font-size: 0.5rem;
+    padding: 0.06rem 0.2rem;
+    min-height: 12px;
   }
 
   .more-tasks {
@@ -687,9 +715,9 @@
   }
 
   .task-item {
-    font-size: 0.55rem;
-    padding: 0.08rem 0.15rem;
-    min-height: 14px;
+    font-size: 0.45rem;
+    padding: 0.05rem 0.15rem;
+    min-height: 11px;
   }
 
   .more-tasks {

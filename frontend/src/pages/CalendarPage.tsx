@@ -7,7 +7,50 @@ import { Task, TaskPriority } from '../types/task.types';
 import '../styles/dashboard.css';
 import '../styles/calender-page.css';
 
-// Priority color configuration
+// Default category colors for when backend doesn't provide colors
+const defaultCategoryColors = [
+  '#4CAF50', // Green
+  '#2196F3', // Blue  
+  '#FF9800', // Orange
+  '#9C27B0', // Purple
+  '#F44336', // Red
+  '#00BCD4', // Cyan
+  '#8BC34A', // Light Green
+  '#FF5722', // Deep Orange
+  '#607D8B', // Blue Grey
+  '#795548'  // Brown
+];
+
+// Function to get category color based on category name
+const getCategoryColor = (categoryName?: string, categoryColor?: string): string => {
+  if (categoryColor) return categoryColor;
+  if (!categoryName) return '#6B7280'; // Default grey for "GENERAL"
+  
+  // Generate consistent color based on category name hash
+  let hash = 0;
+  for (let i = 0; i < categoryName.length; i++) {
+    hash = categoryName.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return defaultCategoryColors[Math.abs(hash) % defaultCategoryColors.length];
+};
+
+// Function to generate light background color from primary color
+const getLightBackgroundColor = (primaryColor: string): string => {
+  // Convert hex to RGB
+  const hex = primaryColor.replace('#', '');
+  const r = parseInt(hex.substr(0, 2), 16);
+  const g = parseInt(hex.substr(2, 2), 16);
+  const b = parseInt(hex.substr(4, 2), 16);
+  
+  // Create a very light version (mix with white at ~90% opacity)
+  const lightR = Math.floor(r + (255 - r) * 0.9);
+  const lightG = Math.floor(g + (255 - g) * 0.9);
+  const lightB = Math.floor(b + (255 - b) * 0.9);
+  
+  return `rgb(${lightR}, ${lightG}, ${lightB})`;
+};
+
+// Priority color configuration (kept for task popup)
 const priorityColors = {
   [TaskPriority.LOW]: '#16A34A',
   [TaskPriority.MEDIUM]: '#CA8A04', 
@@ -41,6 +84,18 @@ const TaskPopup: React.FC<TaskPopupProps> = ({ task, onClose }) => {
             ></span>
             <span className="priority-text">{task.priority}</span>
           </div>
+          {task.categoryName && (
+            <div className="task-popup-category">
+              <h4>Category</h4>
+              <div className="category-display">
+                <span 
+                  className="category-indicator"
+                  style={{ backgroundColor: getCategoryColor(task.categoryName, task.categoryColor) }}
+                ></span>
+                <span className="category-text">{task.categoryName}</span>
+              </div>
+            </div>
+          )}
           {task.description && (
             <div className="task-popup-description">
               <h4>Description</h4>
@@ -145,6 +200,7 @@ const CalendarPage: React.FC = () => {
       try {
         setLoading(true);
         const fetchedTasks = await getTasks();
+        console.log('Calendar fetched tasks:', fetchedTasks);
         setTasks(fetchedTasks);
       } catch (error) {
         console.error('Error fetching tasks:', error);
@@ -213,10 +269,6 @@ const CalendarPage: React.FC = () => {
     setCurrentDate(new Date(year, month + 1, 1));
   };
 
-
-
-
-
   const handleVisualPickerSelect = (selectedYear: number, selectedMonth: number) => {
     const selectedDate = new Date(selectedYear, selectedMonth - 1, 1);
     console.log('Visual picker selected:', selectedDate.getFullYear(), selectedDate.getMonth() + 1);
@@ -232,7 +284,13 @@ const CalendarPage: React.FC = () => {
   const getTasksForDay = (dayObj: any) => {
     if (!dayObj.isCurrentMonth) return [];
     const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(dayObj.day).padStart(2, '0')}`;
-    return tasks.filter(task => task.dueDate === dateStr);
+    return tasks.filter(task => {
+      if (!task.dueDate) return false;
+      // Handle different date formats that might come from the backend
+      const taskDate = new Date(task.dueDate);
+      const taskDateStr = taskDate.toISOString().split('T')[0];
+      return taskDateStr === dateStr;
+    });
   };
 
   // Check if date is today
@@ -293,7 +351,6 @@ const CalendarPage: React.FC = () => {
               >
                 {monthNames[month]} {year}
               </button>
-
             </div>
 
             <button 
@@ -330,17 +387,25 @@ const CalendarPage: React.FC = () => {
                 </span>
                 {dayObj.isCurrentMonth && (
                   <div className="day-tasks">
-                    {getTasksForDay(dayObj).slice(0, 3).map(task => (
-                      <div
-                        key={task.id}
-                        className="task-item"
-                        style={{ backgroundColor: priorityColors[task.priority] }}
-                        onClick={() => setSelectedTask(task)}
-                        title={task.title}
-                      >
-                        <span className="task-title">{task.title}</span>
-                      </div>
-                    ))}
+                    {getTasksForDay(dayObj).slice(0, 3).map(task => {
+                      const categoryColor = getCategoryColor(task.categoryName, task.categoryColor);
+                      const lightBackgroundColor = getLightBackgroundColor(categoryColor);
+                      return (
+                        <div
+                          key={task.id}
+                          className="task-item"
+                          style={{ 
+                            backgroundColor: lightBackgroundColor,
+                            color: categoryColor,
+                            border: `1px solid ${categoryColor}`
+                          }}
+                          onClick={() => setSelectedTask(task)}
+                          title={`${task.title} (${task.categoryName || 'No Category'})`}
+                        >
+                          <span className="task-title">{task.title}</span>
+                        </div>
+                      );
+                    })}
                     {getTasksForDay(dayObj).length > 3 && (
                       <div className="more-tasks">
                         +{getTasksForDay(dayObj).length - 3} more
