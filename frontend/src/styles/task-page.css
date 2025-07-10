@@ -138,11 +138,29 @@
   gap: 16px;
   transition: transform 0.2s, box-shadow 0.2s;
   flex-shrink: 0; /* Prevent cards from shrinking */
+  position: relative; /* For dropdown positioning */
 }
 
 .task-card:hover {
   transform: translateY(-2px);
   box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.15);
+}
+
+/* Empty State Styles */
+.empty-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-height: 200px;
+  text-align: center;
+}
+
+.empty-state p {
+  color: #9CA3AF;
+  font-size: 14px;
+  font-weight: 400;
+  margin: 0;
 }
 
 .task-card-header {
@@ -201,10 +219,18 @@
   margin: 0;
 }
 
+/* Bottom row containing priority and due date */
+.task-bottom-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+  gap: 12px;
+}
+
 .task-priority {
   display: flex;
   align-items: center;
-  margin-top: 8px;
 }
 
 .priority-badge {
@@ -226,6 +252,42 @@
   font-size: 12px;
   font-weight: 500;
   text-transform: capitalize;
+}
+
+/* Due date styles */
+.task-due-date {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #6b7280;
+  flex-shrink: 0;
+}
+
+.due-date-icon {
+  width: 14px;
+  height: 14px;
+  color: inherit;
+}
+
+.due-date-text {
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Overdue styling */
+.task-due-date.overdue {
+  color: #dc2626;
+}
+
+.task-due-date.overdue .due-date-icon {
+  color: #dc2626;
+}
+
+.task-due-date.overdue .due-date-text {
+  color: #dc2626;
+  font-weight: 600;
 }
 
 /* ===========================
@@ -360,6 +422,26 @@
     width: 8px;
     height: 8px;
   }
+
+  /* Due date responsive styles */
+  .task-due-date {
+    font-size: 11px;
+    gap: 4px;
+  }
+
+  .due-date-icon {
+    width: 12px;
+    height: 12px;
+  }
+
+  .due-date-text {
+    font-size: 11px;
+  }
+
+  .task-bottom-row {
+    gap: 8px;
+    margin-top: 6px;
+  }
 }
 
 /* Mobile portrait */
@@ -447,8 +529,24 @@
     height: 7px;
   }
   
-  .task-priority {
-    margin-top: 6px;
+  /* Due date responsive styles */
+  .task-due-date {
+    font-size: 10px;
+    gap: 3px;
+  }
+
+  .due-date-icon {
+    width: 11px;
+    height: 11px;
+  }
+
+  .due-date-text {
+    font-size: 10px;
+  }
+
+  .task-bottom-row {
+    gap: 6px;
+    margin-top: 4px;
   }
 }
 
@@ -503,6 +601,33 @@
   
   .priority-label {
     font-size: 9px;
+  }
+
+  /* Due date responsive styles */
+  .task-due-date {
+    font-size: 9px;
+    gap: 2px;
+  }
+
+  .due-date-icon {
+    width: 10px;
+    height: 10px;
+  }
+
+  .due-date-text {
+    font-size: 9px;
+  }
+
+  .task-bottom-row {
+    gap: 4px;
+    margin-top: 4px;
+  }
+
+  /* Stack priority and due date on very small screens */
+  .task-bottom-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
   }
 }
 
@@ -606,4 +731,665 @@
 
 .transition-colors {
   transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, color 0.15s ease-in-out;
+}
+
+/* ===========================
+   TASK CREATE MODAL STYLES
+   =========================== */
+   
+/* Modal overlay with blur effect */
+.task-create-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+/* Modal container */
+.task-create-modal {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  padding: 0;
+  min-width: 500px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: modalSlideIn 0.3s ease;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Modal header */
+.task-create-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid #f1f5f9;
+  background: #ffffff;
+  border-radius: 12px 12px 0 0;
+}
+
+.task-create-modal-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #000000;
+  margin: 0;
+}
+
+.task-create-modal-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.task-create-modal-close:hover {
+  background-color: #f3f4f6;
+  color: #374151;
+}
+
+/* Modal form */
+.task-create-modal-form {
+  padding: 2rem;
+}
+
+.task-create-modal-error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  color: #dc2626;
+  padding: 12px 16px;
+  margin-bottom: 1.5rem;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Form groups */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 8px;
+}
+
+.required {
+  color: #dc2626;
+}
+
+/* Form inputs */
+.form-input,
+.form-textarea,
+.form-select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #374151;
+  background: #ffffff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: #9ca3af;
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.form-select {
+  cursor: pointer;
+}
+
+/* Modal actions */
+.task-create-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #f1f5f9;
+}
+
+.btn-primary,
+.btn-secondary {
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1px solid transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
+}
+
+.btn-primary {
+  background: #3b82f6;
+  color: #ffffff;
+  border-color: #3b82f6;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #2563eb;
+  border-color: #2563eb;
+}
+
+.btn-primary:disabled {
+  background: #9ca3af;
+  border-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: #ffffff;
+  color: #374151;
+  border-color: #e5e7eb;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: #f9fafb;
+  border-color: #d1d5db;
+}
+
+.btn-secondary:disabled {
+  background: #f9fafb;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* ===========================
+   RESPONSIVE MODAL STYLES
+   =========================== */
+
+/* Medium tablets */
+@media (max-width: 768px) {
+  .task-create-modal {
+    min-width: 0;
+    width: 95%;
+    margin: 1rem;
+  }
+  
+  .task-create-modal-header {
+    padding: 1rem 1.5rem;
+  }
+  
+  .task-create-modal-title {
+    font-size: 1.25rem;
+  }
+  
+  .task-create-modal-form {
+    padding: 1.5rem;
+  }
+  
+  .task-create-modal-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+  }
+}
+
+/* Small mobile */
+@media (max-width: 480px) {
+  .task-create-modal-overlay {
+    padding: 0.5rem;
+  }
+  
+  .task-create-modal {
+    width: 100%;
+    max-height: 95vh;
+  }
+  
+  .task-create-modal-header {
+    padding: 1rem;
+  }
+  
+  .task-create-modal-title {
+    font-size: 1.125rem;
+  }
+  
+  .task-create-modal-form {
+    padding: 1rem;
+  }
+  
+  .form-group {
+    margin-bottom: 1rem;
+  }
+  
+  .form-input,
+  .form-textarea,
+  .form-select {
+    padding: 10px 12px;
+  }
+  
+  .task-create-modal-actions {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+  }
+}
+
+/* Task card menu */
+.task-menu-container {
+  position: relative;
+}
+
+.task-card-menu {
+  position: absolute;
+  top: 36px;
+  right: 12px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  min-width: 120px;
+}
+
+.task-card-menu-item {
+  padding: 10px 16px;
+  font-size: 14px;
+  color: #374151;
+  background: transparent;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.task-card-menu-item:hover {
+  background: #f3f4f6;
+}
+
+.task-card-menu-item-delete {
+  color: #dc2626 !important;
+}
+
+.task-card-menu-item-delete:hover {
+  background: #fef2f2 !important;
+  color: #b91c1c !important;
+}
+
+/* ===========================
+   DELETE CONFIRMATION MODAL STYLES
+   =========================== */
+
+/* Modal overlay with blur effect */
+.delete-confirmation-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1001;
+  padding: 1rem;
+  backdrop-filter: blur(4px);
+}
+
+/* Modal container */
+.delete-confirmation-modal {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  padding: 0;
+  min-width: 400px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: deleteModalSlideIn 0.3s ease;
+}
+
+@keyframes deleteModalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Modal header */
+.delete-confirmation-header {
+  padding: 1.5rem 2rem 1rem 2rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.delete-confirmation-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #dc2626;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.delete-confirmation-title::before {
+  content: "⚠️";
+  font-size: 1.1rem;
+}
+
+/* Modal content */
+.delete-confirmation-content {
+  padding: 1rem 2rem 1.5rem 2rem;
+}
+
+.delete-confirmation-message {
+  font-size: 16px;
+  color: #374151;
+  margin: 0 0 12px 0;
+  line-height: 1.5;
+}
+
+.delete-confirmation-warning {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0;
+  font-style: italic;
+}
+
+/* Modal actions */
+.delete-confirmation-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 1rem 2rem 1.5rem 2rem;
+  border-top: 1px solid #f1f5f9;
+}
+
+.btn-cancel,
+.btn-delete {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1px solid transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 100px;
+}
+
+.btn-cancel {
+  background: #ffffff;
+  color: #374151;
+  border-color: #e5e7eb;
+}
+
+.btn-cancel:hover {
+  background: #f9fafb;
+  border-color: #d1d5db;
+}
+
+.btn-delete {
+  background: #dc2626;
+  color: #ffffff;
+  border-color: #dc2626;
+}
+
+.btn-delete:hover {
+  background: #b91c1c;
+  border-color: #b91c1c;
+}
+
+.btn-delete:active {
+  background: #991b1b;
+  border-color: #991b1b;
+}
+
+/* ===========================
+   RESPONSIVE DELETE MODAL STYLES
+   =========================== */
+
+/* Medium tablets */
+@media (max-width: 768px) {
+  .delete-confirmation-modal {
+    min-width: 0;
+    width: 95%;
+    margin: 1rem;
+  }
+  
+  .delete-confirmation-header {
+    padding: 1rem 1.5rem 0.75rem 1.5rem;
+  }
+  
+  .delete-confirmation-title {
+    font-size: 1.125rem;
+  }
+  
+  .delete-confirmation-content {
+    padding: 0.75rem 1.5rem 1rem 1.5rem;
+  }
+  
+  .delete-confirmation-actions {
+    flex-direction: column;
+    gap: 8px;
+    padding: 1rem 1.5rem 1.25rem 1.5rem;
+  }
+  
+  .btn-cancel,
+  .btn-delete {
+    width: 100%;
+  }
+}
+
+/* Small mobile */
+@media (max-width: 480px) {
+  .delete-confirmation-overlay {
+    padding: 0.5rem;
+  }
+  
+  .delete-confirmation-modal {
+    width: 100%;
+    max-height: 95vh;
+  }
+  
+  .delete-confirmation-header {
+    padding: 1rem;
+  }
+  
+  .delete-confirmation-title {
+    font-size: 1rem;
+  }
+  
+  .delete-confirmation-content {
+    padding: 0.75rem 1rem;
+  }
+  
+  .delete-confirmation-message {
+    font-size: 15px;
+  }
+  
+  .delete-confirmation-warning {
+    font-size: 13px;
+  }
+  
+  .delete-confirmation-actions {
+    padding: 1rem;
+    gap: 6px;
+  }
+  
+  .btn-cancel,
+  .btn-delete {
+    padding: 12px 16px;
+    font-size: 13px;
+  }
+}
+
+/* ===========================
+   DEVELOPMENT WARNING STYLES
+   =========================== */
+
+.development-warning {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1002;
+  animation: warningSlideDown 0.3s ease;
+}
+
+@keyframes warningSlideDown {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.development-warning-content {
+  background: #fef3c7;
+  border: 1px solid #f59e0b;
+  border-radius: 8px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  min-width: 280px;
+  max-width: 400px;
+}
+
+.warning-icon {
+  color: #f59e0b;
+  flex-shrink: 0;
+}
+
+.warning-text {
+  color: #92400e;
+  font-size: 14px;
+  font-weight: 500;
+  flex: 1;
+}
+
+.warning-close {
+  background: none;
+  border: none;
+  color: #92400e;
+  cursor: pointer;
+  padding: 2px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.warning-close:hover {
+  background-color: rgba(146, 64, 14, 0.1);
+}
+
+.warning-close svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Responsive warning styles */
+@media (max-width: 768px) {
+  .development-warning {
+    top: 15px;
+    left: 1rem;
+    right: 1rem;
+    transform: none;
+    width: auto;
+  }
+  
+  .development-warning-content {
+    min-width: 0;
+    max-width: none;
+    width: 100%;
+  }
+  
+  .warning-text {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .development-warning {
+    top: 10px;
+    left: 0.5rem;
+    right: 0.5rem;
+  }
+  
+  .development-warning-content {
+    padding: 10px 12px;
+    gap: 6px;
+  }
+  
+  .warning-text {
+    font-size: 12px;
+  }
+  
+  .warning-icon {
+    width: 14px;
+    height: 14px;
+  }
+  
+  .warning-close svg {
+    width: 12px;
+    height: 12px;
+  }
 }

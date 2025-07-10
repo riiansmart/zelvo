@@ -7,27 +7,53 @@ import { Task } from '../types/task.types';
 export const getTasks = async () => {
   const token = localStorage.getItem('token')
 
-  const response = await api.get('/v1/tasks', {
+  const response = await api.get('/tasks', {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   })
 
   console.log('Raw tasks response:', response);
-  
-  // Handle paginated response with content array
-  if (response.data && response.data.content) {
-    return response.data.content;
+
+  /*
+   * Response shapes we handle:
+   * 1) Spring Page wrapped in our ApiResponse
+   *    { status: 'success', data: { content: [...] } }
+   * 2) Simple list wrapped in ApiResponse
+   *    { status: 'success', data: [...] }
+   * 3) Bare array (unlikely but fall-back)
+   */
+
+  const apiResponse = response.data;
+
+  if (Array.isArray(apiResponse)) {
+    return apiResponse; // Bare array case
   }
-  
-  // Fallback for other response formats
-  return response.data && response.data.data ? response.data.data : response.data;
+
+  if (apiResponse && Array.isArray(apiResponse.content)) {
+    // Backend returned Page directly (no ApiResponse wrapper)
+    return apiResponse.content;
+  }
+
+  if (apiResponse && apiResponse.data) {
+    const inner = apiResponse.data;
+    if (Array.isArray(inner)) {
+      return inner; // ApiResponse with list data
+    }
+    if (inner && Array.isArray(inner.content)) {
+      // ApiResponse with Page data
+      return inner.content;
+    }
+  }
+
+  // Fallback – return empty list to prevent runtime errors
+  return [];
 }
 
 // Get a single task by ID
 export const getTaskById = async (id: number): Promise<Task> => {
   const token = localStorage.getItem('token');
-  const response = await api.get(`/v1/tasks/${id}`, {
+  const response = await api.get(`/tasks/${id}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   // Unwrap ApiResponse and map to front-end Task shape
@@ -51,7 +77,7 @@ export const getTaskById = async (id: number): Promise<Task> => {
 // Create a new task
 export const createTask = async (task: Partial<Task>): Promise<Task> => {
   const token = localStorage.getItem('token');
-  const response = await api.post('/v1/tasks', task, {
+  const response = await api.post('/tasks', task, {
     headers: { Authorization: `Bearer ${token}` },
   });
   // Unwrap ApiResponse to get the actual Task
@@ -70,7 +96,7 @@ export const updateTask = async (id: number, task: Partial<Task>): Promise<Task>
     completed: task.completed,
     categoryId: task.categoryId ?? null,
   };
-  const response = await api.put(`/v1/tasks/${id}`, payload, {
+  const response = await api.put(`/tasks/${id}`, payload, {
     headers: { Authorization: `Bearer ${token}` },
   });
   // Unwrap ApiResponse to get the actual Task
@@ -80,7 +106,7 @@ export const updateTask = async (id: number, task: Partial<Task>): Promise<Task>
 // Delete a task
 export const deleteTask = async (id: number): Promise<void> => {
   const token = localStorage.getItem('token')
-  await api.delete(`/v1/tasks/${id}`, {
+  await api.delete(`/tasks/${id}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
 };

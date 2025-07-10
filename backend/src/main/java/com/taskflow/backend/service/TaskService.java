@@ -1,18 +1,7 @@
 package com.taskflow.backend.service;
 
-import com.taskflow.backend.dto.PageRequest;
-import com.taskflow.backend.exception.ResourceNotFoundException;
-import com.taskflow.backend.model.Task;
-import com.taskflow.backend.model.User;
-import com.taskflow.backend.repository.TaskRepository;
-import com.taskflow.backend.repository.UserRepository;
-import com.taskflow.backend.repository.CategoryRepository;
-import com.taskflow.backend.model.Category;
-import com.taskflow.backend.exception.UnauthorizedException;
-import com.taskflow.backend.dto.TaskRequest;
-import com.taskflow.backend.model.Task.Priority;
-import com.taskflow.backend.dto.TaskResponseDTO;
-import com.taskflow.backend.mapper.TaskMapper;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
@@ -20,8 +9,17 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
+import com.taskflow.backend.dto.TaskRequest;
+import com.taskflow.backend.dto.TaskResponseDTO;
+import com.taskflow.backend.exception.ResourceNotFoundException;
+import com.taskflow.backend.exception.UnauthorizedException;
+import com.taskflow.backend.mapper.TaskMapper;
+import com.taskflow.backend.model.Category;
+import com.taskflow.backend.model.Task;
+import com.taskflow.backend.model.User;
+import com.taskflow.backend.repository.CategoryRepository;
+import com.taskflow.backend.repository.TaskRepository;
+import com.taskflow.backend.repository.UserRepository;
 
 @Service
 public class TaskService {
@@ -58,13 +56,29 @@ public class TaskService {
         org.springframework.data.domain.PageRequest springPageRequest = 
             org.springframework.data.domain.PageRequest.of(pageRequest.getPage(), pageRequest.getSize(), sort);
 
-        Page<Task> tasks = taskRepository.findAll(springPageRequest);
+        // Get the current authenticated user
+        String email = getAuthenticatedUser();
+        User currentUser = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UnauthorizedException("User not found with email: " + email));
+        
+        // Find tasks only for the current user
+        Page<Task> tasks = taskRepository.findByUser(currentUser, springPageRequest);
         return tasks.map(taskMapper::toResponse);
     }
 
     public TaskResponseDTO getTaskById(Long id) {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Task not found with id: " + id));
+        
+        // Verify the task belongs to the current user
+        String email = getAuthenticatedUser();
+        User currentUser = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UnauthorizedException("User not found with email: " + email));
+        
+        if (!task.getUser().getId().equals(currentUser.getId())) {
+            throw new UnauthorizedException("You are not authorized to access this task");
+        }
+        
         return taskMapper.toResponse(task);
     }
 
@@ -100,29 +114,54 @@ public class TaskService {
     public TaskResponseDTO updateTask(Long id, TaskRequest request) {
         Task existingTask = taskRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Task not found with id: " + id));
-        Optional<User> assigneeOpt = Optional.empty();
-        if (request.getAssigneeId() != null) {
-            assigneeOpt = userRepository.findById(request.getAssigneeId());
+        
+        // Verify the task belongs to the current user
+        String email = getAuthenticatedUser();
+        User currentUser = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UnauthorizedException("User not found with email: " + email));
+        
+        if (!existingTask.getUser().getId().equals(currentUser.getId())) {
+            throw new UnauthorizedException("You are not authorized to update this task");
         }
-        Task updatedTask = taskMapper.toEntity(request, assigneeOpt);
-        updatedTask.setId(existingTask.getId());
-        updatedTask.setUser(existingTask.getUser());
-        updatedTask.setCreatedAt(existingTask.getCreatedAt());
+        
+        // Update fields from request
+        if (request.getTitle() != null) {
+            existingTask.setTitle(request.getTitle());
+        }
+        if (request.getDescription() != null) {
+            existingTask.setDescription(request.getDescription());
+        }
+        if (request.getStatus() != null) {
+            existingTask.setStatus(request.getStatus());
+        }
+        if (request.getPriority() != null) {
+            existingTask.setPriority(Task.Priority.valueOf(request.getPriority().toUpperCase()));
+        }
+        existingTask.setCompleted(request.isCompleted());
+        
         // Set due date at start of day
         if (request.getDueDate() != null) {
-            updatedTask.setDueDate(request.getDueDate().atStartOfDay());
+            existingTask.setDueDate(request.getDueDate().atStartOfDay());
         }
-        updatedTask.setCompleted(request.isCompleted());
+        
+        // Handle assignee
+        if (request.getAssigneeId() != null) {
+            User assignee = userRepository.findById(request.getAssigneeId())
+                    .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + request.getAssigneeId()));
+            existingTask.setAssignee(assignee);
+        }
+        
         // Update category association
         if (request.getCategoryId() != null) {
             Category category = categoryRepository.findById(request.getCategoryId())
                     .orElseThrow(() -> new ResourceNotFoundException(
                             "Category not found with id: " + request.getCategoryId()));
-            updatedTask.setCategory(category);
+            existingTask.setCategory(category);
         } else {
-            updatedTask.setCategory(null);
+            existingTask.setCategory(null);
         }
-        Task saved = taskRepository.save(updatedTask);
+        
+        Task saved = taskRepository.save(existingTask);
         return taskMapper.toResponse(saved);
     }
 
@@ -130,6 +169,16 @@ public class TaskService {
     public void deleteTask(Long id) {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Task not found with id: " + id));
+        
+        // Verify the task belongs to the current user
+        String email = getAuthenticatedUser();
+        User currentUser = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UnauthorizedException("User not found with email: " + email));
+        
+        if (!task.getUser().getId().equals(currentUser.getId())) {
+            throw new UnauthorizedException("You are not authorized to delete this task");
+        }
+        
         taskRepository.delete(task);
     }
 

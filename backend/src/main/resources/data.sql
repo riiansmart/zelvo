@@ -1,15 +1,9 @@
--- Seed default categories on application startup
-INSERT INTO categories (
-  name,
-  description,
-  color,
-  icon,
-  created_at,
-  updated_at,
-  is_default
-) VALUES
-  ('Work', '', '#cccccc', '', NOW(), NOW(), false),
-  ('Personal', '', '#cccccc', '', NOW(), NOW(), false),
-  ('Shopping', '', '#cccccc', '', NOW(), NOW(), false),
-  ('Urgent', '', '#cccccc', '', NOW(), NOW(), false)
-ON CONFLICT (name) DO NOTHING; 
+-- Insert default categories with colors
+INSERT INTO categories (name, color, created_at) VALUES 
+('Development', '#4CAF50', NOW()),
+('Design', '#2196F3', NOW()),
+('Marketing', '#FF9800', NOW()),
+('Research', '#9C27B0', NOW()),
+('Testing', '#F44336', NOW()),
+('Documentation', '#00BCD4', NOW())
+ON DUPLICATE KEY UPDATE name=name; 

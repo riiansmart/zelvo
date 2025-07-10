@@ -17,6 +17,11 @@ public class TaskResponseDTO {
     private String dueDate;
     private String createdAt;
     private String updatedAt;
+    private Long userId;
+    private boolean completed;
+    private Long categoryId;
+    private String categoryName;
+    private String categoryColor;
 
     // Getters and setters
     public Long getId() { return id; }
@@ -47,4 +52,14 @@ public class TaskResponseDTO {
     public void setCreatedAt(String createdAt) { this.createdAt = createdAt; }
     public String getUpdatedAt() { return updatedAt; }
     public void setUpdatedAt(String updatedAt) { this.updatedAt = updatedAt; }
+    public Long getUserId() { return userId; }
+    public void setUserId(Long userId) { this.userId = userId; }
+    public boolean isCompleted() { return completed; }
+    public void setCompleted(boolean completed) { this.completed = completed; }
+    public Long getCategoryId() { return categoryId; }
+    public void setCategoryId(Long categoryId) { this.categoryId = categoryId; }
+    public String getCategoryName() { return categoryName; }
+    public void setCategoryName(String categoryName) { this.categoryName = categoryName; }
+    public String getCategoryColor() { return categoryColor; }
+    public void setCategoryColor(String categoryColor) { this.categoryColor = categoryColor; }
 } 
