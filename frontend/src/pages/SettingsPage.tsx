@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Search, Eye, EyeOff, Camera, X, Check, AlertTriangle, Sun, Moon } from 'lucide-react';
 import Sidebar from '../components/navigation/Sidebar';
 import ProfileDropdown from '../components/ProfileDropdown';
 import { useAuth } from '../hooks/useAuth';
-import { useTheme } from '../context/ThemeContext';
 import { useNavigate } from 'react-router-dom';
 import '../styles/dashboard.css';
 import '../styles/settings.css';
+import '../styles/task-page.css'; // For development warning styles
 
 interface PasswordStrength {
   score: number;
@@ -14,9 +14,47 @@ interface PasswordStrength {
   color: string;
 }
 
+// Development Warning Component
+interface DevelopmentWarningProps {
+  isVisible: boolean;
+  onClose: () => void;
+}
+
+const DevelopmentWarning: React.FC<DevelopmentWarningProps> = ({ isVisible, onClose }) => {
+  useEffect(() => {
+    if (isVisible) {
+      const timer = setTimeout(() => {
+        onClose();
+      }, 3000); // Auto-close after 3 seconds
+
+      return () => clearTimeout(timer);
+    }
+  }, [isVisible, onClose]);
+
+  if (!isVisible) return null;
+
+  return (
+    <div className="development-warning">
+      <div className="development-warning-content">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="warning-icon">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <line x1="12" y1="9" x2="12" y2="13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <circle cx="12" cy="17" r="1" fill="currentColor"/>
+        </svg>
+        <span className="warning-text">This feature is still being developed</span>
+        <button className="warning-close" onClick={onClose}>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+            <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+            <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  );
+};
+
 const SettingsPage: React.FC = () => {
   const { user, logout } = useAuth();
-  const { isLightMode, toggleTheme } = useTheme();
   const navigate = useNavigate();
   
   // Profile picture state
@@ -40,6 +78,7 @@ const SettingsPage: React.FC = () => {
   // UI state
   const [showPasswordConfirmation, setShowPasswordConfirmation] = useState(false);
   const [isPersonalInfoChanged, setIsPersonalInfoChanged] = useState(false);
+  const [showDevelopmentWarning, setShowDevelopmentWarning] = useState(false);
 
   // Password strength calculation
   const calculatePasswordStrength = (password: string): PasswordStrength => {
@@ -75,6 +114,8 @@ const SettingsPage: React.FC = () => {
       const reader = new FileReader();
       reader.onload = (e) => {
         setProfilePicture(e.target?.result as string);
+        // Show development warning since this doesn't actually save
+        setShowDevelopmentWarning(true);
       };
       reader.readAsDataURL(file);
     }
@@ -91,12 +132,9 @@ const SettingsPage: React.FC = () => {
     setIsPersonalInfoChanged(true);
   };
 
-  // Save personal information
+  // Save personal information - show development warning
   const savePersonalInfo = () => {
-    // TODO: Implement API call to save personal information
-    console.log('Saving personal info:', personalInfo);
-    setIsPersonalInfoChanged(false);
-    // Show success message
+    setShowDevelopmentWarning(true);
   };
 
   // Handle password change
@@ -113,10 +151,10 @@ const SettingsPage: React.FC = () => {
     }
   };
 
-  // Update security settings
+  // Update security settings - show development warning
   const updateSecuritySettings = () => {
     if (!passwordData.currentPassword || !passwordData.newPassword) return;
-    setShowPasswordConfirmation(true);
+    setShowDevelopmentWarning(true);
   };
 
   // Confirm password change
@@ -135,15 +173,13 @@ const SettingsPage: React.FC = () => {
 
   // Theme selection handlers
   const selectLightMode = () => {
-    if (!isLightMode) {
-      toggleTheme();
-    }
+    // Light mode is already selected by default, no action needed
+    return;
   };
 
   const selectDarkMode = () => {
-    if (isLightMode) {
-      toggleTheme();
-    }
+    // Show development warning for dark mode
+    setShowDevelopmentWarning(true);
   };
 
   // Handle keyboard navigation for theme toggles
@@ -152,6 +188,11 @@ const SettingsPage: React.FC = () => {
       event.preventDefault();
       handler();
     }
+  };
+
+  // Close development warning
+  const handleCloseDevelopmentWarning = () => {
+    setShowDevelopmentWarning(false);
   };
 
   return (
@@ -234,7 +275,7 @@ const SettingsPage: React.FC = () => {
               <div className="theme-options-grid">
                 <div className="theme-mode-option">
                   <div 
-                    className={`theme-mode-toggle light-mode ${isLightMode ? 'active' : ''}`}
+                    className={`theme-mode-toggle light-mode active`}
                     onClick={selectLightMode}
                     onKeyDown={(e) => handleThemeKeyDown(e, selectLightMode)}
                     role="button"
@@ -247,7 +288,7 @@ const SettingsPage: React.FC = () => {
                 </div>
                 <div className="theme-mode-option">
                   <div 
-                    className={`theme-mode-toggle dark-mode ${!isLightMode ? 'active' : ''}`}
+                    className={`theme-mode-toggle dark-mode`}
                     onClick={selectDarkMode}
                     onKeyDown={(e) => handleThemeKeyDown(e, selectDarkMode)}
                     role="button"
@@ -400,6 +441,12 @@ const SettingsPage: React.FC = () => {
             </div>
           </div>
         )}
+
+        {/* Development Warning */}
+        <DevelopmentWarning 
+          isVisible={showDevelopmentWarning}
+          onClose={handleCloseDevelopmentWarning}
+        />
       </main>
     </div>
   );
