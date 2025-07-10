@@ -1,103 +1,185 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Search } from 'lucide-react';
 import Sidebar from '../components/navigation/Sidebar';
 import ProfileDropdown from '../components/ProfileDropdown';
+import TaskCreateModal from '../components/TaskCreateModal';
+import { Task, TaskStatus } from '../types/task.types';
+import { getTasks, deleteTask } from '../services/taskService';
+import { formatDate, isOverdue } from '../utils/dateUtils';
 import '../styles/task-page.css';
 import '../styles/dashboard.css';
 
 // Priority types for personal task management
-type Priority = 'low' | 'medium' | 'high';
+type Priority = 'LOW' | 'MEDIUM' | 'HIGH';
 
-// Mock data for demonstration - Updated for personal task management
-const mockTasks = {
-  todo: [
-    {
-      id: 1,
-      category: 'DESIGN SYSTEM',
-      categoryColor: '#4CAF50',
-      title: 'Hero section',
-      description: 'Create a design system for a hero section in 2 different variants. Create a simple presentation with these components.',
-      priority: 'high' as Priority
-    },
-    {
-      id: 2,
-      category: 'TYPOGRAPHY',
-      categoryColor: '#FF9800',
-      title: 'Typography change',
-      description: 'Modify typography and styling of text placed on 6 screens of the website design. Prepare a documentation.',
-      priority: 'medium' as Priority
+// Default category colors for when backend doesn't provide colors
+const defaultCategoryColors = [
+  '#4CAF50', // Green
+  '#2196F3', // Blue  
+  '#FF9800', // Orange
+  '#9C27B0', // Purple
+  '#F44336', // Red
+  '#00BCD4', // Cyan
+  '#8BC34A', // Light Green
+  '#FF5722', // Deep Orange
+  '#607D8B', // Blue Grey
+  '#795548'  // Brown
+];
+
+// Function to get category color based on category name
+const getCategoryColor = (categoryName?: string, categoryColor?: string): string => {
+  if (categoryColor) return categoryColor;
+  if (!categoryName) return '#6B7280'; // Default grey for "GENERAL"
+  
+  // Generate consistent color based on category name hash
+  let hash = 0;
+  for (let i = 0; i < categoryName.length; i++) {
+    hash = categoryName.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return defaultCategoryColors[Math.abs(hash) % defaultCategoryColors.length];
+};
+
+// Development Warning Component
+interface DevelopmentWarningProps {
+  isVisible: boolean;
+  onClose: () => void;
+}
+
+const DevelopmentWarning: React.FC<DevelopmentWarningProps> = ({ isVisible, onClose }) => {
+  useEffect(() => {
+    if (isVisible) {
+      const timer = setTimeout(() => {
+        onClose();
+      }, 3000); // Auto-close after 3 seconds
+
+      return () => clearTimeout(timer);
     }
-  ],
-  inProgress: [
-    {
-      id: 3,
-      category: 'DEVELOPMENT',
-      categoryColor: '#F44336',
-      title: 'Implement design screens',
-      description: 'Our designers created 6 screens for a website that needs to be implemented by our dev team.',
-      priority: 'high' as Priority
-    }
-  ],
-  done: [
-    {
-      id: 4,
-      category: 'DEVELOPMENT',
-      categoryColor: '#F44336',
-      title: 'Fix bugs in the CSS code',
-      description: 'Fix small bugs that are essential to prepare for the next release that will happen this quarter.',
-      priority: 'medium' as Priority
-    },
-    {
-      id: 5,
-      category: 'TYPOGRAPHY',
-      categoryColor: '#FF9800',
-      title: 'Proofread final text',
-      description: 'The text provided by marketing department needs to be proofread so that we make sure that it fits into our design.',
-      priority: 'low' as Priority
-    },
-    {
-      id: 6,
-      category: 'DESIGN SYSTEM',
-      categoryColor: '#4CAF50',
-      title: 'Responsive design',
-      description: 'All designs need to be responsive. The requirement is that it fits all web and mobile screens.',
-      priority: 'high' as Priority
-    }
-  ]
+  }, [isVisible, onClose]);
+
+  if (!isVisible) return null;
+
+  return (
+    <div className="development-warning">
+      <div className="development-warning-content">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="warning-icon">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <line x1="12" y1="9" x2="12" y2="13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <circle cx="12" cy="17" r="1" fill="currentColor"/>
+        </svg>
+        <span className="warning-text">This feature is still being developed</span>
+        <button className="warning-close" onClick={onClose}>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+            <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+            <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  );
+};
+
+// Custom Delete Confirmation Modal
+interface DeleteConfirmationModalProps {
+  isOpen: boolean;
+  taskTitle: string;
+  onConfirm: () => void;
+  onCancel: () => void;
+}
+
+const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = ({
+  isOpen,
+  taskTitle,
+  onConfirm,
+  onCancel
+}) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="delete-confirmation-overlay" onClick={onCancel}>
+      <div className="delete-confirmation-modal" onClick={(e) => e.stopPropagation()}>
+        <div className="delete-confirmation-header">
+          <h3 className="delete-confirmation-title">Delete Task</h3>
+        </div>
+        <div className="delete-confirmation-content">
+          <p className="delete-confirmation-message">
+            Are you sure you want to delete "<strong>{taskTitle}</strong>"?
+          </p>
+          <p className="delete-confirmation-warning">
+            This action cannot be undone.
+          </p>
+        </div>
+        <div className="delete-confirmation-actions">
+          <button className="btn-cancel" onClick={onCancel}>
+            Cancel
+          </button>
+          <button className="btn-delete" onClick={onConfirm}>
+            Delete Task
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 interface TaskCardProps {
-  task: {
-    id: number;
-    category: string;
-    categoryColor: string;
-    title: string;
-    description: string;
-    priority: Priority;
-  };
+  task: Task;
+  onEdit: (task: Task) => void;
+  onDelete: (task: Task) => void;
 }
 
 // Priority configuration with simple, intuitive urgency colors
 const priorityConfig = {
-  low: {
+  LOW: {
     label: 'Low',
     color: '#16A34A', // Green
     bgColor: '#F0FDF4' // Very light green background
   },
-  medium: {
+  MEDIUM: {
     label: 'Medium',
     color: '#CA8A04', // Yellow/Amber
     bgColor: '#FEFCE8' // Very light yellow background
   },
-  high: {
+  HIGH: {
     label: 'High',
     color: '#DC2626', // Red
     bgColor: '#FEF2F2' // Very light red background
   }
 };
 
-const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
-  const priority = priorityConfig[task.priority];
+const TaskCard: React.FC<TaskCardProps> = ({ task, onEdit, onDelete }) => {
+  const priority = priorityConfig[task.priority as Priority];
+  const [menuOpen, setMenuOpen] = useState(false);
+  
+  // Get category display info
+  const categoryName = task.categoryName || 'GENERAL';
+  const categoryColor = getCategoryColor(task.categoryName, task.categoryColor);
+
+  const handleMenuClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setMenuOpen(prev => !prev);
+  };
+
+  const handleMenuBlur = (e: React.FocusEvent) => {
+    // Close menu when focus leaves the menu container
+    if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+      setMenuOpen(false);
+    }
+  };
+
+  // Format due date and check if overdue
+  const formatDueDate = (dueDate: string): string => {
+    try {
+      const date = new Date(dueDate);
+      return date.toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric'
+      });
+    } catch (error) {
+      return 'No date';
+    }
+  };
+
+  const isDueDateOverdue = task.dueDate ? isOverdue(task.dueDate) : false;
   
   return (
     <div className="task-card">
@@ -105,46 +187,184 @@ const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
         <div className="task-category">
           <div 
             className="category-dot" 
-            style={{ backgroundColor: task.categoryColor }}
+            style={{ backgroundColor: categoryColor }}
           ></div>
-          <span className="category-text">{task.category}</span>
+          <span className="category-text">{categoryName.toUpperCase()}</span>
         </div>
-        <button className="task-menu-btn">
-          <svg width="16" height="4" viewBox="0 0 16 4" fill="none">
-            <circle cx="2" cy="2" r="2" fill="#6B7280"/>
-            <circle cx="8" cy="2" r="2" fill="#6B7280"/>
-            <circle cx="14" cy="2" r="2" fill="#6B7280"/>
-          </svg>
-        </button>
+        <div className="task-menu-container" onBlur={handleMenuBlur} tabIndex={-1}>
+          <button className="task-menu-btn" onClick={handleMenuClick}>
+            <svg width="16" height="4" viewBox="0 0 16 4" fill="none">
+              <circle cx="2" cy="2" r="2" fill="#6B7280"/>
+              <circle cx="8" cy="2" r="2" fill="#6B7280"/>
+              <circle cx="14" cy="2" r="2" fill="#6B7280"/>
+            </svg>
+          </button>
+          
+          {/* Menu */}
+          {menuOpen && (
+            <div className="task-card-menu">
+              <button 
+                onClick={() => {
+                  onEdit(task); 
+                  setMenuOpen(false);
+                }} 
+                className="task-card-menu-item"
+              >
+                Edit
+              </button>
+              <button 
+                onClick={() => {
+                  onDelete(task); 
+                  setMenuOpen(false);
+                }} 
+                className="task-card-menu-item task-card-menu-item-delete"
+              >
+                Delete
+              </button>
+            </div>
+          )}
+        </div>
       </div>
       
       <h3 className="task-title">{task.title}</h3>
-      <p className="task-description">{task.description}</p>
-      
-      {/* Priority Indicator */}
-      <div className="task-priority">
-        <div 
-          className="priority-badge"
-          style={{ 
-            backgroundColor: priority.bgColor,
-            color: priority.color,
-            border: `1px solid ${priority.color}20`
-          }}
-        >
-          <span className="priority-label">{priority.label}</span>
+      <p className="task-description">{task.description || 'No description'}</p>
+
+      {/* Bottom row with Priority and Due Date */}
+      <div className="task-bottom-row">
+        {/* Priority Indicator */}
+        <div className="task-priority">
+          <div 
+            className="priority-badge"
+            style={{ 
+              backgroundColor: priority.bgColor,
+              color: priority.color,
+              border: `1px solid ${priority.color}20`
+            }}
+          >
+            <span className="priority-label">{priority.label}</span>
+          </div>
         </div>
+
+        {/* Due Date */}
+        {task.dueDate && (
+          <div className={`task-due-date ${isDueDateOverdue ? 'overdue' : ''}`}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="due-date-icon">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" strokeWidth="2"/>
+              <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" strokeWidth="2"/>
+              <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" strokeWidth="2"/>
+              <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" strokeWidth="2"/>
+            </svg>
+            <span className="due-date-text">{formatDueDate(task.dueDate)}</span>
+          </div>
+        )}
       </div>
     </div>
   );
 };
 
 const TasksPage: React.FC = () => {
-  const [selectedWeek, setSelectedWeek] = useState('This week');
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [taskBeingEdited, setTaskBeingEdited] = useState<Task | null>(null);
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [taskToDelete, setTaskToDelete] = useState<Task | null>(null);
+  const [showDevelopmentWarning, setShowDevelopmentWarning] = useState(false);
+  
+  // Fetch tasks from API
+  useEffect(() => {
+    fetchTasks();
+  }, []);
+
+  const fetchTasks = async () => {
+    try {
+      setLoading(true);
+      const fetchedTasks = await getTasks();
+      setTasks(fetchedTasks);
+    } catch (error) {
+      console.error('Error fetching tasks:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  // Group tasks by status (use raw Task objects)
+  const groupedTasks = {
+    todo: tasks.filter(task => task.status === TaskStatus.TODO),
+    inProgress: tasks.filter(task => task.status === TaskStatus.IN_PROGRESS),
+    done: tasks.filter(task => task.status === TaskStatus.DONE)
+  };
 
   const handleAddTask = (column: string) => {
-    // TODO: Implement add task functionality
-    console.log(`Add task to ${column}`);
+    if (column === 'todo') {
+      setTaskBeingEdited(null);
+      setShowModal(true);
+    } else {
+      // Show development warning for other columns
+      setShowDevelopmentWarning(true);
+    }
   };
+
+  const handleColumnMenu = () => {
+    setShowDevelopmentWarning(true);
+  };
+
+  const handleTaskCreated = async () => {
+    // Refresh tasks after creation
+    await fetchTasks();
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setTaskBeingEdited(null);
+  };
+
+  const handleEditTask = (task: Task) => {
+    setTaskBeingEdited(task);
+    setShowModal(true);
+  };
+
+  const handleDeleteTask = (task: Task) => {
+    setTaskToDelete(task);
+    setShowDeleteConfirmation(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!taskToDelete) return;
+    
+    try {
+      await deleteTask(parseInt(taskToDelete.id as unknown as string));
+      await fetchTasks();
+      setShowDeleteConfirmation(false);
+      setTaskToDelete(null);
+    } catch (error) {
+      console.error('Failed to delete task', error);
+      setShowDeleteConfirmation(false);
+      setTaskToDelete(null);
+    }
+  };
+
+  const handleCancelDelete = () => {
+    setShowDeleteConfirmation(false);
+    setTaskToDelete(null);
+  };
+
+  const handleCloseDevelopmentWarning = () => {
+    setShowDevelopmentWarning(false);
+  };
+
+  if (loading) {
+    return (
+      <div className="dashboard-layout">
+        <Sidebar />
+        <main className="dashboard-content">
+          <div className="flex items-center justify-center h-64">
+            <div className="text-gray-500">Loading tasks...</div>
+          </div>
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div className="dashboard-layout">
@@ -172,17 +392,6 @@ const TasksPage: React.FC = () => {
             <h1 className="welcome-text">Tasks</h1>
             <p className="welcome-description">Organize and efficiently track your tasks.</p>
           </div>
-          <div className="week-selector">
-            <select 
-              value={selectedWeek} 
-              onChange={(e) => setSelectedWeek(e.target.value)}
-              className="week-dropdown"
-            >
-              <option value="This week">This week</option>
-              <option value="Last week">Last week</option>
-              <option value="Next week">Next week</option>
-            </select>
-          </div>
         </div>
 
         {/* Kanban Board */}
@@ -202,7 +411,11 @@ const TasksPage: React.FC = () => {
                     <line x1="5" y1="12" x2="19" y2="12" stroke="currentColor" strokeWidth="2"/>
                   </svg>
                 </button>
-                <button className="column-menu-btn" aria-label="Column menu">
+                <button 
+                  className="column-menu-btn" 
+                  aria-label="Column menu"
+                  onClick={handleColumnMenu}
+                >
                   <svg width="16" height="4" viewBox="0 0 16 4" fill="none">
                     <circle cx="2" cy="2" r="2" fill="currentColor"/>
                     <circle cx="8" cy="2" r="2" fill="currentColor"/>
@@ -212,9 +425,14 @@ const TasksPage: React.FC = () => {
               </div>
             </div>
             <div className="column-content">
-              {mockTasks.todo.map(task => (
-                <TaskCard key={task.id} task={task} />
+              {groupedTasks.todo.map((task) => (
+                <TaskCard key={task.id} task={task} onEdit={handleEditTask} onDelete={handleDeleteTask} />
               ))}
+              {groupedTasks.todo.length === 0 && (
+                <div className="empty-state">
+                  <p>No Tasks</p>
+                </div>
+              )}
             </div>
           </div>
 
@@ -233,7 +451,11 @@ const TasksPage: React.FC = () => {
                     <line x1="5" y1="12" x2="19" y2="12" stroke="currentColor" strokeWidth="2"/>
                   </svg>
                 </button>
-                <button className="column-menu-btn" aria-label="Column menu">
+                <button 
+                  className="column-menu-btn" 
+                  aria-label="Column menu"
+                  onClick={handleColumnMenu}
+                >
                   <svg width="16" height="4" viewBox="0 0 16 4" fill="none">
                     <circle cx="2" cy="2" r="2" fill="currentColor"/>
                     <circle cx="8" cy="2" r="2" fill="currentColor"/>
@@ -243,9 +465,14 @@ const TasksPage: React.FC = () => {
               </div>
             </div>
             <div className="column-content">
-              {mockTasks.inProgress.map(task => (
-                <TaskCard key={task.id} task={task} />
+              {groupedTasks.inProgress.map((task) => (
+                <TaskCard key={task.id} task={task} onEdit={handleEditTask} onDelete={handleDeleteTask} />
               ))}
+              {groupedTasks.inProgress.length === 0 && (
+                <div className="empty-state">
+                  <p>No Tasks</p>
+                </div>
+              )}
             </div>
           </div>
 
@@ -264,7 +491,11 @@ const TasksPage: React.FC = () => {
                     <line x1="5" y1="12" x2="19" y2="12" stroke="currentColor" strokeWidth="2"/>
                   </svg>
                 </button>
-                <button className="column-menu-btn" aria-label="Column menu">
+                <button 
+                  className="column-menu-btn" 
+                  aria-label="Column menu"
+                  onClick={handleColumnMenu}
+                >
                   <svg width="16" height="4" viewBox="0 0 16 4" fill="none">
                     <circle cx="2" cy="2" r="2" fill="currentColor"/>
                     <circle cx="8" cy="2" r="2" fill="currentColor"/>
@@ -274,13 +505,40 @@ const TasksPage: React.FC = () => {
               </div>
             </div>
             <div className="column-content">
-              {mockTasks.done.map(task => (
-                <TaskCard key={task.id} task={task} />
+              {groupedTasks.done.map((task) => (
+                <TaskCard key={task.id} task={task} onEdit={handleEditTask} onDelete={handleDeleteTask} />
               ))}
+              {groupedTasks.done.length === 0 && (
+                <div className="empty-state">
+                  <p>No Tasks</p>
+                </div>
+              )}
             </div>
           </div>
         </div>
       </main>
+
+      {/* Development Warning */}
+      <DevelopmentWarning 
+        isVisible={showDevelopmentWarning}
+        onClose={handleCloseDevelopmentWarning}
+      />
+
+      {/* Task Create Modal */}
+      <TaskCreateModal 
+        isOpen={showModal}
+        onClose={handleCloseModal}
+        onTaskSaved={handleTaskCreated}
+        existingTask={taskBeingEdited}
+      />
+
+      {/* Delete Confirmation Modal */}
+      <DeleteConfirmationModal
+        isOpen={showDeleteConfirmation}
+        taskTitle={taskToDelete?.title || ''}
+        onConfirm={handleConfirmDelete}
+        onCancel={handleCancelDelete}
+      />
     </div>
   );
 };

@@ -43,6 +43,14 @@ public class TaskMapper {
         response.setDueDate(task.getDueDate() != null ? task.getDueDate().toString() : null);
         response.setCreatedAt(task.getCreatedAt() != null ? task.getCreatedAt().toString() : null);
         response.setUpdatedAt(task.getUpdatedAt() != null ? task.getUpdatedAt().toString() : null);
+        response.setUserId(task.getUser() != null ? task.getUser().getId() : null);
+        response.setCompleted(task.isCompleted());
+        // Category information
+        if (task.getCategory() != null) {
+            response.setCategoryId(task.getCategory().getId());
+            response.setCategoryName(task.getCategory().getName());
+            response.setCategoryColor(task.getCategory().getColor());
+        }
         return response;
     }
 }

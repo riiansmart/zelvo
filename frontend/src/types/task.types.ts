@@ -26,6 +26,8 @@ export interface Task {
   completed: boolean
   userId: number
   categoryId?: number
+  categoryName?: string
+  categoryColor?: string
   createdAt?: string
   updatedAt?: string
   storyPoints?: number
