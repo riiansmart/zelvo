@@ -1,16 +1,23 @@
 package com.taskflow.backend.security;
 
-import com.taskflow.backend.model.User;
-import io.jsonwebtoken.*;
-import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.security.Keys;
+import java.security.Key;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import java.security.Key;
-import java.util.Date;
+import com.taskflow.backend.model.User;
 
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
+
+/**
+ * Helper utility mirroring {@link JwtTokenProvider} but provided separately
+ * for scenarios where Spring Security {@link Authentication} is not available.
+ */
 @Component
 public class JwtUtils {
 
@@ -25,7 +32,9 @@ public class JwtUtils {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    // Generate JWT for a user
+    /**
+     * Generates a signed token for the given user.
+     */
     public String generateToken(User user) {
         return Jwts.builder()
                 .setSubject(user.getEmail())
@@ -35,7 +44,9 @@ public class JwtUtils {
                 .compact();
     }
 
-    // Extract username (email) from token
+    /**
+     * Extracts user email from token.
+     */
     public String extractUsername(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(getSigningKey())
@@ -45,7 +56,9 @@ public class JwtUtils {
                 .getSubject();
     }
 
-    // Validate JWT token against UserDetails
+    /**
+     * Performs token validation against provided {@link UserDetails}.
+     */
     public boolean validateToken(String token, UserDetails userDetails) {
     final String username = extractUsername(token);
     return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));

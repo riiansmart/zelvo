@@ -21,6 +21,10 @@ import com.taskflow.backend.repository.CategoryRepository;
 import com.taskflow.backend.repository.TaskRepository;
 import com.taskflow.backend.repository.UserRepository;
 
+/**
+ * Service containing business logic for creating, updating, querying and deleting tasks
+ * while enforcing ownership & authorization rules for Zelvo users.
+ */
 @Service
 public class TaskService {
 
@@ -47,6 +51,12 @@ public class TaskService {
         return null;
     }
 
+    /**
+     * Returns a paginated list of tasks belonging to the authenticated user.
+     *
+     * @param pageRequest pagination & filter information
+     * @return mapped {@link TaskResponseDTO} page
+     */
     public Page<TaskResponseDTO> getUserTasks(com.taskflow.backend.dto.PageRequest pageRequest) {
         Sort.Direction direction = Sort.Direction.fromString(pageRequest.getDirection().toUpperCase());
         Sort sort = pageRequest.getSort() != null ? 
@@ -66,6 +76,12 @@ public class TaskService {
         return tasks.map(taskMapper::toResponse);
     }
 
+    /**
+     * Retrieves a task by id, validating the caller’s access rights.
+     *
+     * @param id task identifier
+     * @return mapped task DTO
+     */
     public TaskResponseDTO getTaskById(Long id) {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Task not found with id: " + id));
@@ -82,6 +98,12 @@ public class TaskService {
         return taskMapper.toResponse(task);
     }
 
+    /**
+     * Creates a new task for the authenticated user.
+     *
+     * @param request task creation payload
+     * @return persisted task DTO
+     */
     @Transactional
     public TaskResponseDTO createTask(TaskRequest request) {
         Optional<User> assigneeOpt = Optional.empty();
@@ -110,6 +132,13 @@ public class TaskService {
         return taskMapper.toResponse(saved);
     }
 
+    /**
+     * Updates an existing task belonging to the authenticated user.
+     *
+     * @param id      task id
+     * @param request fields to update
+     * @return updated task DTO
+     */
     @Transactional
     public TaskResponseDTO updateTask(Long id, TaskRequest request) {
         Task existingTask = taskRepository.findById(id)
@@ -165,6 +194,11 @@ public class TaskService {
         return taskMapper.toResponse(saved);
     }
 
+    /**
+     * Removes a task owned by the authenticated user.
+     *
+     * @param id task identifier to delete
+     */
     @Transactional
     public void deleteTask(Long id) {
         Task task = taskRepository.findById(id)
@@ -182,18 +216,35 @@ public class TaskService {
         taskRepository.delete(task);
     }
 
+    /**
+     * Bulk-create tasks. Authorization and ownership assignment should be handled prior to save.
+     *
+     * @param tasks list of tasks to create
+     * @return created tasks
+     */
     @Transactional
     public List<Task> createBulkTasks(List<Task> tasks) {
         // TODO: Set current user for all tasks
         return taskRepository.saveAll(tasks);
     }
 
+    /**
+     * Bulk update tasks.
+     *
+     * @param tasks tasks with updated fields
+     * @return updated tasks
+     */
     @Transactional
     public List<Task> updateBulkTasks(List<Task> tasks) {
         // TODO: Validate and update tasks
         return taskRepository.saveAll(tasks);
     }
 
+    /**
+     * Bulk delete tasks by id.
+     *
+     * @param taskIds list of ids to remove
+     */
     @Transactional
     public void deleteBulkTasks(List<Long> taskIds) {
         taskRepository.deleteAllById(taskIds);

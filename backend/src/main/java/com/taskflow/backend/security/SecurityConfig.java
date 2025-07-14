@@ -14,6 +14,10 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+/**
+ * Spring Security configuration for Zelvo.
+ * Sets up JWT authentication, OAuth2 login and authorization rules.
+ */
 @Configuration
 @EnableMethodSecurity
 @EnableWebSecurity
@@ -29,7 +33,23 @@ public class SecurityConfig {
         this.oauth2AuthenticationSuccessHandler = oauth2AuthenticationSuccessHandler;
     }
 
-    // Configure security filter chain
+    /**
+     * Builds the {@link SecurityFilterChain} that secures the application.
+     * <p>
+     * Key responsibilities:
+     * <ul>
+     *   <li>Disable CSRF because JWT is used.</li>
+     *   <li>Configure CORS via separate {@code WebConfig}.</li>
+     *   <li>Expose public endpoints (auth, docs, categories).</li>
+     *   <li>Register {@link JwtAuthenticationFilter} before username/password filter.</li>
+     *   <li>Integrate OAuth2 login success handler.</li>
+     *   <li>Enforce stateless sessions.</li>
+     * </ul>
+     *
+     * @param http {@link HttpSecurity} builder
+     * @return configured filter chain
+     * @throws Exception in case the security chain cannot be built
+     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())

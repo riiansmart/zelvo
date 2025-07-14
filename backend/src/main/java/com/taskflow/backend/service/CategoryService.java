@@ -1,11 +1,15 @@
 package com.taskflow.backend.service;
 
-import com.taskflow.backend.model.Category;
-import com.taskflow.backend.repository.CategoryRepository;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
+import com.taskflow.backend.model.Category;
+import com.taskflow.backend.repository.CategoryRepository;
+
+/**
+ * Business logic for CRUD operations on {@link Category} entities within Zelvo.
+ */
 @Service
 public class CategoryService {
 
@@ -15,12 +19,21 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-    // Get all categories from the database
+    /**
+     * Fetches all categories.
+     *
+     * @return list of categories
+     */
     public List<Category> getAllCategories() {
         return categoryRepository.findAll();
     }
 
-    // Create a new category
+    /**
+     * Persists a new category record.
+     *
+     * @param category category to create
+     * @return created category
+     */
     public Category createCategory(Category category) {
         return categoryRepository.save(category);
     }

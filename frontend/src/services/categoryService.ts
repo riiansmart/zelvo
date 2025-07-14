@@ -1,4 +1,6 @@
-// getCategories()
+/**
+ * Fetches task categories so users can tag items within Zelvo.
+ */
 
 import api from './api';
 import { Category } from '../types/category.types';

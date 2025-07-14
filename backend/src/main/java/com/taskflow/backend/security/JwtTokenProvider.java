@@ -17,6 +17,9 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SecurityException;
 
+/**
+ * Component responsible for generating and validating JWT access & refresh tokens for Zelvo.
+ */
 @Component
 public class JwtTokenProvider {
 
@@ -34,6 +37,12 @@ public class JwtTokenProvider {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
+    /**
+     * Generates a short-lived access token.
+     *
+     * @param authentication Spring Security principal
+     * @return signed JWT string
+     */
     public String generateToken(Authentication authentication) {
         String username = authentication.getName();
         Date now = new Date();
@@ -47,6 +56,9 @@ public class JwtTokenProvider {
                 .compact();
     }
 
+    /**
+     * Generates a long-lived refresh token.
+     */
     public String generateRefreshToken(Authentication authentication) {
         String username = authentication.getName();
         Date now = new Date();
@@ -60,6 +72,9 @@ public class JwtTokenProvider {
                 .compact();
     }
 
+    /**
+     * Extracts the e-mail (subject) from a token.
+     */
     public String getEmailFromToken(String token) {
         Claims claims = Jwts.parserBuilder()
                 .setSigningKey(getSigningKey())
@@ -70,6 +85,12 @@ public class JwtTokenProvider {
         return claims.getSubject();
     }
 
+    /**
+     * Performs a defensive validation of the token structure, signature and expiry.
+     *
+     * @param token JWT string
+     * @return true if valid, false otherwise
+     */
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder()

@@ -21,6 +21,10 @@ import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import lombok.Data;
 
+/**
+ * Entity representing an application user in Zelvo, supporting both local and OAuth-based authentication.
+ * Stores profile data, credentials, roles, and various timestamps.
+ */
 @Entity
 @Data
 @Table(name = "users")

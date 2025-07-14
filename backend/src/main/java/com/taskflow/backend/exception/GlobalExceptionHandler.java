@@ -1,12 +1,17 @@
 package com.taskflow.backend.exception;
 
-import com.taskflow.backend.dto.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import com.taskflow.backend.dto.ApiResponse;
+
+/**
+ * Centralized REST exception handling for Zelvo. Translates thrown exceptions into
+ * consistent {@link ApiResponse} error bodies with appropriate HTTP status codes.
+ */
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 

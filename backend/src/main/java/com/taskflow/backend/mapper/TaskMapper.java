@@ -9,8 +9,19 @@ import com.taskflow.backend.dto.TaskResponseDTO;
 import com.taskflow.backend.model.Task;
 import com.taskflow.backend.model.User;
 
+/**
+ * Maps between API DTOs and {@link Task} entities for Zelvo.
+ * Centralizes transformation logic so that controllers/services remain thin.
+ */
 @Component
 public class TaskMapper {
+    /**
+     * Converts a {@link TaskRequest} into a {@link Task} entity.
+     *
+     * @param request   client payload
+     * @param assigneeOpt optional assignee user
+     * @return populated entity (not yet persisted)
+     */
     // Convert TaskRequest to Task entity
     public Task toEntity(TaskRequest request, Optional<User> assigneeOpt) {
         Task task = new Task();
@@ -26,6 +37,9 @@ public class TaskMapper {
         return task;
     }
 
+    /**
+     * Converts a {@link Task} entity into a {@link TaskResponseDTO} for API responses.
+     */
     // Convert Task entity to TaskResponseDTO
     public TaskResponseDTO toResponse(Task task) {
         TaskResponseDTO response = new TaskResponseDTO();

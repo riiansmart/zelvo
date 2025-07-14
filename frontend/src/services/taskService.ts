@@ -1,4 +1,6 @@
-// getTasks(), createTask(), updateTask(), deleteTask()
+/**
+ * Service layer for CRUD operations on tasks against the Zelvo REST API.
+ */
 
 import api from './api';
 import { Task } from '../types/task.types';

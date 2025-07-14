@@ -1,4 +1,7 @@
-// Optional redirect logic for unauth users
+/**
+ * Client-side guard that redirects unauthenticated users to the landing page.
+ * Attach inside protected route components to enforce Zelvo session presence.
+ */
 
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';

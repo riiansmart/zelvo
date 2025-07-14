@@ -1,3 +1,7 @@
+/**
+ * SettingsPage – user preferences, profile edits, and account security controls for Zelvo.
+ * Some features are marked as in development and will display warnings accordingly.
+ */
 import React, { useState, useEffect } from 'react';
 import { Search, Eye, EyeOff, Camera, X, Check, AlertTriangle, Sun, Moon } from 'lucide-react';
 import Sidebar from '../components/navigation/Sidebar';
