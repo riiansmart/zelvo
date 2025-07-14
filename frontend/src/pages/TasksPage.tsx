@@ -1,3 +1,7 @@
+/**
+ * TasksPage presents a kanban-style overview of all tasks with filtering, CRUD actions,
+ * and drag-and-drop style interactions (WIP) for Zelvo.
+ */
 import React, { useState, useEffect } from 'react';
 import { Search } from 'lucide-react';
 import Sidebar from '../components/navigation/Sidebar';

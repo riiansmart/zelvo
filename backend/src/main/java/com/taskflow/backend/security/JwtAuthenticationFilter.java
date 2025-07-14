@@ -14,6 +14,10 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+/**
+ * Servlet filter that validates incoming JWTs and sets the Spring Security context
+ * for authenticated Zelvo users.
+ */
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
@@ -25,6 +29,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         this.userDetailsService = userDetailsService;
     }
 
+    /**
+     * Extracts the bearer token, validates it and, if valid, populates the security context.
+     *
+     * @param request  current HTTP request
+     * @param response current HTTP response
+     * @param filterChain remaining filter chain
+     */
     // Filter to validate JWT on every request
     @Override
     protected void doFilterInternal(

@@ -1,4 +1,6 @@
-// getProfile(), updateProfile()
+/**
+ * Helper functions for interacting with the Zelvo `/users` endpoints (profile fetch/update).
+ */
 
 import api from './api';
 import { User } from '../types/task.types';

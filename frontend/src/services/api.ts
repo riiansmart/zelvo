@@ -1,4 +1,7 @@
-// Axios instance with auth header
+/**
+ * Pre-configured Axios instance used by all Zelvo front-end service modules.
+ * Automatically injects `Authorization` header when a JWT is present in `localStorage`.
+ */
 
 import axios, { InternalAxiosRequestConfig } from 'axios';
 

@@ -1,4 +1,7 @@
-// login(), register(), logout()
+/**
+ * Collection of authentication helpers that wrap Zelvo back-end `/auth` endpoints.
+ * Provides login, registration, and basic user retrieval.
+ */
 
 import api from './api';
 import { LoginRequest, RegisterRequest, JwtResponse } from '../types/Auth';

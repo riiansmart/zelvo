@@ -23,6 +23,10 @@ import com.taskflow.backend.model.User;
 import com.taskflow.backend.repository.UserRepository;
 import com.taskflow.backend.service.AuthService;
 
+/**
+ * REST controller that exposes authentication-related endpoints for the Zelvo platform.
+ * Handles actions such as login, registration, email-verification, token refresh and logout.
+ */
 @RestController
 @RequestMapping("/api/v1/auth")
 @CrossOrigin
@@ -39,7 +43,12 @@ public class AuthController {
         this.userRepository = userRepository;
     }
 
-    // Handle user login and return JWT
+    /**
+     * Authenticates a user with the provided credentials and returns access & refresh JWT tokens.
+     *
+     * @param request the {@link LoginRequest} containing the user’s email and password
+     * @return {@link ApiResponse} with a {@link JwtResponse} payload on success
+     */
     @PostMapping("/login")
     public ResponseEntity<ApiResponse<JwtResponse>> login(@RequestBody LoginRequest request) {
         logger.info("Login attempt for email: {}", request != null ? request.getEmail() : "[request_is_null]");
@@ -57,41 +66,71 @@ public class AuthController {
         return ResponseEntity.ok(ApiResponse.success(response, "Login successful"));
     }
 
-    // Handle user registration
+    /**
+     * Registers a new Zelvo user account.
+     *
+     * @param request the {@link RegisterRequest} carrying user registration data
+     * @return success response when the user is created and verification mail sent
+     */
     @PostMapping("/register")
     public ResponseEntity<ApiResponse<?>> register(@RequestBody RegisterRequest request) {
         authService.register(request);
         return ResponseEntity.ok(ApiResponse.success(null, "User registered successfully"));
     }
 
-    // Verify email with token
+    /**
+     * Verifies a user’s email based on the verification token sent to their mailbox.
+     *
+     * @param token unique verification token
+     * @return success response once the account is activated
+     */
     @GetMapping("/verify-email/{token}")
     public ResponseEntity<ApiResponse<?>> verifyEmail(@PathVariable String token) {
         authService.verifyEmail(token);
         return ResponseEntity.ok(ApiResponse.success(null, "Email verified successfully"));
     }
 
-    // Resend verification email
+    /**
+     * Resends a verification e-mail to the provided address in case the original one expired or was lost.
+     *
+     * @param email the user’s e-mail address
+     * @return success response when the e-mail is queued/sent
+     */
     @PostMapping("/resend-verification")
     public ResponseEntity<ApiResponse<?>> resendVerification(@RequestParam String email) {
         authService.resendVerificationEmail(email);
         return ResponseEntity.ok(ApiResponse.success(null, "Verification email sent successfully"));
     }
 
-    // Refresh JWT token
+    /**
+     * Issues a new access/refresh token pair when the presented refresh token is valid.
+     *
+     * @param refreshToken a valid JWT refresh token
+     * @return {@link ApiResponse} with refreshed {@link JwtResponse}
+     */
     @PostMapping("/refresh-token")
     public ResponseEntity<ApiResponse<JwtResponse>> refreshToken(@RequestParam String refreshToken) {
         JwtResponse response = authService.refreshToken(refreshToken);
         return ResponseEntity.ok(ApiResponse.success(response, "Token refreshed successfully"));
     }
 
-    // Logout (invalidate refresh token)
+    /**
+     * Invalidates the supplied refresh token and clears authentication state for the user.
+     *
+     * @param refreshToken refresh token to invalidate
+     * @return confirmation response once logout has completed
+     */
     @PostMapping("/logout")
     public ResponseEntity<ApiResponse<?>> logout(@RequestParam String refreshToken) {
         authService.logout(refreshToken);
         return ResponseEntity.ok(ApiResponse.success(null, "Logged out successfully"));
     }
 
+    /**
+     * Retrieves the authenticated Zelvo user from the security context.
+     *
+     * @return {@link ApiResponse} wrapping the {@link User} entity corresponding to the currently logged-in principal
+     */
     @GetMapping("/user")
     public ResponseEntity<ApiResponse<User>> getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

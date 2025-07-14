@@ -1,4 +1,7 @@
-// Fetch and filter tasks
+/**
+ * Fetches the current user’s tasks from the Zelvo API and tracks loading / error state.
+ * Re-validates automatically when the auth token changes.
+ */
 
 import { useEffect, useState } from 'react';
 import { Task } from '../types/task.types';

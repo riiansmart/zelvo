@@ -1,4 +1,10 @@
-// Handles common input logic
+/**
+ * Generic form input hook for Zelvo forms.
+ * Returns a `value` and `onChange` handler so components can bind input state declaratively.
+ *
+ * @param initialValue initial field value
+ * @returns object with `value` and `onChange`
+ */
 
 import { useState } from 'react';
 

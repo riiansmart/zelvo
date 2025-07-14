@@ -25,6 +25,10 @@ import com.taskflow.backend.security.JwtTokenProvider;
 
 import io.jsonwebtoken.JwtException;
 
+/**
+ * Service that encapsulates authentication logic for Zelvo including login, registration,
+ * email verification, token issuance and logout operations.
+ */
 @Service
 public class AuthService {
 
@@ -46,6 +50,12 @@ public class AuthService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    /**
+     * Authenticates a user and returns a pair of JWT access & refresh tokens.
+     *
+     * @param request login request containing credentials
+     * @return JWT response with tokens and user metadata
+     */
     public JwtResponse login(LoginRequest request) {
         Authentication authentication;
         try {
@@ -90,6 +100,11 @@ public class AuthService {
         return new JwtResponse(token, refreshToken, user);
     }
 
+    /**
+     * Registers a new Zelvo user account and queues an e-mail verification message.
+     *
+     * @param request registration payload
+     */
     @Transactional
     public void register(RegisterRequest request) {
         if (userRepository.existsByEmail(request.getEmail())) {
@@ -114,12 +129,22 @@ public class AuthService {
         userRepository.save(user);
     }
 
+    /**
+     * Completes e-mail verification for a user.
+     *
+     * @param token verification token
+     */
     @Transactional
     public void verifyEmail(String token) {
         // TODO: Implement email verification logic
         throw new UnauthorizedException("Not implemented");
     }
 
+    /**
+     * Generates and resends a new verification e-mail.
+     *
+     * @param email address to which the verification message should be sent
+     */
     @Transactional
     public void resendVerificationEmail(String email) {
         User user = userRepository.findByEmail(email)
@@ -127,6 +152,12 @@ public class AuthService {
         // TODO: Generate new verification token and send email
     }
 
+    /**
+     * Issues a new access token pair from a valid refresh token.
+     *
+     * @param refreshToken existing refresh token
+     * @return new JWT response containing freshly minted tokens
+     */
     public JwtResponse refreshToken(String refreshToken) {
         if (!jwtTokenProvider.validateToken(refreshToken)) {
             throw new UnauthorizedException("Invalid refresh token");
@@ -146,6 +177,11 @@ public class AuthService {
         return new JwtResponse(newToken, newRefreshToken);
     }
 
+    /**
+     * Invalidates a refresh token, effectively logging the user out.
+     *
+     * @param refreshToken token to revoke
+     */
     @Transactional
     public void logout(String refreshToken) {
         // TODO: Implement token invalidation logic

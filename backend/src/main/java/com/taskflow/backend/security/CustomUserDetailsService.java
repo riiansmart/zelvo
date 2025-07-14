@@ -1,12 +1,16 @@
 package com.taskflow.backend.security;
 
-import com.taskflow.backend.model.User;
-import com.taskflow.backend.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.taskflow.backend.model.User;
+import com.taskflow.backend.repository.UserRepository;
+
+/**
+ * Bridges Zelvo's {@link User} entities with Spring Security by implementing {@link UserDetailsService}.
+ */
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
@@ -16,7 +20,9 @@ public class CustomUserDetailsService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
-    // Load user by email for authentication
+    /**
+     * Loads a Zelvo user by e-mail for authentication.
+     */
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email)

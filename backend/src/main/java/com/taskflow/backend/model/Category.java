@@ -14,6 +14,10 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 
+/**
+ * Entity representing a grouping for tasks in Zelvo. A category can be assigned to many tasks
+ * and holds metadata such as name and display color.
+ */
 @Entity
 @Data
 @Table(name = "categories")

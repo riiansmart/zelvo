@@ -22,6 +22,10 @@ import com.taskflow.backend.security.JwtTokenProvider;
 
 import jakarta.servlet.http.HttpServletResponse;
 
+/**
+ * Controller that finalizes the OAuth2 login flow for Zelvo, handling provider callbacks
+ * and translating successful authentications into JWT tokens that the frontend can consume.
+ */
 @RestController
 @RequestMapping("/api/v1/auth/oauth2")
 @CrossOrigin
@@ -33,6 +37,14 @@ public class OAuth2Controller {
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
+    /**
+     * Handles the GitHub OAuth2 redirect URI. The actual OAuth2 negotiation is performed by Spring Security; 
+     * this endpoint merely redirects the user back to the Zelvo frontend once authorization is complete.
+     *
+     * @param code  the authorization code returned by GitHub (unused – handled by Spring Security)
+     * @param state CSRF protection state parameter (unused)
+     * @param response servlet response used to issue a client-side redirect
+     */
     @GetMapping("/callback/github")
     public void handleGithubCallback(@RequestParam String code, @RequestParam String state, HttpServletResponse response) throws IOException {
         // Note: The actual OAuth authentication is handled by Spring Security
@@ -40,6 +52,13 @@ public class OAuth2Controller {
         response.sendRedirect("http://localhost:5173/dashboard");
     }
 
+    /**
+     * Invoked after a successful OAuth2 authentication. Generates application JWT tokens for the authenticated user
+     * and redirects them to the Zelvo dashboard with the token as a URL parameter.
+     *
+     * @param authentication Spring Security authentication containing the OAuth2User principal
+     * @param response servlet response used for HTTP redirect
+     */
     @GetMapping("/success")
     public void oauth2Success(Authentication authentication, HttpServletResponse response) throws IOException {
         if (authentication instanceof OAuth2AuthenticationToken) {

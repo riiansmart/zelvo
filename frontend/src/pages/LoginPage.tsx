@@ -1,4 +1,8 @@
-// src/pages/LoginPage.tsx
+/**
+ * LoginPage – email / password authentication screen for Zelvo users.
+ * Implements form validation, error handling, and redirects to the dashboard on success.
+ */
+
 import React, { useState } from 'react';
 import "../styles/auth.css";
 import { useNavigate, Link, useLocation } from 'react-router-dom';
