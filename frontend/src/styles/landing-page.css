@@ -942,11 +942,6 @@ html, body {
   transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
-.pricing-card.highlight {
-  border-color: #e79a0a;
-  box-shadow: 0 0 8px rgba(231, 154, 10, 0.75);
-}
-
 .pricing-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 6px 24px rgba(0,0,0,0.16);
@@ -964,7 +959,6 @@ html, body {
 .plan-price {
   font-size: 2rem;
   font-weight: 700;
-  color: #e79a0a;
   margin-bottom: 1rem;
 }
 
@@ -988,7 +982,6 @@ html, body {
 }
 
 .plan-cta {
-  background: #e79a0a;
   color: #181715;
   border: none;
   padding: 0.6rem 1.2rem;
@@ -1001,7 +994,7 @@ html, body {
 
 .plan-cta:hover {
   transform: translateY(-3px);
-  box-shadow: 0 4px 12px rgba(231, 154, 10, 0.35);
+  box-shadow: 0 4px 12px rgba(107, 107, 107, 0.35);
 }
 
 /* ===========================
@@ -1029,7 +1022,6 @@ html, body {
 }
 
 .sticky-button {
-  background: #e79a0a;
   color: #181715;
   padding: 0.4rem 1rem;
   border-radius: 6px;
@@ -1738,6 +1730,834 @@ html, body {
 
   .additional-features-title {
     font-size: 1.5rem;
+  }
+}
+
+/* ===================================================== */
+/* ZELVO TESTIMONIALS SECTION                            */
+/* ===================================================== */
+
+.zelvo-testimonials {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  background: #FFFFFF;
+  position: relative;
+  overflow: hidden;
+}
+
+.testimonials-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.testimonials-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.testimonials-title {
+  font-family: "Circular Std", sans-serif;
+  font-weight: 900;
+  font-size: 3.5rem;
+  line-height: 1.2;
+  color: #17246d;
+  margin: 0 0 1.5rem 0;
+  letter-spacing: -1px;
+}
+
+.testimonials-subtitle {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 500;
+  font-size: 1.25rem;
+  line-height: 1.6;
+  color: #6c7380;
+  margin: 0;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+.testimonial-card {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 20px;
+  padding: 2.5rem;
+  box-shadow: 0px 8px 32px rgba(123, 126, 238, 0.12);
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 10;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0px 16px 48px rgba(123, 126, 238, 0.2);
+  border-color: rgba(0, 168, 150, 0.3);
+}
+
+.testimonial-quote-icon {
+  color: #00A896;
+  margin-bottom: 1.5rem;
+  opacity: 0.7;
+}
+
+.testimonial-text {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 500;
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: #17246d;
+  margin: 0 0 1.5rem 0;
+  font-style: italic;
+}
+
+.testimonial-rating {
+  display: flex;
+  gap: 0.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.star-icon {
+  color: #FFD700;
+  fill: #FFD700;
+}
+
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.author-avatar {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, #00A896, #3a74d3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Circular Std", sans-serif;
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: #ffffff;
+  flex-shrink: 0;
+}
+
+.author-info {
+  flex: 1;
+}
+
+.author-name {
+  font-family: "Circular Std", sans-serif;
+  font-weight: 700;
+  font-size: 1.125rem;
+  color: #17246d;
+  margin: 0 0 0.25rem 0;
+}
+
+.author-role {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: #6c7380;
+  margin: 0;
+}
+
+.testimonials-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.stat-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0px 8px 32px rgba(123, 126, 238, 0.12);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  z-index: 10;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0px 16px 40px rgba(123, 126, 238, 0.2);
+}
+
+.stat-number {
+  font-family: "Circular Std", sans-serif;
+  font-weight: 900;
+  font-size: 2.5rem;
+  color: #00A896;
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: #6c7380;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 1rem;
+}
+
+.stat-stars {
+  display: flex;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+.stat-icon {
+  font-size: 2rem;
+  margin-top: 0.5rem;
+}
+
+/* Responsive Design for Testimonials */
+@media (max-width: 1024px) {
+  .testimonials-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .testimonials-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .zelvo-testimonials {
+    padding: 3rem 1rem;
+  }
+
+  .testimonials-title {
+    font-size: 2.5rem;
+  }
+
+  .testimonials-subtitle {
+    font-size: 1.125rem;
+  }
+
+  .testimonial-card {
+    padding: 2rem;
+  }
+
+  .testimonials-stats {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .stat-card {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .testimonials-title {
+    font-size: 2rem;
+  }
+
+  .testimonial-card {
+    padding: 1.5rem;
+  }
+
+  .testimonial-text {
+    font-size: 1rem;
+  }
+
+  .stat-number {
+    font-size: 2rem;
+  }
+}
+
+/* ===================================================== */
+/* ZELVO PRICING SECTION                                 */
+/* ===================================================== */
+
+.zelvo-pricing {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  background: #FFFFFF;
+  position: relative;
+  overflow: hidden;
+}
+
+.pricing-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.pricing-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.pricing-title {
+  font-family: "Circular Std", sans-serif;
+  font-weight: 900;
+  font-size: 3.5rem;
+  line-height: 1.2;
+  color: #17246d;
+  margin: 0 0 1.5rem 0;
+  letter-spacing: -1px;
+}
+
+.pricing-subtitle {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 500;
+  font-size: 1.25rem;
+  line-height: 1.6;
+  color: #6c7380;
+  margin: 0;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.pricing-card {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 20px;
+  padding: 2.5rem;
+  box-shadow: 0px 8px 32px rgba(123, 126, 238, 0.12);
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 10;
+  text-align: center;
+}
+
+.pricing-card.featured {
+  border-color: rgba(0, 168, 150, 0.3);
+  box-shadow: 0px 16px 48px rgba(0, 168, 150, 0.15);
+  transform: scale(1.05);
+}
+
+.pricing-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0px 16px 48px rgba(123, 126, 238, 0.2);
+  border-color: rgba(0, 168, 150, 0.3);
+}
+
+.pricing-card.featured:hover {
+  transform: scale(1.05) translateY(-8px);
+}
+
+.plan-header {
+  margin-bottom: 2rem;
+}
+
+.plan-name {
+  font-family: "Circular Std", sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: #17246d;
+  margin: 0 0 1rem 0;
+}
+
+.plan-price {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+.price-amount {
+  font-family: "Circular Std", sans-serif;
+  font-weight: 900;
+  font-size: 3rem;
+  color: #00A896;
+}
+
+.price-period {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 500;
+  font-size: 1rem;
+  color: #6c7380;
+}
+
+.plan-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.plan-feature {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: #6c7380;
+}
+
+.plan-feature svg {
+  color: #00A896;
+  flex-shrink: 0;
+}
+
+.plan-cta {
+  margin-top: auto;
+}
+
+.cta-button {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0.9rem 2rem;
+  border-radius: 44px;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+}
+
+.cta-button.primary {
+  background: #3a74d3;
+  color: #ffffff;
+  box-shadow: 0px 36px 56px rgba(20, 34, 244, 0.14), 0px 24px 33px rgba(20, 34, 244, 0.11), 0px 14px 18px rgba(20, 34, 244, 0.09), 0px 7px 9px rgba(20, 34, 244, 0.07), 0px 3px 5px rgba(20, 34, 244, 0.06), 0px 1px 2px rgba(20, 34, 244, 0.04);
+}
+
+.cta-button.primary:hover {
+  background: #2d5bb8;
+  transform: translateY(-2px);
+  box-shadow: 0px 40px 60px rgba(20, 34, 244, 0.16);
+}
+
+.cta-button.secondary {
+  background: transparent;
+  color: #3a74d3;
+  border: 2px solid #3a74d3;
+}
+
+.cta-button.secondary:hover {
+  background: #3a74d3;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+/* ===================================================== */
+/* ZELVO FOOTER SECTION                                  */
+/* ===================================================== */
+
+.zelvo-footer {
+  width: 100%;
+  background: #f8fafc;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 4rem 2rem 2rem 2rem;
+  position: relative;
+  z-index: 10;
+}
+
+.footer-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 4rem;
+  margin-bottom: 3rem;
+}
+
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: "Circular Std", sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: #17246d;
+}
+
+.footer-logo svg {
+  color: #3a74d3;
+}
+
+.footer-tagline {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #6c7380;
+  margin: 0;
+}
+
+.footer-social {
+  display: flex;
+  gap: 1rem;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  color: #6c7380;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.social-link:hover {
+  background: #00A896;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0px 4px 12px rgba(0, 168, 150, 0.3);
+}
+
+.footer-links {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+
+.footer-column h4 {
+  font-family: "Circular Std", sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #17246d;
+  margin: 0 0 1rem 0;
+}
+
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.footer-column a {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: #6c7380;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-column a:hover {
+  color: #00A896;
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.footer-copyright {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: #6c7380;
+}
+
+.footer-newsletter {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.footer-newsletter p {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: #6c7380;
+  margin: 0;
+}
+
+.newsletter-form {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.newsletter-input {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 0.875rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  background: #ffffff;
+  color: #17246d;
+  min-width: 200px;
+}
+
+.newsletter-input:focus {
+  outline: none;
+  border-color: #00A896;
+  box-shadow: 0px 0px 0px 3px rgba(0, 168, 150, 0.1);
+}
+
+.newsletter-button {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 0.5rem 1rem;
+  background: #00A896;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.newsletter-button:hover {
+  background: #008f7a;
+  transform: translateY(-1px);
+}
+
+/* Responsive Design for Pricing and Footer */
+@media (max-width: 1024px) {
+  .pricing-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .footer-links {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .zelvo-pricing {
+    padding: 3rem 1rem;
+  }
+
+  .pricing-title {
+    font-size: 2.5rem;
+  }
+
+  .pricing-subtitle {
+    font-size: 1.125rem;
+  }
+
+  .pricing-card {
+    padding: 2rem;
+  }
+
+  .pricing-card.featured {
+    transform: none;
+  }
+
+  .pricing-card.featured:hover {
+    transform: translateY(-8px);
+  }
+
+  .price-amount {
+    font-size: 2.5rem;
+  }
+
+  .zelvo-footer {
+    padding: 3rem 1rem 2rem 1rem;
+  }
+
+  .footer-links {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 1.5rem;
+    text-align: center;
+  }
+
+  .newsletter-form {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .newsletter-input {
+    min-width: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .pricing-title {
+    font-size: 2rem;
+  }
+
+  .pricing-card {
+    padding: 1.5rem;
+  }
+
+  .plan-name {
+    font-size: 1.25rem;
+  }
+
+  .price-amount {
+    font-size: 2rem;
+  }
+}
+
+/* ===================================================== */
+/* DEVELOPMENT WARNING STYLES                           */
+/* ===================================================== */
+
+.development-warning {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1002;
+  animation: warningSlideDown 0.3s ease;
+}
+
+@keyframes warningSlideDown {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.development-warning-content {
+  background: #fef3c7;
+  border: 1px solid #f59e0b;
+  border-radius: 8px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  min-width: 280px;
+  max-width: 400px;
+}
+
+.warning-icon {
+  color: #f59e0b;
+  flex-shrink: 0;
+}
+
+.warning-text {
+  color: #92400e;
+  font-size: 14px;
+  font-weight: 500;
+  flex: 1;
+}
+
+.warning-close {
+  background: none;
+  border: none;
+  color: #92400e;
+  cursor: pointer;
+  padding: 2px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.warning-close:hover {
+  background-color: rgba(146, 64, 14, 0.1);
+}
+
+.warning-close svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Responsive warning styles */
+@media (max-width: 768px) {
+  .development-warning {
+    top: 15px;
+    left: 1rem;
+    right: 1rem;
+    transform: none;
+    width: auto;
+  }
+  
+  .development-warning-content {
+    min-width: 0;
+    max-width: none;
+    width: 100%;
+  }
+  
+  .warning-text {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .development-warning {
+    top: 10px;
+    left: 0.5rem;
+    right: 0.5rem;
+  }
+  
+  .development-warning-content {
+    padding: 10px 12px;
+  }
+  
+  .warning-text {
+    font-size: 12px;
+  }
+  
+  .warning-icon {
+    width: 14px;
+    height: 14px;
+  }
+  
+  .warning-close svg {
+    width: 12px;
+    height: 12px;
   }
 }
 
