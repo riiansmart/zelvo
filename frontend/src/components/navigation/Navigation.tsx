@@ -9,12 +9,11 @@ import { useAuth } from "../../hooks/useAuth";
 import { useTheme } from "../../context/ThemeContext";
 import "../../styles/components/Navigation.css";
 import React from "react";
-import { Sun, Package, ChevronDown } from "lucide-react";
+import { Sun, Package } from "lucide-react";
 
 interface NavItem {
   label: string;
   href: string;
-  hasDropdown?: boolean;
 }
 
 /**
@@ -40,7 +39,7 @@ export function Navigation() {
   const NAV_ITEMS: NavItem[] = [
     { label: "Home", href: "#home" },
     { label: "About", href: "#about" },
-    { label: "Features", href: "#features", hasDropdown: true },
+    { label: "Features", href: "#features" },
     { label: "Testimonial", href: "#testimonial" },
     { label: "Pricing", href: "#pricing" },
   ];
@@ -58,9 +57,8 @@ export function Navigation() {
         <ul className="zelvo-nav-links" role="list">
           {NAV_ITEMS.map((item) => (
             <li key={item.label}>
-              <a href={item.href} className={`zelvo-nav-link ${item.hasDropdown ? 'has-dropdown' : ''}`}>
+              <a href={item.href} className="zelvo-nav-link">
                 {item.label}
-                {item.hasDropdown && <ChevronDown size={12} className="nav-dropdown-arrow" />}
               </a>
             </li>
           ))}
