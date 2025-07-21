@@ -10,7 +10,7 @@ import figureImage from "../assets/figure.png";
 import figmaLogo from "../assets/Figma Logo Full Color.png";
 import githubLogo from "../assets/GitHub_Logo_White.png";
 import githubcatLogo from "../assets/github-mark-white.png";
-import { Rocket, CheckCircle, UsersRound } from "lucide-react";
+import { Rocket, CheckCircle, User } from "lucide-react";
 import heroScreenshot from "../assets/zelvo_dashboard_light.png";
 import backgroundImage from "../assets/Zelvo_LandingPage_Background.png";
 import heroBlurImage from "../assets/Zelvo_HeroImage_Blur.png";
@@ -122,6 +122,93 @@ export default function LandingPage() {
             </div>
           </section>
         </div>
+
+        {/* About Section */}
+        <section className="zelvo-about" id="about">
+          <div className="about-container">
+            <div className="about-content">
+              <div className="about-text">
+                <h2 className="about-title">
+                  About <span className="gradient-text">Zelvo</span>
+                </h2>
+                <p className="about-subtitle">
+                  Revolutionizing the way teams collaborate and individuals achieve their goals through intelligent task management and seamless workflow automation.
+                </p>
+                <p className="about-description">
+                  Born from the frustration of scattered tools and fragmented workflows, Zelvo represents a new paradigm in productivity software. We believe that managing tasks shouldn't be a task itself. Our platform combines the simplicity of modern design with the power of advanced automation, creating an experience that feels natural and empowering.
+                </p>
+                
+                <div className="about-stats">
+                  <div className="stat-item">
+                    <div className="stat-number">10K+</div>
+                    <div className="stat-label">Active Users</div>
+                  </div>
+                  <div className="stat-item">
+                    <div className="stat-number">50K+</div>
+                    <div className="stat-label">Tasks Completed</div>
+                  </div>
+                  <div className="stat-item">
+                    <div className="stat-number">99.9%</div>
+                    <div className="stat-label">Uptime</div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="about-features">
+                <div className="feature-highlight">
+                  <div className="feature-icon">
+                    <Rocket size={32} />
+                  </div>
+                  <h3 className="feature-title">Lightning Fast</h3>
+                  <p className="feature-desc">Built with performance in mind, every interaction is optimized for speed and responsiveness.</p>
+                </div>
+                
+                <div className="feature-highlight">
+                  <div className="feature-icon">
+                    <CheckCircle size={32} />
+                  </div>
+                  <h3 className="feature-title">Intuitive Design</h3>
+                  <p className="feature-desc">Clean, modern interface that feels familiar from day one, reducing the learning curve to zero.</p>
+                </div>
+                
+                <div className="feature-highlight">
+                  <div className="feature-icon">
+                    <User size={32} />
+                  </div>
+                  <h3 className="feature-title">User Focused</h3>
+                  <p className="feature-desc">Seamless collaboration tools that keep you aligned and projects moving forward.</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="about-visual">
+              <div className="visual-container">
+                <div className="floating-card card-1">
+                  <div className="card-icon">📊</div>
+                  <div className="card-text">Analytics</div>
+                </div>
+                <div className="floating-card card-2">
+                  <div className="card-icon">⚡</div>
+                  <div className="card-text">Automation</div>
+                </div>
+                <div className="floating-card card-3">
+                  <div className="card-icon">🎯</div>
+                  <div className="card-text">Focus Mode</div>
+                </div>
+                <div className="floating-card card-4">
+                  <div className="card-icon">🔄</div>
+                  <div className="card-text">Sync</div>
+                </div>
+                <div className="about-main-visual">
+                  <div className="visual-content">
+                    <h4>The Future of Work</h4>
+                    <p>Where productivity meets simplicity</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
 
       
