@@ -10,7 +10,7 @@ import figureImage from "../assets/figure.png";
 import figmaLogo from "../assets/Figma Logo Full Color.png";
 import githubLogo from "../assets/GitHub_Logo_White.png";
 import githubcatLogo from "../assets/github-mark-white.png";
-import { Rocket, CheckCircle, User } from "lucide-react";
+import { Rocket, CheckCircle, User, Calendar, BarChart3, Target, Clock, Filter, Search, Zap } from "lucide-react";
 import heroScreenshot from "../assets/zelvo_dashboard_light.png";
 import backgroundImage from "../assets/Zelvo_LandingPage_Background.png";
 import heroBlurImage from "../assets/Zelvo_HeroImage_Blur.png";
@@ -204,6 +204,150 @@ export default function LandingPage() {
                     <h4>The Future of Work</h4>
                     <p>Where productivity meets simplicity</p>
                   </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Features Section */}
+        <section className="zelvo-features" id="features">
+          <div className="features-container">
+            <div className="features-header">
+              <h2 className="features-title">
+                Powerful <span className="gradient-text">Features</span> for Your Productivity
+              </h2>
+              <p className="features-subtitle">
+                Everything you need to organize, track, and complete your tasks efficiently
+              </p>
+            </div>
+
+            <div className="features-grid">
+              {/* Task Management Feature */}
+              <div className="zelvo-feature-card" id="task-management">
+                <div className="feature-card-header">
+                  <div className="feature-icon-large">
+                    <Target size={40} />
+                  </div>
+                  <h3 className="feature-card-title">Task Management</h3>
+                </div>
+                <p className="feature-card-description">
+                  Create, organize, and track your tasks with intuitive controls. Set priorities, due dates, and categories to keep everything organized.
+                </p>
+                <div className="feature-details">
+                  <div className="feature-detail-item">
+                    <CheckCircle size={16} />
+                    <span>Smart task creation with templates</span>
+                  </div>
+                  <div className="feature-detail-item">
+                    <CheckCircle size={16} />
+                    <span>Priority levels and due date tracking</span>
+                  </div>
+                  <div className="feature-detail-item">
+                    <CheckCircle size={16} />
+                    <span>Category organization system</span>
+                  </div>
+                  <div className="feature-detail-item">
+                    <CheckCircle size={16} />
+                    <span>Bulk operations for efficiency</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Smart Analytics Feature */}
+              <div className="zelvo-feature-card" id="smart-analytics">
+                <div className="feature-card-header">
+                  <div className="feature-icon-large">
+                    <BarChart3 size={40} />
+                  </div>
+                  <h3 className="feature-card-title">Smart Analytics</h3>
+                </div>
+                <p className="feature-card-description">
+                  Gain insights into your productivity patterns with detailed analytics and progress tracking.
+                </p>
+                <div className="feature-details">
+                  <div className="feature-detail-item">
+                    <CheckCircle size={16} />
+                    <span>Progress visualization and charts</span>
+                  </div>
+                  <div className="feature-detail-item">
+                    <CheckCircle size={16} />
+                    <span>Productivity trend analysis</span>
+                  </div>
+                  <div className="feature-detail-item">
+                    <CheckCircle size={16} />
+                    <span>Completion rate tracking</span>
+                  </div>
+                  <div className="feature-detail-item">
+                    <CheckCircle size={16} />
+                    <span>Performance insights</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Personal Dashboard Feature */}
+              <div className="zelvo-feature-card" id="personal-dashboard">
+                <div className="feature-card-header">
+                  <div className="feature-icon-large">
+                    <Calendar size={40} />
+                  </div>
+                  <h3 className="feature-card-title">Personal Dashboard</h3>
+                </div>
+                <p className="feature-card-description">
+                  Your central command center with real-time overview of tasks, upcoming deadlines, and productivity metrics.
+                </p>
+                <div className="feature-details">
+                  <div className="feature-detail-item">
+                    <CheckCircle size={16} />
+                    <span>Real-time task overview</span>
+                  </div>
+                  <div className="feature-detail-item">
+                    <CheckCircle size={16} />
+                    <span>Calendar integration</span>
+                  </div>
+                  <div className="feature-detail-item">
+                    <CheckCircle size={16} />
+                    <span>Real-time task updates</span>
+                  </div>
+                  <div className="feature-detail-item">
+                    <CheckCircle size={16} />
+                    <span>Customizable widgets</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Additional Features Row */}
+            <div className="additional-features">
+              <h3 className="additional-features-title">More Powerful Tools</h3>
+              <div className="additional-features-grid">
+                <div className="mini-feature">
+                  <div className="mini-feature-icon">
+                    <Search size={24} />
+                  </div>
+                  <h4>Smart Search</h4>
+                  <p>Find tasks instantly with intelligent search and filters</p>
+                </div>
+                <div className="mini-feature">
+                  <div className="mini-feature-icon">
+                    <Clock size={24} />
+                  </div>
+                  <h4>Time Tracking</h4>
+                  <p>Monitor time spent on tasks and optimize your workflow</p>
+                </div>
+                <div className="mini-feature">
+                  <div className="mini-feature-icon">
+                    <Filter size={24} />
+                  </div>
+                  <h4>Advanced Filtering</h4>
+                  <p>Filter tasks by status, priority, date, and more</p>
+                </div>
+                <div className="mini-feature">
+                  <div className="mini-feature-icon">
+                    <Zap size={24} />
+                  </div>
+                  <h4>Real-time Sync</h4>
+                  <p>Instant updates and synchronization across your workspace</p>
                 </div>
               </div>
             </div>
