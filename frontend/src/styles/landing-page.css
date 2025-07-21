@@ -1092,3 +1092,399 @@ html, body {
 .integrations-logos .partner-logo:hover {
   transform: scale(1.05) translateY(-2px);
 }
+
+/* ===================================================== */
+/* ZELVO ABOUT SECTION                                   */
+/* ===================================================== */
+
+.zelvo-about {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  background: #FFFFFF;
+  position: relative;
+  overflow: hidden;
+}
+
+.about-container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.about-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.about-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.about-title {
+  font-family: "Circular Std", sans-serif;
+  font-weight: 900;
+  font-size: 3.5rem;
+  line-height: 1.2;
+  color: #17246d;
+  margin: 0;
+  letter-spacing: -1px;
+}
+
+.about-subtitle {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 600;
+  font-size: 1.25rem;
+  line-height: 1.5;
+  color: #17246d;
+  margin: 0;
+}
+
+.about-description {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #6c7380;
+  margin: 0;
+}
+
+.about-stats {
+  display: flex;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 16px;
+  box-shadow: 0px 8px 32px rgba(123, 126, 238, 0.12);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  z-index: 10;
+}
+
+.stat-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0px 16px 40px rgba(123, 126, 238, 0.2);
+}
+
+.stat-number {
+  font-family: "Circular Std", sans-serif;
+  font-weight: 900;
+  font-size: 2rem;
+  color: #00A896;
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: #6c7380;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.about-features {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.feature-highlight {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 16px;
+  box-shadow: 0px 8px 24px rgba(123, 126, 238, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 10;
+}
+
+.feature-highlight:hover {
+  transform: translateX(8px);
+  box-shadow: 0px 12px 32px rgba(123, 126, 238, 0.15);
+  border-color: rgba(0, 168, 150, 0.3);
+}
+
+.feature-icon {
+  color: #00A896;
+  padding: 0.75rem;
+  background: rgba(0, 168, 150, 0.1);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.feature-title {
+  font-family: "Circular Std", sans-serif;
+  font-weight: 700;
+  font-size: 1.125rem;
+  color: #17246d;
+  margin: 0 0 0.5rem 0;
+}
+
+.feature-desc {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: #6c7380;
+  margin: 0;
+}
+
+.about-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.visual-container {
+  position: relative;
+  width: 400px;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.floating-card {
+  position: absolute;
+  padding: 1rem 1.5rem;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 16px;
+  box-shadow: 0px 8px 24px rgba(123, 126, 238, 0.15);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  animation: float 6s ease-in-out infinite;
+  transition: transform 0.3s ease;
+  z-index: 10;
+}
+
+.floating-card:hover {
+  transform: scale(1.05);
+}
+
+.card-1 {
+  top: 10%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.card-2 {
+  top: 15%;
+  right: 10%;
+  animation-delay: 1.5s;
+}
+
+.card-3 {
+  bottom: 15%;
+  left: 5%;
+  animation-delay: 3s;
+}
+
+.card-4 {
+  bottom: 10%;
+  right: 15%;
+  animation-delay: 4.5s;
+}
+
+.card-icon {
+  font-size: 1.5rem;
+}
+
+.card-text {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: #17246d;
+  white-space: nowrap;
+}
+
+.about-main-visual {
+  width: 200px;
+  height: 200px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  box-shadow: 
+    0px 32px 64px rgba(123, 126, 238, 0.2),
+    0px 16px 32px rgba(123, 126, 238, 0.15),
+    0px 8px 16px rgba(123, 126, 238, 0.1);
+  text-align: center;
+  padding: 2rem;
+  z-index: 10;
+}
+
+.visual-content h4 {
+  font-family: "Circular Std", sans-serif;
+  font-weight: 700;
+  font-size: 1.125rem;
+  color: #17246d;
+  margin: 0 0 0.5rem 0;
+}
+
+.visual-content p {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 500;
+  font-size: 0.75rem;
+  color: #6c7380;
+  margin: 0;
+}
+
+/* Animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .about-container {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    text-align: center;
+  }
+
+  .about-visual {
+    order: -1;
+  }
+
+  .visual-container {
+    width: 350px;
+    height: 350px;
+  }
+
+  .about-stats {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .zelvo-about {
+    padding: 3rem 1rem;
+  }
+
+  .about-title {
+    font-size: 2.5rem;
+  }
+
+  .about-subtitle {
+    font-size: 1.125rem;
+  }
+
+  .about-stats {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .visual-container {
+    width: 300px;
+    height: 300px;
+  }
+
+  .floating-card {
+    padding: 0.75rem 1rem;
+  }
+
+  .card-text {
+    font-size: 0.75rem;
+  }
+
+  .about-main-visual {
+    width: 150px;
+    height: 150px;
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-container {
+    gap: 2rem;
+  }
+
+  .about-title {
+    font-size: 2rem;
+  }
+
+  .visual-container {
+    width: 250px;
+    height: 250px;
+  }
+
+  .floating-card {
+    padding: 0.5rem 0.75rem;
+  }
+
+  .card-icon {
+    font-size: 1.25rem;
+  }
+
+  .about-main-visual {
+    width: 120px;
+    height: 120px;
+    padding: 1rem;
+  }
+
+  .visual-content h4 {
+    font-size: 1rem;
+  }
+
+  .visual-content p {
+    font-size: 0.625rem;
+  }
+}
+
+/* ===================================================== */
+/* RESPONSIVE SCALING FOR DIFFERENT SCREEN SIZES         */
+/* ===================================================== */
