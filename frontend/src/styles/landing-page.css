@@ -30,6 +30,546 @@ html, body {
 }
 
 /* ===========================
+   DARK MODE STYLES
+   =========================== */
+body:not(.light-mode) .landing-page {
+  color: #ffffff;
+  background: #0a0a0f;
+}
+
+body:not(.light-mode) .landing-container {
+  background: #0a0a0f;
+}
+
+body:not(.light-mode) .main-header {
+  background: #141420;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+body:not(.light-mode) .taskflow-title {
+  color: #ffffff;
+  text-shadow: 0 0 16px #ff3a4c, 0 2px 0 #000, 0 0 2px #ff3a4c;
+}
+
+body:not(.light-mode) .login-link {
+  color: #ff3a4c;
+}
+
+body:not(.light-mode) .login-link:hover {
+  color: #ff7080;
+}
+
+body:not(.light-mode) .tagline-text {
+  color: #ff3a4c;
+  text-shadow: 0 0 8px #ff3a4c;
+}
+
+body:not(.light-mode) .zelvo-hero {
+  background: transparent;
+}
+
+body:not(.light-mode) .zelvo-hero-title {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .zelvo-hero-subtitle {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .zelvo-btn-primary {
+  background: linear-gradient(135deg, #ff3a4c 0%, #ff7080 100%);
+  color: #ffffff;
+  border: 1px solid #ff3a4c;
+}
+
+body:not(.light-mode) .zelvo-btn-primary:hover {
+  background: linear-gradient(135deg, #ff7080 0%, #ff3a4c 100%);
+  box-shadow: 0 4px 20px rgba(255, 58, 76, 0.4);
+}
+
+body:not(.light-mode) .zelvo-btn-outline {
+  background: transparent;
+  color: #ff3a4c;
+  border: 2px solid #ff3a4c;
+}
+
+body:not(.light-mode) .zelvo-btn-outline:hover {
+  background: rgba(255, 58, 76, 0.1);
+  box-shadow: 0 4px 20px rgba(255, 58, 76, 0.2);
+}
+
+body:not(.light-mode) .zelvo-about {
+  background: transparent;
+}
+
+body:not(.light-mode) .about-title {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .about-subtitle {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .about-description {
+  color: #e0e0e0;
+}
+
+body:not(.light-mode) .stat-item {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body:not(.light-mode) .stat-item:hover {
+  background: rgba(255, 58, 76, 0.1);
+  border-color: #ff3a4c;
+}
+
+body:not(.light-mode) .stat-number {
+  color: #ff3a4c;
+}
+
+body:not(.light-mode) .stat-label {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .feature-highlight {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body:not(.light-mode) .feature-highlight:hover {
+  background: rgba(255, 58, 76, 0.1);
+  border-color: #ff3a4c;
+}
+
+body:not(.light-mode) .feature-icon {
+  color: #ff3a4c;
+  background: rgba(255, 58, 76, 0.1);
+}
+
+body:not(.light-mode) .feature-title {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .feature-desc {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .floating-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+body:not(.light-mode) .floating-card:hover {
+  background: rgba(255, 58, 76, 0.1);
+  border-color: #ff3a4c;
+}
+
+body:not(.light-mode) .card-text {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .about-main-visual {
+  background: linear-gradient(135deg, #141420 0%, #1a1a2e 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body:not(.light-mode) .visual-content h4 {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .visual-content p {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .zelvo-features {
+  background: #0a0a0f;
+}
+
+body:not(.light-mode) .features-title {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .features-subtitle {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .zelvo-feature-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body:not(.light-mode) .zelvo-feature-card:hover {
+  background: rgba(255, 58, 76, 0.1);
+  border-color: #ff3a4c;
+  box-shadow: 0 8px 32px rgba(255, 58, 76, 0.2);
+}
+
+body:not(.light-mode) .feature-icon-large {
+  color: #ff3a4c;
+  background: rgba(255, 58, 76, 0.1);
+}
+
+body:not(.light-mode) .feature-card-title {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .feature-card-description {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .feature-detail-item {
+  color: #e0e0e0;
+}
+
+body:not(.light-mode) .feature-detail-item svg {
+  color: #ff3a4c;
+}
+
+body:not(.light-mode) .additional-features-title {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .mini-feature {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body:not(.light-mode) .mini-feature:hover {
+  background: rgba(255, 58, 76, 0.1);
+  border-color: #ff3a4c;
+}
+
+body:not(.light-mode) .mini-feature-icon {
+  color: #ff3a4c;
+  background: rgba(255, 58, 76, 0.1);
+}
+
+body:not(.light-mode) .mini-feature h4 {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .mini-feature p {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .zelvo-testimonials {
+  background: transparent;
+}
+
+body:not(.light-mode) .testimonials-title {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .testimonials-subtitle {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .testimonial-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body:not(.light-mode) .testimonial-card:hover {
+  background: rgba(255, 58, 76, 0.1);
+  border-color: #ff3a4c;
+  box-shadow: 0 8px 32px rgba(255, 58, 76, 0.2);
+}
+
+body:not(.light-mode) .testimonial-quote-icon {
+  color: #ff3a4c;
+}
+
+body:not(.light-mode) .testimonial-text {
+  color: #e0e0e0;
+}
+
+body:not(.light-mode) .star-icon {
+  color: #ff3a4c;
+}
+
+body:not(.light-mode) .author-name {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .author-role {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .stat-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body:not(.light-mode) .stat-card:hover {
+  background: rgba(255, 58, 76, 0.1);
+  border-color: #ff3a4c;
+}
+
+body:not(.light-mode) .zelvo-pricing {
+  background: #0a0a0f;
+}
+
+body:not(.light-mode) .pricing-title {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .pricing-subtitle {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .pricing-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body:not(.light-mode) .pricing-card.featured {
+  background: rgba(255, 58, 76, 0.1);
+  border-color: #ff3a4c;
+  box-shadow: 0 8px 32px rgba(255, 58, 76, 0.2);
+}
+
+body:not(.light-mode) .pricing-card:hover {
+  background: rgba(255, 58, 76, 0.1);
+  border-color: #ff3a4c;
+  box-shadow: 0 8px 32px rgba(255, 58, 76, 0.2);
+}
+
+body:not(.light-mode) .plan-name {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .price-amount {
+  color: #ff3a4c;
+}
+
+body:not(.light-mode) .price-period {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .plan-feature {
+  color: #e0e0e0;
+}
+
+body:not(.light-mode) .plan-feature svg {
+  color: #ff3a4c;
+}
+
+body:not(.light-mode) .cta-button.primary {
+  background: linear-gradient(135deg, #ff3a4c 0%, #ff7080 100%);
+  color: #ffffff;
+  border: 1px solid #ff3a4c;
+}
+
+body:not(.light-mode) .cta-button.primary:hover {
+  background: linear-gradient(135deg, #ff7080 0%, #ff3a4c 100%);
+  box-shadow: 0 4px 20px rgba(255, 58, 76, 0.4);
+}
+
+body:not(.light-mode) .cta-button.secondary {
+  background: transparent;
+  color: #ff3a4c;
+  border: 2px solid #ff3a4c;
+}
+
+body:not(.light-mode) .cta-button.secondary:hover {
+  background: rgba(255, 58, 76, 0.1);
+  box-shadow: 0 4px 20px rgba(255, 58, 76, 0.2);
+}
+
+body:not(.light-mode) .zelvo-footer {
+  background: #141420;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body:not(.light-mode) .footer-logo {
+  color: #ff3a4c;
+}
+
+body:not(.light-mode) .footer-tagline {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .social-link {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .social-link:hover {
+  color: #ff3a4c;
+}
+
+body:not(.light-mode) .footer-column h4 {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .footer-column a {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .footer-column a:hover {
+  color: #ff3a4c;
+}
+
+body:not(.light-mode) .footer-copyright {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .footer-newsletter p {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .newsletter-input {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+body:not(.light-mode) .newsletter-input:focus {
+  border-color: #ff3a4c;
+  box-shadow: 0 0 0 2px rgba(255, 58, 76, 0.2);
+}
+
+body:not(.light-mode) .newsletter-input::placeholder {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .newsletter-button {
+  background: linear-gradient(135deg, #ff3a4c 0%, #ff7080 100%);
+  color: #ffffff;
+  border: 1px solid #ff3a4c;
+}
+
+body:not(.light-mode) .newsletter-button:hover {
+  background: linear-gradient(135deg, #ff7080 0%, #ff3a4c 100%);
+  box-shadow: 0 4px 20px rgba(255, 58, 76, 0.4);
+}
+
+body:not(.light-mode) .development-warning {
+  background: rgba(255, 58, 76, 0.1);
+  border: 1px solid #ff3a4c;
+}
+
+body:not(.light-mode) .development-warning-content {
+  background: rgba(20, 20, 32, 0.95);
+  border: 1px solid rgba(255, 58, 76, 0.3);
+}
+
+body:not(.light-mode) .warning-icon {
+  color: #ff3a4c;
+}
+
+body:not(.light-mode) .warning-text {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .warning-close {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .warning-close:hover {
+  color: #ff3a4c;
+}
+
+/* Additional dark mode styles for FAQ and other elements */
+body:not(.light-mode) .faq-section {
+  background: #141420;
+}
+
+body:not(.light-mode) .faq-title {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .faq-question {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+body:not(.light-mode) .faq-question:hover {
+  background: rgba(255, 58, 76, 0.1);
+  border-color: #ff3a4c;
+}
+
+body:not(.light-mode) .faq-answer {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  color: #e0e0e0;
+}
+
+body:not(.light-mode) .benefits-section {
+  background: #0a0a0f;
+}
+
+body:not(.light-mode) .benefits-title {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .benefit-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body:not(.light-mode) .benefit-card:hover {
+  background: rgba(255, 58, 76, 0.1);
+  border-color: #ff3a4c;
+}
+
+body:not(.light-mode) .benefit-icon {
+  color: #ff3a4c;
+  background: rgba(255, 58, 76, 0.1);
+}
+
+body:not(.light-mode) .benefit-heading {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .benefit-text {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .integrations-section {
+  background: #141420;
+}
+
+body:not(.light-mode) .integrations-text h3 {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .integrations-text p {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .partner-logo {
+  filter: brightness(0.8) contrast(1.2);
+}
+
+body:not(.light-mode) .partner-logo:hover {
+  filter: brightness(1) contrast(1);
+}
+
+/* Dark mode hero image container */
+body:not(.light-mode) .zelvo-hero-image {
+  background: rgba(20, 20, 32, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0px 32px 64px rgba(0, 0, 0, 0.3),
+    0px 16px 32px rgba(0, 0, 0, 0.2),
+    0px 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive dark mode styles */
+@media (max-width: 768px) {
+  body:not(.light-mode) .zelvo-hero-title {
+    color: #ffffff;
+  }
+  
+  body:not(.light-mode) .zelvo-hero-subtitle {
+    color: #9b9ba7;
+  }
+}
+
+/* ===========================
    HEADER SECTION
    =========================== */
 .main-header {

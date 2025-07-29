@@ -557,6 +557,67 @@ body {
 /* ZELVO Figma-matching Navbar Styles                    */
 /* ===================================================== */
 
+/* Dark mode styles for Zelvo navbar */
+body:not(.light-mode) .zelvo-nav {
+  background: rgba(20, 20, 32, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Light mode styles for Zelvo navbar */
+body.light-mode .zelvo-nav {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+body:not(.light-mode) .zelvo-brand-icon {
+  color: #3a74d3;
+}
+
+body:not(.light-mode) .zelvo-brand-text {
+  color: #ff3a4c;
+}
+
+body:not(.light-mode) .zelvo-nav-link {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .zelvo-nav-link:hover {
+  color: #ff3a4c;
+}
+
+body:not(.light-mode) .zelvo-nav-link::after {
+  background: #ff3a4c;
+}
+
+body:not(.light-mode) .zelvo-login {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .zelvo-login:hover {
+  color: #ff3a4c;
+}
+
+body:not(.light-mode) .zelvo-signup-btn {
+  background: linear-gradient(135deg, #ff3a4c 0%, #ff7080 100%);
+  color: #ffffff;
+  box-shadow: 0px 4px 14px rgba(255, 58, 76, 0.3);
+}
+
+body:not(.light-mode) .zelvo-signup-btn:hover {
+  background: linear-gradient(135deg, #ff7080 0%, #ff3a4c 100%);
+  box-shadow: 0px 6px 20px rgba(255, 58, 76, 0.4);
+}
+
+body:not(.light-mode) .zelvo-theme-toggle {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .zelvo-theme-toggle:hover {
+  color: #ff3a4c;
+}
+
 .zelvo-nav {
   position: fixed;
   top: 0;

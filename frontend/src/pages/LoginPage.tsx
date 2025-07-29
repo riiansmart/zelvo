@@ -11,11 +11,13 @@ import { useAuth } from '../hooks/useAuth';
 import { ErrorMessage } from '../components/ui/CommonComponents';
 import axios from 'axios';
 import loginImg from '../assets/loginImg.png';
+import { useTheme } from '../context/ThemeContext';
 
 export default function LoginPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const { login } = useAuth();
+  const { isLightMode } = useTheme();
   const [form, setForm] = useState<{ email: string; password: string }>({ email: '', password: '' });
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -70,7 +72,13 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div 
+      className="min-h-screen"
+      style={{
+        backgroundColor: isLightMode ? '#f9fafb' : '#0a0a0f',
+        color: isLightMode ? '#111827' : '#ffffff'
+      }}
+    >
       {/* Main Container - removed max width constraint for better large screen utilization */}
       <div className="flex min-h-screen">
         {/* Left Hero Section - Better proportions for large screens */}
@@ -87,8 +95,11 @@ export default function LoginPage() {
           {/* Content */}
           <div className="relative z-10 flex flex-col justify-center items-center px-8 lg:px-16 xl:px-24 py-20 text-center text-white w-full">
             <div className="max-w-lg">
-              <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-6">
-                Welcome to Zelvo
+              <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold mb-6">
+                Welcome to{' '}
+                <span style={{ color: isLightMode ? '#ffffff' : '#ff3a4c' }}>
+                  Zelvo
+                </span>
               </h1>
               <p className="text-lg lg:text-xl xl:text-2xl text-gray-100">
                 Streamline your task and project management.
@@ -98,26 +109,58 @@ export default function LoginPage() {
         </div>
 
         {/* Right Form Section - Better proportions */}
-        <div className="w-1/2 lg:w-2/5 flex items-center justify-center px-8 lg:px-12 xl:px-16 py-12 relative">
+        <div 
+          className="w-1/2 lg:w-2/5 flex items-center justify-center px-8 lg:px-12 xl:px-16 py-12 relative"
+          style={{
+            backgroundColor: isLightMode ? '#ffffff' : '#141420'
+          }}
+        >
           {/* Back Button */}
           <button
             onClick={() => navigate('/')}
-            className="absolute top-6 right-6 flex items-center gap-2 text-gray-600 hover:text-[#3a74d3] transition-colors group"
+            className="absolute top-6 right-6 flex items-center gap-2 transition-colors group"
+            style={{
+              color: isLightMode ? '#6b7280' : '#9b9ba7'
+            }}
             aria-label="Go back to landing page"
           >
-            <svg className="w-5 h-5 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg 
+              className="w-5 h-5 transform group-hover:-translate-x-1 transition-transform" 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
+              style={{
+                color: isLightMode ? '#3a74d3' : '#ff3a4c'
+              }}
+            >
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
-            <span className="text-sm font-medium">Back</span>
+            <span 
+              className="text-sm font-medium"
+              style={{
+                color: isLightMode ? '#3a74d3' : '#ff3a4c'
+              }}
+            >
+              Back
+            </span>
           </button>
 
           <div className="w-full max-w-lg">
             {/* Form Header */}
             <div className="text-center mb-8">
-              <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900 mb-3">
-                Sign in to Zelvo
+              <h2 
+                className="text-3xl lg:text-4xl xl:text-5xl font-bold mb-3"
+                style={{ color: isLightMode ? '#111827' : '#ffffff' }}
+              >
+                Sign in to{' '}
+                <span style={{ color: isLightMode ? '#111827' : '#ff3a4c' }}>
+                  Zelvo
+                </span>
               </h2>
-              <p className="text-gray-600 text-lg">
+              <p 
+                className="text-lg"
+                style={{ color: isLightMode ? '#6b7280' : '#9b9ba7' }}
+              >
                 Start managing your tasks efficiently
               </p>
             </div>
@@ -126,7 +169,11 @@ export default function LoginPage() {
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Email */}
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                <label 
+                  htmlFor="email" 
+                  className="block text-sm font-medium mb-1"
+                  style={{ color: isLightMode ? '#374151' : '#e0e0e0' }}
+                >
                   Email address
                 </label>
                 <input
@@ -137,13 +184,22 @@ export default function LoginPage() {
                   value={form.email}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#3a74d3] focus:border-transparent"
+                  className="w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:border-transparent"
+                  style={{
+                    border: isLightMode ? '1px solid #d1d5db' : '1px solid rgba(255, 255, 255, 0.1)',
+                    backgroundColor: isLightMode ? '#ffffff' : 'rgba(255, 255, 255, 0.05)',
+                    color: isLightMode ? '#111827' : '#ffffff'
+                  }}
                 />
               </div>
 
               {/* Password */}
               <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+                <label 
+                  htmlFor="password" 
+                  className="block text-sm font-medium mb-1"
+                  style={{ color: isLightMode ? '#374151' : '#e0e0e0' }}
+                >
                   Password
                 </label>
                 <input
@@ -154,7 +210,12 @@ export default function LoginPage() {
                   value={form.password}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#3a74d3] focus:border-transparent"
+                  className="w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:border-transparent"
+                  style={{
+                    border: isLightMode ? '1px solid #d1d5db' : '1px solid rgba(255, 255, 255, 0.1)',
+                    backgroundColor: isLightMode ? '#ffffff' : 'rgba(255, 255, 255, 0.05)',
+                    color: isLightMode ? '#111827' : '#ffffff'
+                  }}
                 />
               </div>
 
@@ -165,15 +226,24 @@ export default function LoginPage() {
                     id="remember"
                     name="remember"
                     type="checkbox"
-                    className="h-4 w-4 text-[#3a74d3] border-gray-300 rounded focus:ring-[#3a74d3]"
+                    className="h-4 w-4 rounded"
+                    style={{
+                      color: isLightMode ? '#3a74d3' : '#ff3a4c',
+                      borderColor: isLightMode ? '#d1d5db' : 'rgba(255, 255, 255, 0.1)'
+                    }}
                   />
-                  <label htmlFor="remember" className="ml-2 block text-sm text-gray-700">
+                  <label 
+                    htmlFor="remember" 
+                    className="ml-2 block text-sm"
+                    style={{ color: isLightMode ? '#374151' : '#e0e0e0' }}
+                  >
                     Remember me
                   </label>
                 </div>
                 <Link 
                   to="/forgot-password" 
-                  className="text-sm text-[#3a74d3] font-medium hover:text-[#2d5cb8]"
+                  className="text-sm font-medium"
+                  style={{ color: isLightMode ? '#3a74d3' : '#ff3a4c' }}
                 >
                   Forgot your password?
                 </Link>
@@ -186,7 +256,11 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full bg-[#3a74d3] hover:bg-[#2d5cb8] text-white font-medium py-3 px-4 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#3a74d3] disabled:opacity-50"
+                className="w-full font-medium py-3 px-4 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50"
+                style={{
+                  backgroundColor: isLightMode ? '#3a74d3' : '#ff3a4c',
+                  color: '#ffffff'
+                }}
               >
                 {isLoading ? (
                   <span className="flex items-center justify-center">
@@ -204,17 +278,33 @@ export default function LoginPage() {
               {/* Social Login Divider */}
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-gray-300" />
+                  <div 
+                    className="w-full border-t"
+                    style={{ borderColor: isLightMode ? '#d1d5db' : 'rgba(255, 255, 255, 0.1)' }}
+                  />
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-gray-50 text-gray-500">Or continue with</span>
+                  <span 
+                    className="px-2"
+                    style={{
+                      backgroundColor: isLightMode ? '#f9fafb' : '#141420',
+                      color: isLightMode ? '#6b7280' : '#9b9ba7'
+                    }}
+                  >
+                    Or continue with
+                  </span>
                 </div>
               </div>
 
               {/* Social Login Button */}
               <button
                 type="button"
-                className="flex items-center justify-center gap-2 w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-700 font-medium hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                className="flex items-center justify-center gap-2 w-full px-4 py-3 rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2"
+                style={{
+                  border: isLightMode ? '1px solid #d1d5db' : '1px solid rgba(255, 255, 255, 0.1)',
+                  backgroundColor: isLightMode ? '#ffffff' : 'rgba(255, 255, 255, 0.05)',
+                  color: isLightMode ? '#374151' : '#e0e0e0'
+                }}
                 onClick={() => { window.location.href = 'http://localhost:8081/oauth2/authorization/github' }}
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -224,9 +314,16 @@ export default function LoginPage() {
               </button>
 
               {/* Register Link */}
-              <p className="text-center text-sm text-gray-600">
+              <p 
+                className="text-center text-sm"
+                style={{ color: isLightMode ? '#6b7280' : '#9b9ba7' }}
+              >
                 Don't have an account?{' '}
-                <Link to="/register" className="text-[#3a74d3] font-medium hover:text-[#2d5cb8]">
+                <Link 
+                  to="/register" 
+                  className="font-medium"
+                  style={{ color: isLightMode ? '#3a74d3' : '#ff3a4c' }}
+                >
                   Register now
                 </Link>
               </p>

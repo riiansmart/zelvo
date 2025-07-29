@@ -12,8 +12,11 @@ import githubLogo from "../assets/GitHub_Logo_White.png";
 import githubcatLogo from "../assets/github-mark-white.png";
 import { Rocket, CheckCircle, User, Calendar, BarChart3, Target, Clock, Filter, Search, Zap, Star, Quote, Package, AlertTriangle } from "lucide-react";
 import heroScreenshot from "../assets/zelvo_dashboard_light.png";
+import heroScreenshotDark from "../assets/Zelvo Dashboard Dark.png";
 import backgroundImage from "../assets/Zelvo_LandingPage_Background.png";
 import heroBlurImage from "../assets/Zelvo_HeroImage_Blur.png";
+import heroBlurImageDark from "../assets/Zelvo_LandingPage_Background_Dark.png";
+import { useTheme } from "../context/ThemeContext";
 
 import "../styles/landing-page.css";
 
@@ -103,6 +106,7 @@ const DevelopmentWarning: React.FC<DevelopmentWarningProps> = ({ isVisible, onCl
  * @returns {JSX.Element} The landing page component
  */
 export default function LandingPage() {
+  const { isLightMode } = useTheme();
   const [showDevelopmentWarning, setShowDevelopmentWarning] = React.useState(false);
 
   const handleDevelopmentLink = (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => {
@@ -113,6 +117,9 @@ export default function LandingPage() {
   const handleCloseDevelopmentWarning = () => {
     setShowDevelopmentWarning(false);
   };
+
+  const { toggleTheme } = useTheme();
+
   return (
     <div className="landing-page">
       {/* Development Warning */}
@@ -154,9 +161,12 @@ export default function LandingPage() {
 
             {/* Dashboard Image - Below Text */}
             <div className="zelvo-hero-image">
-              <img src={heroScreenshot} alt="Zelvo dashboard preview" />
               <img 
-                src={heroBlurImage} 
+                src={isLightMode ? heroScreenshot : heroScreenshotDark} 
+                alt="Zelvo dashboard preview" 
+              />
+              <img 
+                src={isLightMode ? heroBlurImage : heroBlurImageDark} 
                 alt="Hero blur overlay" 
                 className="zelvo-hero-blur-overlay"
               />
