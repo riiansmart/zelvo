@@ -34,16 +34,22 @@ const DashboardPage = () => {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
 
-  useEffect(() => {
+  const fetchTasks = async () => {
     if (!token) return;
     setLoading(true);
-    getTasks()
-      .then((response) => {
-        if (Array.isArray(response)) setTasks(response);
-        else if (response?.content) setTasks(response.content);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
+    try {
+      const response = await getTasks();
+      if (Array.isArray(response)) setTasks(response);
+      else if (response?.content) setTasks(response.content);
+    } catch (error) {
+      console.error('Error fetching tasks:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchTasks();
   }, [token]);
 
   if (!user) return <div className="text-white p-6">Loading...</div>;
@@ -105,7 +111,7 @@ const DashboardPage = () => {
 
           <div className="flex flex-col gap-6">
             <CalendarCard />
-            <RecentTasksCard tasks={tasks} loading={loading} />
+            <RecentTasksCard tasks={tasks} loading={loading} onTaskUpdate={fetchTasks} />
           </div>
         </div>
       </main>

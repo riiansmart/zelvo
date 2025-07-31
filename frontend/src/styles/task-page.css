@@ -277,14 +277,14 @@ body:not(.light-mode) .form-textarea::placeholder {
 
 /* Dark mode buttons */
 body:not(.light-mode) .btn-primary {
-  background: linear-gradient(135deg, #ff3a4c 0%, #ff7080 100%);
+  background: #007bff;
   color: #ffffff;
   border: none;
 }
 
 body:not(.light-mode) .btn-primary:hover:not(:disabled) {
-  background: linear-gradient(135deg, #ff7080 0%, #ff3a4c 100%);
-  box-shadow: 0 4px 12px rgba(255, 58, 76, 0.3);
+  background: #0056b3;
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
 }
 
 body:not(.light-mode) .btn-secondary {
@@ -1311,14 +1311,14 @@ body:not(.light-mode) .hover\:bg-gray-50:hover {
 }
 
 .btn-primary {
-  background: #3b82f6;
+  background: #007bff;
   color: #ffffff;
-  border-color: #3b82f6;
+  border-color: #007bff;
 }
 
 .btn-primary:hover:not(:disabled) {
-  background: #2563eb;
-  border-color: #2563eb;
+  background: #0056b3;
+  border-color: #0056b3;
 }
 
 .btn-primary:disabled {
