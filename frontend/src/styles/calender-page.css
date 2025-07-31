@@ -1,6 +1,251 @@
 /* Calendar Page Styles */
 
 /* ======================================
+   DARK MODE STYLES FOR CALENDAR PAGE
+   ====================================== */
+
+/* Dark mode calendar container */
+body:not(.light-mode) .calendar-container {
+  background: #141420;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Dark mode calendar header */
+body:not(.light-mode) .calendar-header {
+  background: #141420;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body:not(.light-mode) .calendar-nav-btn {
+  background: #1a1a2e;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .calendar-nav-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: #ff3a4c;
+  color: #ff3a4c;
+}
+
+body:not(.light-mode) .calendar-title {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .calendar-title:hover {
+  background: rgba(255, 58, 76, 0.1);
+}
+
+/* Dark mode visual picker */
+body:not(.light-mode) .visual-picker-overlay {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+body:not(.light-mode) .visual-picker {
+  background: #141420;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+body:not(.light-mode) .visual-picker-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body:not(.light-mode) .visual-picker-nav {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .visual-picker-nav:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #ff3a4c;
+  color: #ff3a4c;
+}
+
+body:not(.light-mode) .visual-picker-year {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .visual-picker-month {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+body:not(.light-mode) .visual-picker-month:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #ff3a4c;
+  color: #ff3a4c;
+}
+
+body:not(.light-mode) .visual-picker-month.current {
+  background: rgba(255, 58, 76, 0.1);
+  border-color: #ff3a4c;
+  color: #ff3a4c;
+}
+
+body:not(.light-mode) .visual-picker-month.today {
+  background: #ff3a4c;
+  border-color: #ff3a4c;
+  color: #ffffff;
+}
+
+body:not(.light-mode) .visual-picker-month.today:hover {
+  background: #ff7080;
+  border-color: #ff7080;
+}
+
+body:not(.light-mode) .visual-picker-actions {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body:not(.light-mode) .visual-picker-today {
+  background: #ff3a4c;
+  color: #ffffff;
+  border-color: #ff3a4c;
+}
+
+body:not(.light-mode) .visual-picker-today:hover {
+  background: #ff7080;
+  border-color: #ff7080;
+}
+
+body:not(.light-mode) .visual-picker-close {
+  background: rgba(255, 255, 255, 0.05);
+  color: #9b9ba7;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body:not(.light-mode) .visual-picker-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+/* Dark mode calendar grid */
+body:not(.light-mode) .calendar-grid {
+  background: #141420;
+}
+
+body:not(.light-mode) .calendar-day-name {
+  background: #141420;
+  color: #9b9ba7;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body:not(.light-mode) .calendar-day {
+  background: #141420;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body:not(.light-mode) .calendar-day.empty {
+  background: #0a0a0f;
+}
+
+body:not(.light-mode) .calendar-day.other-month {
+  background: #0a0a0f;
+}
+
+body:not(.light-mode) .calendar-day.today {
+  background: rgba(255, 58, 76, 0.1);
+}
+
+body:not(.light-mode) .calendar-day:hover:not(.empty):not(.other-month) {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+body:not(.light-mode) .day-number {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .calendar-day.today .day-number {
+  background: #ff3a4c;
+  color: #ffffff;
+}
+
+body:not(.light-mode) .other-month-number {
+  color: #6b7280 !important;
+}
+
+body:not(.light-mode) .more-tasks {
+  color: #9b9ba7;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Dark mode task items - keep category colors but improve readability */
+body:not(.light-mode) .task-item {
+  color: #ffffff !important;
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  opacity: 0.9;
+  /* Remove the white border - let the inline styles keep the category color border */
+}
+
+body:not(.light-mode) .task-item:hover {
+  opacity: 1;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+body:not(.light-mode) .task-title {
+  color: #ffffff !important;
+  font-weight: 600;
+}
+
+/* Dark mode task popup */
+body:not(.light-mode) .task-popup-overlay {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+body:not(.light-mode) .task-popup {
+  background: #141420;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+body:not(.light-mode) .task-popup-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body:not(.light-mode) .task-popup-title {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .task-popup-close {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .task-popup-close:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+}
+
+body:not(.light-mode) .priority-text {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .category-text {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .task-popup-description h4,
+body:not(.light-mode) .task-popup-due-date h4,
+body:not(.light-mode) .task-popup-category h4 {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .task-popup-description p,
+body:not(.light-mode) .task-popup-due-date p {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .calendar-loading {
+  color: #9b9ba7;
+}
+
+/* ======================================
    CALENDAR CONTAINER
    ====================================== */
 .calendar-container {

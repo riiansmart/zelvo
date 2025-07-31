@@ -217,8 +217,8 @@ body:not(.light-mode) .task-card-menu-item-delete {
 }
 
 body:not(.light-mode) .task-card-menu-item-delete:hover {
-  background-color: rgba(255, 58, 76, 0.1);
-  color: #ff3a4c;
+  background-color: rgba(255, 58, 76, 0.1) !important;
+  color: #ff3a4c !important;
 }
 
 /* Dark mode task create modal */

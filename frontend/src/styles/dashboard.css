@@ -108,8 +108,8 @@ body:not(.light-mode) .dropdown-item {
 }
 
 body:not(.light-mode) .dropdown-item:hover {
-  background: rgba(255, 58, 76, 0.1);
-  color: #ff3a4c;
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
 }
 
 body:not(.light-mode) .dropdown-item-logout {
