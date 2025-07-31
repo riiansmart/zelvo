@@ -7,7 +7,7 @@ interface Props {
 }
 
 const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
-const yAxisLabels = ['05', '04', '03', '02', '01', '0'];
+const yAxisLabels = ['5+', '4', '3', '2', '1', '0'];
 
 function groupTasksByDay(tasks: Task[]): number[] {
   const counts = Array(7).fill(0);
