@@ -86,7 +86,7 @@ const DashboardPage = () => {
         {/* Stats Cards */}
         <div className="flex flex-wrap gap-4 mb-6">
           <StatsCard
-            count={tasks.filter((t) => !t.completed && new Date(t.dueDate) >= new Date()).length}
+            count={tasks.filter((t) => t.status === TaskStatus.TODO && new Date(t.dueDate) >= new Date()).length}
             title="Upcoming"
             subtitle="Tasks"
             borderColor="#d9534f"
@@ -98,7 +98,7 @@ const DashboardPage = () => {
             borderColor="#f0ad4e"
           />
           <StatsCard
-            count={tasks.filter((t) => t.completed).length}
+            count={tasks.filter((t) => t.status === TaskStatus.DONE).length}
             title="Completed"
             subtitle="Tasks"
             borderColor="#5cb85c"

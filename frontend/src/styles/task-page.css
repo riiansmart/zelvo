@@ -275,6 +275,21 @@ body:not(.light-mode) .form-textarea::placeholder {
   color: #6b7280;
 }
 
+/* Dark mode select dropdown options */
+body:not(.light-mode) .form-select option {
+  background-color: #141420;
+  color: #ffffff;
+}
+
+body:not(.light-mode) .form-select option:hover {
+  background-color: #1a1a2e;
+}
+
+body:not(.light-mode) .form-select option:checked {
+  background-color: #ff3a4c;
+  color: #ffffff;
+}
+
 /* Dark mode buttons */
 body:not(.light-mode) .btn-primary {
   background: #007bff;
