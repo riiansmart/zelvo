@@ -89,6 +89,44 @@ body:not(.light-mode) .theme-mode-toggle.active {
   color: #ffffff;
 }
 
+/* Dark mode button active state - red color */
+body:not(.light-mode) .theme-mode-toggle.dark-mode.active {
+  background: #ff3a4c;
+  border-color: #ff3a4c;
+  color: #ffffff;
+}
+
+body:not(.light-mode) .theme-mode-toggle.dark-mode.active .theme-mode-icon,
+body:not(.light-mode) .theme-mode-toggle.dark-mode.active .theme-mode-label {
+  color: #ffffff;
+}
+
+/* Light mode button active state - blue color */
+body.light-mode .theme-mode-toggle.light-mode.active {
+  background: #007bff;
+  border-color: #007bff;
+  color: #ffffff;
+}
+
+body.light-mode .theme-mode-toggle.light-mode.active .theme-mode-icon,
+body.light-mode .theme-mode-toggle.light-mode.active .theme-mode-label {
+  color: #ffffff;
+}
+
+
+
+/* Dark mode button hover state */
+.theme-mode-toggle.dark-mode:hover {
+  background: rgba(255, 58, 76, 0.1);
+  border-color: #ff3a4c;
+  color: #ff3a4c;
+}
+
+.theme-mode-toggle.dark-mode:hover .theme-mode-icon,
+.theme-mode-toggle.dark-mode:hover .theme-mode-label {
+  color: #ff3a4c;
+}
+
 body:not(.light-mode) .theme-mode-icon {
   color: #9b9ba7;
 }
