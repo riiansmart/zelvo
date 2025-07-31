@@ -5,6 +5,305 @@
 /* Add any additional dashboard-specific styles here */
 
 /* ======================================
+   DARK MODE STYLES FOR DASHBOARD
+   ====================================== */
+
+/* Dark mode layout */
+body:not(.light-mode) .dashboard-layout {
+  background: #0a0a0f;
+}
+
+body:not(.light-mode) .dashboard-content {
+  background: #0a0a0f;
+  color: #ffffff;
+}
+
+/* Dark mode sidebar */
+body:not(.light-mode) .sidebar {
+  background: #141420;
+  color: #ffffff;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 2px 0 4px rgba(0, 0, 0, 0.3);
+}
+
+body:not(.light-mode) .sidebar-brand {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .sidebar-brand-icon {
+  color: #3a74d3;
+}
+
+body:not(.light-mode) .sidebar-brand-text {
+  color: #ff3a4c;
+}
+
+body:not(.light-mode) .sidebar-link {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .sidebar-link:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+}
+
+body:not(.light-mode) .sidebar-link.active {
+  background: rgba(255, 58, 76, 0.1);
+  color: #ff3a4c;
+}
+
+body:not(.light-mode) .sidebar-logout {
+  color: #ff3a4c;
+}
+
+body:not(.light-mode) .sidebar-logout:hover {
+  background: rgba(255, 58, 76, 0.1);
+}
+
+/* Dark mode search */
+body:not(.light-mode) .search-container {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+body:not(.light-mode) .search-icon {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .search-input {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .search-input::placeholder {
+  color: #6b7280;
+}
+
+/* Dark mode welcome section */
+body:not(.light-mode) .welcome-text {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .welcome-description {
+  color: #9b9ba7;
+}
+
+/* Dark mode profile dropdown */
+body:not(.light-mode) .profile-avatar {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .profile-avatar:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+body:not(.light-mode) .dropdown-menu {
+  background: #141420;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+body:not(.light-mode) .dropdown-item {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+}
+
+body:not(.light-mode) .dropdown-item-logout {
+  color: #ff3a4c;
+}
+
+body:not(.light-mode) .dropdown-item-logout:hover {
+  background: rgba(255, 58, 76, 0.1);
+  color: #ff3a4c;
+}
+
+/* Dark mode stats cards */
+body:not(.light-mode) .stats-card {
+  background: #141420;
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+body:not(.light-mode) .stats-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+body:not(.light-mode) .stats-count {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .stats-title {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .stats-subtitle {
+  color: #9b9ba7;
+}
+
+/* Dark mode cards */
+body:not(.light-mode) .card {
+  background: #141420;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+body:not(.light-mode) .card-title {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .card-action {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .card-action:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+}
+
+body:not(.light-mode) .card-message {
+  color: #9b9ba7;
+}
+
+/* Dark mode calendar */
+body:not(.light-mode) .dashboard-calendar-day-header {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .dashboard-calendar-day {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .dashboard-calendar-day:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+body:not(.light-mode) .dashboard-calendar-today {
+  background: #ff3a4c !important;
+  color: #ffffff !important;
+}
+
+/* Dark mode activity chart */
+body:not(.light-mode) .activity-y-label {
+  color: #6b7280;
+}
+
+body:not(.light-mode) .activity-chart {
+  border-left: 2px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+body:not(.light-mode) .activity-bar-incomplete {
+  background: rgba(255, 58, 76, 0.3);
+}
+
+body:not(.light-mode) .activity-bar-completed {
+  background: #ff3a4c;
+}
+
+body:not(.light-mode) .activity-label {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .activity-metric-value {
+  background: rgba(255, 58, 76, 0.1);
+  color: #ff3a4c;
+}
+
+body:not(.light-mode) .activity-metric-label {
+  color: #9b9ba7;
+}
+
+/* Dark mode recent tasks */
+body:not(.light-mode) .recent-task-item {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body:not(.light-mode) .recent-task-title {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .recent-task-description {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .recent-task-menu {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .recent-task-menu:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Dark mode recent task dropdown menu */
+body:not(.light-mode) .recent-task-dropdown-menu {
+  background: #141420;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+body:not(.light-mode) .recent-task-dropdown-item {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .recent-task-dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+}
+
+body:not(.light-mode) .recent-task-dropdown-item-delete {
+  color: #ff3a4c;
+}
+
+body:not(.light-mode) .recent-task-dropdown-item-delete:hover {
+  background: rgba(255, 58, 76, 0.1) !important;
+  color: #ff3a4c !important;
+}
+
+/* Dark mode status dots */
+body:not(.light-mode) .status-design-system {
+  background: #10b981;
+}
+
+body:not(.light-mode) .status-typography {
+  background: #3b82f6;
+}
+
+/* Dark mode utility classes */
+body:not(.light-mode) .text-gray-600 {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .text-gray-500 {
+  color: #6b7280;
+}
+
+body:not(.light-mode) .text-gray-700 {
+  color: #e0e0e0;
+}
+
+body:not(.light-mode) .text-gray-900 {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .bg-white {
+  background-color: #141420;
+}
+
+body:not(.light-mode) .border-gray-200 {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+body:not(.light-mode) .hover\:bg-gray-50:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* ======================================
    DASHBOARD LAYOUT - LIGHT THEME
    ====================================== */
 .dashboard-layout {
@@ -562,6 +861,50 @@
 
 .recent-task-menu:hover {
   background: #f8f9fa;
+}
+
+/* Recent task dropdown menu */
+.recent-task-menu-container {
+  position: relative;
+}
+
+.recent-task-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  min-width: 120px;
+  margin-top: 4px;
+}
+
+.recent-task-dropdown-item {
+  padding: 10px 16px;
+  font-size: 14px;
+  color: #374151;
+  background: transparent;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.recent-task-dropdown-item:hover {
+  background: #f3f4f6;
+}
+
+.recent-task-dropdown-item-delete {
+  color: #dc2626 !important;
+}
+
+.recent-task-dropdown-item-delete:hover {
+  background: #fef2f2 !important;
+  color: #b91c1c !important;
 }
 
 .status-dot {

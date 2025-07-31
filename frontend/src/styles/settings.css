@@ -1,6 +1,324 @@
 /* Settings Page Styles */
 
 /* ======================================
+   DARK MODE STYLES FOR SETTINGS PAGE
+   ====================================== */
+
+/* Dark mode settings container */
+body:not(.light-mode) .settings-container {
+  background: #0a0a0f;
+}
+
+/* Dark mode settings cards */
+body:not(.light-mode) .settings-card {
+  background: #141420;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+body:not(.light-mode) .settings-title {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .settings-subtitle {
+  color: #9b9ba7;
+}
+
+/* Dark mode form fields */
+body:not(.light-mode) .field-label {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .field-input {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+body:not(.light-mode) .field-input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
+}
+
+body:not(.light-mode) .field-input::placeholder {
+  color: #6b7280;
+}
+
+/* Dark mode password input wrapper */
+body:not(.light-mode) .password-input-wrapper {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body:not(.light-mode) .password-input-wrapper:focus-within {
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
+}
+
+body:not(.light-mode) .password-toggle {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .password-toggle:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Dark mode password strength */
+body:not(.light-mode) .password-strength-bar {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Dark mode theme preferences */
+body:not(.light-mode) .theme-mode-toggle {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+body:not(.light-mode) .theme-mode-toggle:hover {
+  background: rgba(0, 123, 255, 0.1);
+  border-color: #007bff;
+  color: #007bff;
+}
+
+body:not(.light-mode) .theme-mode-toggle.active {
+  background: #007bff;
+  border-color: #007bff;
+  color: #ffffff;
+}
+
+/* Dark mode button active state - red color */
+body:not(.light-mode) .theme-mode-toggle.dark-mode.active {
+  background: #ff3a4c;
+  border-color: #ff3a4c;
+  color: #ffffff;
+}
+
+body:not(.light-mode) .theme-mode-toggle.dark-mode.active .theme-mode-icon,
+body:not(.light-mode) .theme-mode-toggle.dark-mode.active .theme-mode-label {
+  color: #ffffff;
+}
+
+/* Light mode button active state - blue color */
+body.light-mode .theme-mode-toggle.light-mode.active {
+  background: #007bff;
+  border-color: #007bff;
+  color: #ffffff;
+}
+
+body.light-mode .theme-mode-toggle.light-mode.active .theme-mode-icon,
+body.light-mode .theme-mode-toggle.light-mode.active .theme-mode-label {
+  color: #ffffff;
+}
+
+
+
+/* Dark mode button hover state */
+.theme-mode-toggle.dark-mode:hover {
+  background: rgba(255, 58, 76, 0.1);
+  border-color: #ff3a4c;
+  color: #ff3a4c;
+}
+
+.theme-mode-toggle.dark-mode:hover .theme-mode-icon,
+.theme-mode-toggle.dark-mode:hover .theme-mode-label {
+  color: #ff3a4c;
+}
+
+body:not(.light-mode) .theme-mode-icon {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .theme-mode-toggle:hover .theme-mode-icon {
+  color: #007bff;
+}
+
+body:not(.light-mode) .theme-mode-toggle.active .theme-mode-icon {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .theme-mode-label {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .theme-mode-toggle:hover .theme-mode-label {
+  color: #007bff;
+}
+
+body:not(.light-mode) .theme-mode-toggle.active .theme-mode-label {
+  color: #ffffff;
+}
+
+/* Dark mode profile picture */
+body:not(.light-mode) .profile-picture {
+  border: 4px solid rgba(255, 255, 255, 0.1);
+}
+
+body:not(.light-mode) .profile-picture-placeholder {
+  background: rgba(255, 255, 255, 0.05);
+  border: 4px solid rgba(255, 255, 255, 0.1);
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .profile-picture-icon {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .remove-picture-btn {
+  background: #dc3545;
+  color: #ffffff;
+  border: 2px solid #141420;
+}
+
+body:not(.light-mode) .remove-picture-btn:hover {
+  background: #c82333;
+}
+
+/* Dark mode buttons - keep blue as requested */
+body:not(.light-mode) .action-btn {
+  background: #007bff;
+  color: #ffffff;
+  border: none;
+}
+
+body:not(.light-mode) .action-btn:hover:not(:disabled) {
+  background: #0056b3;
+}
+
+body:not(.light-mode) .action-btn:disabled {
+  background: rgba(255, 255, 255, 0.1);
+  color: #6c7280;
+}
+
+body:not(.light-mode) .upload-btn {
+  background: #007bff;
+  color: #ffffff;
+}
+
+body:not(.light-mode) .upload-btn:hover {
+  background: #0056b3;
+}
+
+body:not(.light-mode) .remove-btn {
+  background: transparent;
+  color: #dc3545;
+  border: 2px solid #dc3545;
+}
+
+body:not(.light-mode) .remove-btn:hover {
+  background: #dc3545;
+  color: #ffffff;
+}
+
+body:not(.light-mode) .save-btn {
+  background: #007bff;
+  color: #ffffff;
+}
+
+body:not(.light-mode) .save-btn:hover:not(:disabled) {
+  background: #0056b3;
+}
+
+body:not(.light-mode) .save-btn:disabled {
+  background: rgba(255, 255, 255, 0.1);
+  color: #6c7280;
+}
+
+body:not(.light-mode) .update-security-btn {
+  background: #007bff;
+  color: #ffffff;
+}
+
+body:not(.light-mode) .update-security-btn:hover:not(:disabled) {
+  background: #0056b3;
+}
+
+body:not(.light-mode) .update-security-btn:disabled {
+  background: rgba(255, 255, 255, 0.1);
+  color: #6c7280;
+}
+
+/* Dark mode modal */
+body:not(.light-mode) .modal-overlay {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+body:not(.light-mode) .modal {
+  background: #141420;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+body:not(.light-mode) .modal-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body:not(.light-mode) .modal-icon {
+  color: #f59e0b;
+}
+
+body:not(.light-mode) .modal-title {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .modal-content p {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .modal-btn-cancel {
+  background: rgba(255, 255, 255, 0.05);
+  color: #9b9ba7;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+body:not(.light-mode) .modal-btn-cancel:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+body:not(.light-mode) .modal-btn-confirm {
+  background: #dc3545;
+  color: #ffffff;
+  border-color: #dc3545;
+}
+
+body:not(.light-mode) .modal-btn-confirm:hover {
+  background: #c82333;
+  border-color: #c82333;
+}
+
+/* Dark mode utility classes */
+body:not(.light-mode) .text-gray-600 {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .text-gray-500 {
+  color: #6b7280;
+}
+
+body:not(.light-mode) .text-gray-700 {
+  color: #e0e0e0;
+}
+
+body:not(.light-mode) .text-gray-900 {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .bg-white {
+  background-color: #141420;
+}
+
+body:not(.light-mode) .border-gray-200 {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+body:not(.light-mode) .hover\:bg-gray-50:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* ======================================
    SETTINGS CONTAINER
    ====================================== */
 .settings-container {

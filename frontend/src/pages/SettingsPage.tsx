@@ -7,6 +7,7 @@ import { Search, Eye, EyeOff, Camera, X, Check, AlertTriangle, Sun, Moon } from 
 import Sidebar from '../components/navigation/Sidebar';
 import ProfileDropdown from '../components/ProfileDropdown';
 import { useAuth } from '../hooks/useAuth';
+import { useTheme } from '../context/ThemeContext';
 import { useNavigate } from 'react-router-dom';
 import '../styles/dashboard.css';
 import '../styles/settings.css';
@@ -59,6 +60,7 @@ const DevelopmentWarning: React.FC<DevelopmentWarningProps> = ({ isVisible, onCl
 
 const SettingsPage: React.FC = () => {
   const { user, logout } = useAuth();
+  const { isLightMode, toggleTheme } = useTheme();
   const navigate = useNavigate();
   
   // Profile picture state
@@ -177,13 +179,15 @@ const SettingsPage: React.FC = () => {
 
   // Theme selection handlers
   const selectLightMode = () => {
-    // Light mode is already selected by default, no action needed
-    return;
+    if (!isLightMode) {
+      toggleTheme();
+    }
   };
 
   const selectDarkMode = () => {
-    // Show development warning for dark mode
-    setShowDevelopmentWarning(true);
+    if (isLightMode) {
+      toggleTheme();
+    }
   };
 
   // Handle keyboard navigation for theme toggles
@@ -279,7 +283,7 @@ const SettingsPage: React.FC = () => {
               <div className="theme-options-grid">
                 <div className="theme-mode-option">
                   <div 
-                    className={`theme-mode-toggle light-mode active`}
+                    className={`theme-mode-toggle light-mode ${isLightMode ? 'active' : ''}`}
                     onClick={selectLightMode}
                     onKeyDown={(e) => handleThemeKeyDown(e, selectLightMode)}
                     role="button"
@@ -292,7 +296,7 @@ const SettingsPage: React.FC = () => {
                 </div>
                 <div className="theme-mode-option">
                   <div 
-                    className={`theme-mode-toggle dark-mode`}
+                    className={`theme-mode-toggle dark-mode ${!isLightMode ? 'active' : ''}`}
                     onClick={selectDarkMode}
                     onKeyDown={(e) => handleThemeKeyDown(e, selectDarkMode)}
                     role="button"
