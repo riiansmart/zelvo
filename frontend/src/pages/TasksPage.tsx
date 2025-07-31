@@ -239,6 +239,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, onEdit, onDelete }) => {
         <div className="task-priority">
           <div 
             className="priority-badge"
+            data-priority={task.priority}
             style={{ 
               backgroundColor: priority.bgColor,
               color: priority.color,

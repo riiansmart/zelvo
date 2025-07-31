@@ -31,11 +31,11 @@ body:not(.light-mode) .sidebar-brand {
 }
 
 body:not(.light-mode) .sidebar-brand-icon {
-  color: #ff3a4c;
+  color: #3a74d3;
 }
 
 body:not(.light-mode) .sidebar-brand-text {
-  color: #ffffff;
+  color: #ff3a4c;
 }
 
 body:not(.light-mode) .sidebar-link {

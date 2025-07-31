@@ -1,5 +1,407 @@
 /* Tasks Page Styles - Following Figma Design with Dashboard Layout */
 
+/* ======================================
+   DARK MODE STYLES FOR TASKS PAGE
+   ====================================== */
+
+/* Dark mode page header */
+body:not(.light-mode) .page-header {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .week-dropdown {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body:not(.light-mode) .week-dropdown:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Dark mode kanban board */
+body:not(.light-mode) .kanban-board {
+  background: #0a0a0f;
+}
+
+/* Dark mode kanban columns */
+body:not(.light-mode) .kanban-column {
+  background-color: #141420;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Dark mode column headers */
+body:not(.light-mode) .column-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body:not(.light-mode) .column-title {
+  color: #ffffff;
+}
+
+/* Dark mode column action buttons */
+body:not(.light-mode) .add-task-btn {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .add-task-btn:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #ff3a4c;
+}
+
+body:not(.light-mode) .column-menu-btn {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .column-menu-btn:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+}
+
+/* Dark mode column content */
+body:not(.light-mode) .column-content {
+  background-color: #141420;
+}
+
+/* Dark mode task cards */
+body:not(.light-mode) .task-card {
+  background-color: #1a1a2e;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+body:not(.light-mode) .task-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  border-color: rgba(255, 58, 76, 0.3);
+}
+
+/* Dark mode task card header */
+body:not(.light-mode) .task-category {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .category-text {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .task-menu-btn {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .task-menu-btn:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+}
+
+/* Dark mode task content */
+body:not(.light-mode) .task-title {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .task-description {
+  color: #9b9ba7;
+}
+
+/* Dark mode task bottom row */
+body:not(.light-mode) .task-bottom-row {
+  border-top: none;
+}
+
+/* Dark mode priority badges */
+body:not(.light-mode) .priority-badge {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+/* High priority - Red */
+body:not(.light-mode) .priority-badge[data-priority="HIGH"] {
+  background-color: #dc2626 !important;
+  color: #ffffff !important;
+  border-color: #dc2626 !important;
+}
+
+body:not(.light-mode) .priority-badge[data-priority="HIGH"]:hover {
+  background-color: #b91c1c !important;
+}
+
+/* Medium priority - Orange */
+body:not(.light-mode) .priority-badge[data-priority="MEDIUM"] {
+  background-color: #ea580c !important;
+  color: #ffffff !important;
+  border-color: #ea580c !important;
+}
+
+body:not(.light-mode) .priority-badge[data-priority="MEDIUM"]:hover {
+  background-color: #c2410c !important;
+}
+
+/* Low priority - Green */
+body:not(.light-mode) .priority-badge[data-priority="LOW"] {
+  background-color: #16a34a !important;
+  color: #ffffff !important;
+  border-color: #16a34a !important;
+}
+
+body:not(.light-mode) .priority-badge[data-priority="LOW"]:hover {
+  background-color: #15803d !important;
+}
+
+/* Fallback for any priority without data attribute */
+body:not(.light-mode) .priority-badge:not([data-priority]) {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+body:not(.light-mode) .priority-badge:not([data-priority]):hover {
+  background-color: rgba(255, 58, 76, 0.2);
+}
+
+body:not(.light-mode) .priority-label {
+  color: #9b9ba7;
+}
+
+/* Dark mode due date */
+body:not(.light-mode) .task-due-date {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .due-date-icon {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .due-date-text {
+  color: #9b9ba7;
+}
+
+/* Dark mode overdue styling */
+body:not(.light-mode) .task-due-date.overdue {
+  color: #ff3a4c;
+}
+
+body:not(.light-mode) .task-due-date.overdue .due-date-icon {
+  color: #ff3a4c;
+}
+
+body:not(.light-mode) .task-due-date.overdue .due-date-text {
+  color: #ff3a4c;
+}
+
+/* Dark mode empty state */
+body:not(.light-mode) .empty-state {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .empty-state p {
+  color: #9b9ba7;
+}
+
+/* Dark mode task menu */
+body:not(.light-mode) .task-card-menu {
+  background-color: #141420;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+body:not(.light-mode) .task-card-menu-item {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .task-card-menu-item:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #ff3a4c;
+}
+
+body:not(.light-mode) .task-card-menu-item-delete {
+  color: #ff3a4c;
+}
+
+body:not(.light-mode) .task-card-menu-item-delete:hover {
+  background-color: rgba(255, 58, 76, 0.1);
+  color: #ff3a4c;
+}
+
+/* Dark mode task create modal */
+body:not(.light-mode) .task-create-modal-overlay {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+body:not(.light-mode) .task-create-modal {
+  background-color: #141420;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+body:not(.light-mode) .task-create-modal-header {
+  background-color: #1a1a2e;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body:not(.light-mode) .task-create-modal-title {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .task-create-modal-close {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .task-create-modal-close:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+}
+
+/* Dark mode form elements */
+body:not(.light-mode) .form-label {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .form-input,
+body:not(.light-mode) .form-textarea,
+body:not(.light-mode) .form-select {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+body:not(.light-mode) .form-input:focus,
+body:not(.light-mode) .form-textarea:focus,
+body:not(.light-mode) .form-select:focus {
+  border-color: #ff3a4c;
+  box-shadow: 0 0 0 2px rgba(255, 58, 76, 0.2);
+}
+
+body:not(.light-mode) .form-input::placeholder,
+body:not(.light-mode) .form-textarea::placeholder {
+  color: #6b7280;
+}
+
+/* Dark mode buttons */
+body:not(.light-mode) .btn-primary {
+  background: linear-gradient(135deg, #ff3a4c 0%, #ff7080 100%);
+  color: #ffffff;
+  border: none;
+}
+
+body:not(.light-mode) .btn-primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #ff7080 0%, #ff3a4c 100%);
+  box-shadow: 0 4px 12px rgba(255, 58, 76, 0.3);
+}
+
+body:not(.light-mode) .btn-secondary {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body:not(.light-mode) .btn-secondary:hover:not(:disabled) {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Dark mode delete confirmation modal */
+body:not(.light-mode) .delete-confirmation-overlay {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+body:not(.light-mode) .delete-confirmation-modal {
+  background-color: #141420;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+body:not(.light-mode) .delete-confirmation-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body:not(.light-mode) .delete-confirmation-title {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .delete-confirmation-message {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .delete-confirmation-warning {
+  color: #ff3a4c;
+}
+
+body:not(.light-mode) .btn-cancel {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body:not(.light-mode) .btn-cancel:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+body:not(.light-mode) .btn-delete {
+  background: linear-gradient(135deg, #ff3a4c 0%, #ff7080 100%);
+  color: #ffffff;
+  border: none;
+}
+
+body:not(.light-mode) .btn-delete:hover {
+  background: linear-gradient(135deg, #ff7080 0%, #ff3a4c 100%);
+}
+
+/* Dark mode development warning */
+body:not(.light-mode) .development-warning {
+  background-color: rgba(255, 58, 76, 0.1);
+  border: 1px solid rgba(255, 58, 76, 0.2);
+}
+
+body:not(.light-mode) .development-warning-content {
+  background-color: #141420;
+  border: 1px solid rgba(255, 58, 76, 0.2);
+}
+
+body:not(.light-mode) .warning-icon {
+  color: #ff3a4c;
+}
+
+body:not(.light-mode) .warning-text {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .warning-close {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .warning-close:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+}
+
+/* Dark mode utility classes */
+body:not(.light-mode) .text-gray-600 {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .text-gray-500 {
+  color: #6b7280;
+}
+
+body:not(.light-mode) .text-gray-700 {
+  color: #e0e0e0;
+}
+
+body:not(.light-mode) .text-gray-900 {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .bg-white {
+  background-color: #141420;
+}
+
+body:not(.light-mode) .border-gray-200 {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+body:not(.light-mode) .hover\:bg-gray-50:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
 /* Remove the custom tasks-page and sidebar styles since we're using dashboard layout */
 
 /* ===========================
