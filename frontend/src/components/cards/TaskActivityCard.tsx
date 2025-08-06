@@ -9,16 +9,35 @@ interface Props {
 const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
 const yAxisLabels = ['5+', '4', '3', '2', '1', '0'];
 
-function groupTasksByDay(tasks: Task[]): number[] {
+function groupCompletedTasksByDay(tasks: Task[]): number[] {
   const counts = Array(7).fill(0);
   const now = new Date();
+  
+  // Get the start of the current week (Monday)
   const weekStart = new Date(now);
-  weekStart.setDate(now.getDate() - now.getDay());
+  const dayOfWeek = now.getDay();
+  const daysToMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1; // Sunday = 0, so we need to handle it
+  weekStart.setDate(now.getDate() - daysToMonday);
+  weekStart.setHours(0, 0, 0, 0);
+  
+  // Get the end of the current week (Sunday)
+  const weekEnd = new Date(weekStart);
+  weekEnd.setDate(weekStart.getDate() + 6);
+  weekEnd.setHours(23, 59, 59, 999);
 
   tasks.forEach((task) => {
-    const due = new Date(task.dueDate);
-    if (due >= weekStart && due <= now) {
-      const index = due.getDay();
+    // Only count completed tasks
+    if (!task.completed) return;
+    
+    // Use updatedAt as completion date, fallback to createdAt
+    const completionDate = task.updatedAt ? new Date(task.updatedAt) : new Date(task.createdAt || '');
+    
+    // Check if task was completed within the current week
+    if (completionDate >= weekStart && completionDate <= weekEnd) {
+      // Get day of week (0 = Sunday, 1 = Monday, etc.)
+      const dayOfWeek = completionDate.getDay();
+      // Convert to our array index (0 = Monday, 6 = Sunday)
+      const index = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
       counts[index] += 1;
     }
   });
@@ -28,8 +47,8 @@ function groupTasksByDay(tasks: Task[]): number[] {
 
 const TaskActivityCard = ({ tasks }: Props) => {
   const { user } = useAuth();
-  const counts = groupTasksByDay(tasks);
-  const max = Math.max(...counts, 5);
+  const completedTasksByDay = groupCompletedTasksByDay(tasks);
+  const maxCompleted = Math.max(...completedTasksByDay, 1); // Minimum 1 to avoid division by zero
   
   // Calculate metrics from real task data
   const completedTasks = tasks.filter(t => t.completed).length;
@@ -54,18 +73,6 @@ const TaskActivityCard = ({ tasks }: Props) => {
     return `${Math.max(diffInHours, 1)}h`; // Minimum 1 hour
   };
 
-  // Mock data for visual representation (as shown in Figma)
-  // All bars go to top (5), dark blue shows completed portion
-  const mockData = [
-    { total: 5, completed: 1.2 },  // M: full bar, 1.2 completed
-    { total: 5, completed: 3.8 },  // T: full bar, 3.8 completed  
-    { total: 5, completed: 3.1 },  // W: full bar, 3.1 completed
-    { total: 5, completed: 2.5 },  // T: full bar, 2.5 completed
-    { total: 5, completed: 3.2 },  // F: full bar, 3.2 completed
-    { total: 5, completed: 3.8 },  // S: full bar, 3.8 completed
-    { total: 5, completed: 2.5 }   // S: full bar, 2.5 completed
-  ];
-
   return (
     <div className="card activity-card">
       <h2 className="card-title">Task Activity</h2>
@@ -82,25 +89,28 @@ const TaskActivityCard = ({ tasks }: Props) => {
 
         {/* Chart area */}
         <div className="activity-chart">
-                    {mockData.map((data, idx) => {
-            // All bars go to 100% height (Y-axis 05)
-            // Dark blue shows completed portion from bottom
-            const completedHeight = (data.completed / 5) * 100;
+          {completedTasksByDay.map((completedCount, idx) => {
+            // Calculate the height based on completed tasks for this day
+            // Cap at 5+ for the y-axis
+            const normalizedCount = Math.min(completedCount, 5);
+            const completedHeight = (normalizedCount / 5) * 100;
             const incompleteHeight = 100 - completedHeight;
             
             return (
               <div key={idx} className="activity-column">
                 <div className="activity-bar-container" style={{ height: `100%` }}>
-                  {/* Incomplete portion (light blue) - top part */}
+                  {/* Incomplete portion (light blue/red) - top part */}
                   <div
                     className="activity-bar activity-bar-incomplete"
                     style={{ height: `${incompleteHeight}%` }}
                   />
-                  {/* Completed portion (dark blue) - bottom part */}
-                  <div
-                    className="activity-bar activity-bar-completed"
-                    style={{ height: `${completedHeight}%` }}
-                  />
+                  {/* Completed portion (dark blue/red) - bottom part */}
+                  {completedCount > 0 && (
+                    <div
+                      className="activity-bar activity-bar-completed"
+                      style={{ height: `${completedHeight}%` }}
+                    />
+                  )}
                 </div>
                 <span className="activity-label">{days[idx]}</span>
               </div>
