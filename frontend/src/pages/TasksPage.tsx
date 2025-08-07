@@ -8,7 +8,7 @@ import Sidebar from '../components/navigation/Sidebar';
 import ProfileDropdown from '../components/ProfileDropdown';
 import TaskCreateModal from '../components/TaskCreateModal';
 import { Task, TaskStatus } from '../types/task.types';
-import { getTasks, deleteTask } from '../services/taskService';
+import { getTasks, deleteTask, updateTask } from '../services/taskService';
 import { formatDate, isOverdue } from '../utils/dateUtils';
 import '../styles/task-page.css';
 import '../styles/dashboard.css';
@@ -228,6 +228,550 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, onEdit, onDelete }) => {
   );
 };
 
+// Task Transfer Modal Component (To Do ↔ In Progress)
+interface TaskTransferModalProps {
+  isOpen: boolean;
+  todoTasks: Task[];
+  inProgressTasks: Task[];
+  onClose: () => void;
+  onTasksTransferred: () => void;
+}
+
+// Done Transfer Modal Component (In Progress ↔ Done)
+interface DoneTransferModalProps {
+  isOpen: boolean;
+  inProgressTasks: Task[];
+  doneTasks: Task[];
+  onClose: () => void;
+  onTasksTransferred: () => void;
+}
+
+const TaskTransferModal: React.FC<TaskTransferModalProps> = ({
+  isOpen,
+  todoTasks,
+  inProgressTasks,
+  onClose,
+  onTasksTransferred
+}) => {
+  const [selectedTodoTasks, setSelectedTodoTasks] = useState<Set<string>>(new Set());
+  const [selectedInProgressTasks, setSelectedInProgressTasks] = useState<Set<string>>(new Set());
+  const [loading, setLoading] = useState(false);
+
+  // Reset selections when modal opens/closes
+  useEffect(() => {
+    if (!isOpen) {
+      setSelectedTodoTasks(new Set());
+      setSelectedInProgressTasks(new Set());
+    }
+  }, [isOpen]);
+
+  const handleTodoTaskSelect = (taskId: string) => {
+    setSelectedTodoTasks(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(taskId)) {
+        newSet.delete(taskId);
+      } else {
+        newSet.add(taskId);
+      }
+      return newSet;
+    });
+  };
+
+  const handleInProgressTaskSelect = (taskId: string) => {
+    setSelectedInProgressTasks(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(taskId)) {
+        newSet.delete(taskId);
+      } else {
+        newSet.add(taskId);
+      }
+      return newSet;
+    });
+  };
+
+  const moveTasksToInProgress = async () => {
+    if (selectedTodoTasks.size === 0) return;
+    
+    setLoading(true);
+    try {
+      // Move selected todo tasks to in progress
+      const promises = Array.from(selectedTodoTasks).map(async taskId => {
+        const task = todoTasks.find(t => t.id === taskId);
+        if (task) {
+          console.log('Updating task:', task.id, 'with status:', TaskStatus.IN_PROGRESS);
+          // Only send the necessary fields to avoid conflicts
+          const updateData = {
+            title: task.title,
+            description: task.description,
+            dueDate: task.dueDate,
+            priority: task.priority,
+            status: TaskStatus.IN_PROGRESS,
+            completed: task.completed,
+            categoryId: task.categoryId
+          };
+          console.log('Update payload:', updateData);
+          return updateTask(parseInt(taskId), updateData);
+        }
+        return Promise.resolve();
+      });
+
+      await Promise.all(promises);
+      setSelectedTodoTasks(new Set());
+      onTasksTransferred();
+    } catch (error: any) {
+      console.error('Failed to move tasks to in progress:', error);
+      if (error.response) {
+        console.error('Error response:', error.response.data);
+        console.error('Error status:', error.response.status);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const moveTasksToTodo = async () => {
+    if (selectedInProgressTasks.size === 0) return;
+    
+    setLoading(true);
+    try {
+      // Move selected in progress tasks back to todo
+      const promises = Array.from(selectedInProgressTasks).map(async taskId => {
+        const task = inProgressTasks.find(t => t.id === taskId);
+        if (task) {
+          console.log('Updating task:', task.id, 'with status:', TaskStatus.TODO);
+          // Only send the necessary fields to avoid conflicts
+          const updateData = {
+            title: task.title,
+            description: task.description,
+            dueDate: task.dueDate,
+            priority: task.priority,
+            status: TaskStatus.TODO,
+            completed: task.completed,
+            categoryId: task.categoryId
+          };
+          console.log('Update payload:', updateData);
+          return updateTask(parseInt(taskId), updateData);
+        }
+        return Promise.resolve();
+      });
+
+      await Promise.all(promises);
+      setSelectedInProgressTasks(new Set());
+      onTasksTransferred();
+    } catch (error: any) {
+      console.error('Failed to move tasks to todo:', error);
+      if (error.response) {
+        console.error('Error response:', error.response.data);
+        console.error('Error status:', error.response.status);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleClose = () => {
+    if (!loading) {
+      onClose();
+    }
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="task-transfer-modal-overlay" onClick={handleClose}>
+      <div className="task-transfer-modal" onClick={(e) => e.stopPropagation()}>
+        <div className="task-transfer-modal-header">
+          <h3 className="task-transfer-modal-title">Move Tasks</h3>
+          <button className="task-transfer-modal-close" onClick={handleClose}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" strokeWidth="2"/>
+              <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" strokeWidth="2"/>
+            </svg>
+          </button>
+        </div>
+        
+        <div className="task-transfer-content">
+          {/* Left Column - To Do Tasks */}
+          <div className="transfer-column">
+            <div className="transfer-column-header">
+              <h4 className="transfer-column-title">To Do</h4>
+              <span className="transfer-column-count">({todoTasks.length})</span>
+            </div>
+            <div className="transfer-task-list">
+              {todoTasks.length === 0 ? (
+                <div className="transfer-empty-state">No tasks available</div>
+              ) : (
+                todoTasks.map((task) => (
+                  <div
+                    key={task.id}
+                    className={`transfer-task-item ${selectedTodoTasks.has(task.id as string) ? 'selected' : ''}`}
+                    onClick={() => handleTodoTaskSelect(task.id as string)}
+                  >
+                    <div className="transfer-task-checkbox">
+                      <input
+                        type="checkbox"
+                        checked={selectedTodoTasks.has(task.id as string)}
+                        onChange={() => handleTodoTaskSelect(task.id as string)}
+                      />
+                    </div>
+                    <div className="transfer-task-content">
+                      <h5 className="transfer-task-title">{task.title}</h5>
+                      <p className="transfer-task-description">{task.description || 'No description'}</p>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
+
+          {/* Center Arrow Controls */}
+          <div className="transfer-controls">
+            <button
+              className="transfer-btn transfer-btn-right"
+              onClick={moveTasksToInProgress}
+              disabled={selectedTodoTasks.size === 0 || loading}
+              title={`Move ${selectedTodoTasks.size} task(s) to In Progress`}
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              {selectedTodoTasks.size > 0 && (
+                <span className="transfer-count">{selectedTodoTasks.size}</span>
+              )}
+            </button>
+            
+            <button
+              className="transfer-btn transfer-btn-left"
+              onClick={moveTasksToTodo}
+              disabled={selectedInProgressTasks.size === 0 || loading}
+              title={`Move ${selectedInProgressTasks.size} task(s) to To Do`}
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              {selectedInProgressTasks.size > 0 && (
+                <span className="transfer-count">{selectedInProgressTasks.size}</span>
+              )}
+            </button>
+          </div>
+
+          {/* Right Column - In Progress Tasks */}
+          <div className="transfer-column">
+            <div className="transfer-column-header">
+              <h4 className="transfer-column-title">In Progress</h4>
+              <span className="transfer-column-count">({inProgressTasks.length})</span>
+            </div>
+            <div className="transfer-task-list">
+              {inProgressTasks.length === 0 ? (
+                <div className="transfer-empty-state">No tasks available</div>
+              ) : (
+                inProgressTasks.map((task) => (
+                  <div
+                    key={task.id}
+                    className={`transfer-task-item ${selectedInProgressTasks.has(task.id as string) ? 'selected' : ''}`}
+                    onClick={() => handleInProgressTaskSelect(task.id as string)}
+                  >
+                    <div className="transfer-task-checkbox">
+                      <input
+                        type="checkbox"
+                        checked={selectedInProgressTasks.has(task.id as string)}
+                        onChange={() => handleInProgressTaskSelect(task.id as string)}
+                      />
+                    </div>
+                    <div className="transfer-task-content">
+                      <h5 className="transfer-task-title">{task.title}</h5>
+                      <p className="transfer-task-description">{task.description || 'No description'}</p>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
+        </div>
+
+        <div className="task-transfer-modal-footer">
+          <div className="transfer-summary">
+            {(selectedTodoTasks.size > 0 || selectedInProgressTasks.size > 0) && (
+              <span className="transfer-summary-text">
+                {selectedTodoTasks.size > 0 && `${selectedTodoTasks.size} from To Do`}
+                {selectedTodoTasks.size > 0 && selectedInProgressTasks.size > 0 && ', '}
+                {selectedInProgressTasks.size > 0 && `${selectedInProgressTasks.size} from In Progress`}
+                {' '}selected
+              </span>
+            )}
+          </div>
+          <button className="btn-secondary" onClick={handleClose} disabled={loading}>
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const DoneTransferModal: React.FC<DoneTransferModalProps> = ({
+  isOpen,
+  inProgressTasks,
+  doneTasks,
+  onClose,
+  onTasksTransferred
+}) => {
+  const [selectedInProgressTasks, setSelectedInProgressTasks] = useState<Set<string>>(new Set());
+  const [selectedDoneTasks, setSelectedDoneTasks] = useState<Set<string>>(new Set());
+  const [loading, setLoading] = useState(false);
+
+  // Reset selections when modal opens/closes
+  useEffect(() => {
+    if (!isOpen) {
+      setSelectedInProgressTasks(new Set());
+      setSelectedDoneTasks(new Set());
+    }
+  }, [isOpen]);
+
+  const handleInProgressTaskSelect = (taskId: string) => {
+    setSelectedInProgressTasks(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(taskId)) {
+        newSet.delete(taskId);
+      } else {
+        newSet.add(taskId);
+      }
+      return newSet;
+    });
+  };
+
+  const handleDoneTaskSelect = (taskId: string) => {
+    setSelectedDoneTasks(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(taskId)) {
+        newSet.delete(taskId);
+      } else {
+        newSet.add(taskId);
+      }
+      return newSet;
+    });
+  };
+
+  const moveTasksToDone = async () => {
+    if (selectedInProgressTasks.size === 0) return;
+    
+    setLoading(true);
+    try {
+      // Move selected in progress tasks to done
+      const promises = Array.from(selectedInProgressTasks).map(async taskId => {
+        const task = inProgressTasks.find(t => t.id === taskId);
+        if (task) {
+          console.log('Updating task:', task.id, 'with status:', TaskStatus.DONE);
+          // Only send the necessary fields to avoid conflicts
+          const updateData = {
+            title: task.title,
+            description: task.description,
+            dueDate: task.dueDate,
+            priority: task.priority,
+            status: TaskStatus.DONE,
+            completed: true, // Mark as completed when moving to done
+            categoryId: task.categoryId
+          };
+          console.log('Update payload:', updateData);
+          return updateTask(parseInt(taskId), updateData);
+        }
+        return Promise.resolve();
+      });
+
+      await Promise.all(promises);
+      setSelectedInProgressTasks(new Set());
+      onTasksTransferred();
+    } catch (error: any) {
+      console.error('Failed to move tasks to done:', error);
+      if (error.response) {
+        console.error('Error response:', error.response.data);
+        console.error('Error status:', error.response.status);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const moveTasksToInProgress = async () => {
+    if (selectedDoneTasks.size === 0) return;
+    
+    setLoading(true);
+    try {
+      // Move selected done tasks back to in progress
+      const promises = Array.from(selectedDoneTasks).map(async taskId => {
+        const task = doneTasks.find(t => t.id === taskId);
+        if (task) {
+          console.log('Updating task:', task.id, 'with status:', TaskStatus.IN_PROGRESS);
+          // Only send the necessary fields to avoid conflicts
+          const updateData = {
+            title: task.title,
+            description: task.description,
+            dueDate: task.dueDate,
+            priority: task.priority,
+            status: TaskStatus.IN_PROGRESS,
+            completed: false, // Mark as incomplete when moving back to in progress
+            categoryId: task.categoryId
+          };
+          console.log('Update payload:', updateData);
+          return updateTask(parseInt(taskId), updateData);
+        }
+        return Promise.resolve();
+      });
+
+      await Promise.all(promises);
+      setSelectedDoneTasks(new Set());
+      onTasksTransferred();
+    } catch (error: any) {
+      console.error('Failed to move tasks to in progress:', error);
+      if (error.response) {
+        console.error('Error response:', error.response.data);
+        console.error('Error status:', error.response.status);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleClose = () => {
+    if (!loading) {
+      onClose();
+    }
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="task-transfer-modal-overlay" onClick={handleClose}>
+      <div className="task-transfer-modal" onClick={(e) => e.stopPropagation()}>
+        <div className="task-transfer-modal-header">
+          <h3 className="task-transfer-modal-title">Complete Tasks</h3>
+          <button className="task-transfer-modal-close" onClick={handleClose}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" strokeWidth="2"/>
+              <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" strokeWidth="2"/>
+            </svg>
+          </button>
+        </div>
+        
+        <div className="task-transfer-content">
+          {/* Left Column - In Progress Tasks */}
+          <div className="transfer-column">
+            <div className="transfer-column-header">
+              <h4 className="transfer-column-title">In Progress</h4>
+              <span className="transfer-column-count">({inProgressTasks.length})</span>
+            </div>
+            <div className="transfer-task-list">
+              {inProgressTasks.length === 0 ? (
+                <div className="transfer-empty-state">No tasks available</div>
+              ) : (
+                inProgressTasks.map((task) => (
+                  <div
+                    key={task.id}
+                    className={`transfer-task-item ${selectedInProgressTasks.has(task.id as string) ? 'selected' : ''}`}
+                    onClick={() => handleInProgressTaskSelect(task.id as string)}
+                  >
+                    <div className="transfer-task-checkbox">
+                      <input
+                        type="checkbox"
+                        checked={selectedInProgressTasks.has(task.id as string)}
+                        onChange={() => handleInProgressTaskSelect(task.id as string)}
+                      />
+                    </div>
+                    <div className="transfer-task-content">
+                      <h5 className="transfer-task-title">{task.title}</h5>
+                      <p className="transfer-task-description">{task.description || 'No description'}</p>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
+
+          {/* Center Arrow Controls */}
+          <div className="transfer-controls">
+            <button
+              className="transfer-btn transfer-btn-right"
+              onClick={moveTasksToDone}
+              disabled={selectedInProgressTasks.size === 0 || loading}
+              title={`Mark ${selectedInProgressTasks.size} task(s) as done`}
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M20 6L9 17L4 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              {selectedInProgressTasks.size > 0 && (
+                <span className="transfer-count">{selectedInProgressTasks.size}</span>
+              )}
+            </button>
+            
+            <button
+              className="transfer-btn transfer-btn-left"
+              onClick={moveTasksToInProgress}
+              disabled={selectedDoneTasks.size === 0 || loading}
+              title={`Move ${selectedDoneTasks.size} task(s) back to In Progress`}
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              {selectedDoneTasks.size > 0 && (
+                <span className="transfer-count">{selectedDoneTasks.size}</span>
+              )}
+            </button>
+          </div>
+
+          {/* Right Column - Done Tasks */}
+          <div className="transfer-column">
+            <div className="transfer-column-header">
+              <h4 className="transfer-column-title">Done</h4>
+              <span className="transfer-column-count">({doneTasks.length})</span>
+            </div>
+            <div className="transfer-task-list">
+              {doneTasks.length === 0 ? (
+                <div className="transfer-empty-state">No tasks available</div>
+              ) : (
+                doneTasks.map((task) => (
+                  <div
+                    key={task.id}
+                    className={`transfer-task-item ${selectedDoneTasks.has(task.id as string) ? 'selected' : ''}`}
+                    onClick={() => handleDoneTaskSelect(task.id as string)}
+                  >
+                    <div className="transfer-task-checkbox">
+                      <input
+                        type="checkbox"
+                        checked={selectedDoneTasks.has(task.id as string)}
+                        onChange={() => handleDoneTaskSelect(task.id as string)}
+                      />
+                    </div>
+                    <div className="transfer-task-content">
+                      <h5 className="transfer-task-title">{task.title}</h5>
+                      <p className="transfer-task-description">{task.description || 'No description'}</p>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
+        </div>
+
+        <div className="task-transfer-modal-footer">
+          <div className="transfer-summary">
+            {(selectedInProgressTasks.size > 0 || selectedDoneTasks.size > 0) && (
+              <span className="transfer-summary-text">
+                {selectedInProgressTasks.size > 0 && `${selectedInProgressTasks.size} from In Progress`}
+                {selectedInProgressTasks.size > 0 && selectedDoneTasks.size > 0 && ', '}
+                {selectedDoneTasks.size > 0 && `${selectedDoneTasks.size} from Done`}
+                {' '}selected
+              </span>
+            )}
+          </div>
+          <button className="btn-secondary" onClick={handleClose} disabled={loading}>
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 // Sorting Menu Component
 interface SortingMenuProps {
   isOpen: boolean;
@@ -292,6 +836,8 @@ const TasksPage: React.FC = () => {
   const [taskBeingEdited, setTaskBeingEdited] = useState<Task | null>(null);
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [taskToDelete, setTaskToDelete] = useState<Task | null>(null);
+  const [showTaskTransferModal, setShowTaskTransferModal] = useState(false);
+  const [showDoneTransferModal, setShowDoneTransferModal] = useState(false);
   
   // Sorting state for each column
   const [sortOptions, setSortOptions] = useState<{
@@ -480,6 +1026,32 @@ const TasksPage: React.FC = () => {
     setTaskToDelete(null);
   };
 
+  const handleOpenTaskTransfer = () => {
+    setShowTaskTransferModal(true);
+  };
+
+  const handleCloseTaskTransfer = () => {
+    setShowTaskTransferModal(false);
+  };
+
+  const handleTasksTransferred = async () => {
+    // Refresh tasks after transfer
+    await fetchTasks();
+  };
+
+  const handleOpenDoneTransfer = () => {
+    setShowDoneTransferModal(true);
+  };
+
+  const handleCloseDoneTransfer = () => {
+    setShowDoneTransferModal(false);
+  };
+
+  const handleDoneTasksTransferred = async () => {
+    // Refresh tasks after transfer
+    await fetchTasks();
+  };
+
   if (loading) {
     return (
       <div className="dashboard-layout">
@@ -581,9 +1153,9 @@ const TasksPage: React.FC = () => {
               <div className="column-actions">
                 <button 
                   className="add-task-btn"
-                  onClick={() => handleAddTask('inProgress')}
-                  aria-label="Move task to in progress"
-                  title="Move task to in progress"
+                  onClick={handleOpenTaskTransfer}
+                  aria-label="Move tasks to in progress"
+                  title="Move tasks to in progress"
                 >
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
                     <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -630,9 +1202,9 @@ const TasksPage: React.FC = () => {
               <div className="column-actions">
                 <button 
                   className="add-task-btn"
-                  onClick={() => handleAddTask('done')}
-                  aria-label="Mark task as done"
-                  title="Mark task as done"
+                  onClick={handleOpenDoneTransfer}
+                  aria-label="Mark tasks as done"
+                  title="Mark tasks as done"
                 >
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
                     <path d="M20 6L9 17L4 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -688,6 +1260,24 @@ const TasksPage: React.FC = () => {
         taskTitle={taskToDelete?.title || ''}
         onConfirm={handleConfirmDelete}
         onCancel={handleCancelDelete}
+      />
+
+      {/* Task Transfer Modal */}
+      <TaskTransferModal
+        isOpen={showTaskTransferModal}
+        todoTasks={groupedTasks.todo}
+        inProgressTasks={groupedTasks.inProgress}
+        onClose={handleCloseTaskTransfer}
+        onTasksTransferred={handleTasksTransferred}
+      />
+
+      {/* Done Transfer Modal */}
+      <DoneTransferModal
+        isOpen={showDoneTransferModal}
+        inProgressTasks={groupedTasks.inProgress}
+        doneTasks={groupedTasks.done}
+        onClose={handleCloseDoneTransfer}
+        onTasksTransferred={handleDoneTasksTransferred}
       />
     </div>
   );
