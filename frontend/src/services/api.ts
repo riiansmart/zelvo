@@ -20,7 +20,7 @@ api.interceptors.request.use(
     const token = localStorage.getItem('token'); 
     
     // Define endpoints that should NOT receive the auth header
-    const publicEndpoints = ['/auth/login', '/auth/register'];
+    const publicEndpoints = ['/auth/login', '/auth/register', '/categories'];
 
     const isPublicEndpoint = publicEndpoints.some((endpoint) =>
       config.url?.includes(endpoint)
@@ -54,20 +54,20 @@ export const setAuthToken = (token: string | null) => {
 */
 
 // Optional: Add response interceptor for handling errors (e.g., 401 for expired token)
-/*
 api.interceptors.response.use(
-  response => response, // Pass through successful responses
+  response => response,
   error => {
     if (error.response && error.response.status === 401) {
-      // Handle unauthorized errors (e.g., token expired)
       console.error('Axios response interceptor: Unauthorized (401)');
+      // Remove token and user data
       localStorage.removeItem('token');
-      // Redirect to login or refresh token logic
-      // window.location.href = '/login'; 
+      localStorage.removeItem('user');
+      // Optionally redirect to login page
+      window.location.href = '/login';
     }
     return Promise.reject(error);
   }
 );
-*/
+
 
 export default api;

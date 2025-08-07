@@ -43,45 +43,6 @@ const getCategoryColor = (categoryName?: string, categoryColor?: string): string
   return defaultCategoryColors[Math.abs(hash) % defaultCategoryColors.length];
 };
 
-// Development Warning Component
-interface DevelopmentWarningProps {
-  isVisible: boolean;
-  onClose: () => void;
-}
-
-const DevelopmentWarning: React.FC<DevelopmentWarningProps> = ({ isVisible, onClose }) => {
-  useEffect(() => {
-    if (isVisible) {
-      const timer = setTimeout(() => {
-        onClose();
-      }, 3000); // Auto-close after 3 seconds
-
-      return () => clearTimeout(timer);
-    }
-  }, [isVisible, onClose]);
-
-  if (!isVisible) return null;
-
-  return (
-    <div className="development-warning">
-      <div className="development-warning-content">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="warning-icon">
-          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          <line x1="12" y1="9" x2="12" y2="13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          <circle cx="12" cy="17" r="1" fill="currentColor"/>
-        </svg>
-        <span className="warning-text">This feature is still being developed</span>
-        <button className="warning-close" onClick={onClose}>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-            <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-            <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-          </svg>
-        </button>
-      </div>
-    </div>
-  );
-};
-
 // Custom Delete Confirmation Modal
 interface DeleteConfirmationModalProps {
   isOpen: boolean;
@@ -274,7 +235,6 @@ const TasksPage: React.FC = () => {
   const [taskBeingEdited, setTaskBeingEdited] = useState<Task | null>(null);
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [taskToDelete, setTaskToDelete] = useState<Task | null>(null);
-  const [showDevelopmentWarning, setShowDevelopmentWarning] = useState(false);
   
   // Fetch tasks from API
   useEffect(() => {
@@ -301,17 +261,21 @@ const TasksPage: React.FC = () => {
   };
 
   const handleAddTask = (column: string) => {
+    // Only allow creating new tasks in the "todo" column
     if (column === 'todo') {
       setTaskBeingEdited(null);
       setShowModal(true);
     } else {
-      // Show development warning for other columns
-      setShowDevelopmentWarning(true);
+      // For other columns, this could be used for moving tasks or other actions
+      // For now, we'll just log the action
+      console.log(`Add action clicked for ${column} column`);
     }
   };
 
   const handleColumnMenu = () => {
-    setShowDevelopmentWarning(true);
+    // Allow column menu functionality without showing warning
+    // TODO: Implement column menu functionality
+    console.log('Column menu clicked');
   };
 
   const handleTaskCreated = async () => {
@@ -354,10 +318,6 @@ const TasksPage: React.FC = () => {
     setTaskToDelete(null);
   };
 
-  const handleCloseDevelopmentWarning = () => {
-    setShowDevelopmentWarning(false);
-  };
-
   if (loading) {
     return (
       <div className="dashboard-layout">
@@ -396,6 +356,8 @@ const TasksPage: React.FC = () => {
           <div>
             <h1 className="welcome-text">Tasks</h1>
             <p className="welcome-description">Organize and efficiently track your tasks.</p>
+            <br></br>
+            <p className="welcome-description">To start, click the + in the "To Do" column, to create a new task!</p>
           </div>
         </div>
 
@@ -449,11 +411,11 @@ const TasksPage: React.FC = () => {
                 <button 
                   className="add-task-btn"
                   onClick={() => handleAddTask('inProgress')}
-                  aria-label="Add new task"
+                  aria-label="Move task to in progress"
+                  title="Move task to in progress"
                 >
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                    <line x1="12" y1="5" x2="12" y2="19" stroke="currentColor" strokeWidth="2"/>
-                    <line x1="5" y1="12" x2="19" y2="12" stroke="currentColor" strokeWidth="2"/>
+                    <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </button>
                 <button 
@@ -489,11 +451,11 @@ const TasksPage: React.FC = () => {
                 <button 
                   className="add-task-btn"
                   onClick={() => handleAddTask('done')}
-                  aria-label="Add new task"
+                  aria-label="Mark task as done"
+                  title="Mark task as done"
                 >
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                    <line x1="12" y1="5" x2="12" y2="19" stroke="currentColor" strokeWidth="2"/>
-                    <line x1="5" y1="12" x2="19" y2="12" stroke="currentColor" strokeWidth="2"/>
+                    <path d="M20 6L9 17L4 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </button>
                 <button 
@@ -522,12 +484,6 @@ const TasksPage: React.FC = () => {
           </div>
         </div>
       </main>
-
-      {/* Development Warning */}
-      <DevelopmentWarning 
-        isVisible={showDevelopmentWarning}
-        onClose={handleCloseDevelopmentWarning}
-      />
 
       {/* Task Create Modal */}
       <TaskCreateModal 
