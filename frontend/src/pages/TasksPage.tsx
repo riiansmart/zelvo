@@ -228,6 +228,63 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, onEdit, onDelete }) => {
   );
 };
 
+// Sorting Menu Component
+interface SortingMenuProps {
+  isOpen: boolean;
+  currentSort: SortOption;
+  column: 'todo' | 'inProgress' | 'done';
+  onSortSelect: (column: 'todo' | 'inProgress' | 'done', sortOption: SortOption) => void;
+  onBlur: (column: 'todo' | 'inProgress' | 'done', e: React.FocusEvent) => void;
+}
+
+const SortingMenu: React.FC<SortingMenuProps> = ({ 
+  isOpen, 
+  currentSort, 
+  column, 
+  onSortSelect, 
+  onBlur 
+}) => {
+  if (!isOpen) return null;
+
+  const sortOptions = [
+    { value: SortOption.A_TO_Z, label: 'A-Z' },
+    { value: SortOption.Z_TO_A, label: 'Z-A' },
+    { value: SortOption.NEWEST_TO_OLDEST, label: 'Newest to Oldest' },
+    { value: SortOption.OLDEST_TO_NEWEST, label: 'Oldest to Newest' }
+  ];
+
+  return (
+    <div 
+      className="column-sorting-menu"
+      onBlur={(e) => onBlur(column, e)}
+      tabIndex={-1}
+    >
+      {sortOptions.map((option) => (
+        <button
+          key={option.value}
+          className={`sorting-menu-item ${currentSort === option.value ? 'active' : ''}`}
+          onClick={() => onSortSelect(column, option.value)}
+        >
+          <span className="sorting-option-label">{option.label}</span>
+          {currentSort === option.value && (
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="check-icon">
+              <path d="M20 6L9 17L4 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          )}
+        </button>
+      ))}
+    </div>
+  );
+};
+
+// Sorting options enum
+enum SortOption {
+  A_TO_Z = 'A_TO_Z',
+  Z_TO_A = 'Z_TO_A',
+  NEWEST_TO_OLDEST = 'NEWEST_TO_OLDEST',
+  OLDEST_TO_NEWEST = 'OLDEST_TO_NEWEST'
+}
+
 const TasksPage: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
@@ -235,6 +292,28 @@ const TasksPage: React.FC = () => {
   const [taskBeingEdited, setTaskBeingEdited] = useState<Task | null>(null);
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [taskToDelete, setTaskToDelete] = useState<Task | null>(null);
+  
+  // Sorting state for each column
+  const [sortOptions, setSortOptions] = useState<{
+    todo: SortOption;
+    inProgress: SortOption;
+    done: SortOption;
+  }>({
+    todo: SortOption.A_TO_Z,
+    inProgress: SortOption.A_TO_Z,
+    done: SortOption.A_TO_Z
+  });
+  
+  // Menu state for each column
+  const [openMenus, setOpenMenus] = useState<{
+    todo: boolean;
+    inProgress: boolean;
+    done: boolean;
+  }>({
+    todo: false,
+    inProgress: false,
+    done: false
+  });
   
   // Fetch tasks from API
   useEffect(() => {
@@ -253,11 +332,49 @@ const TasksPage: React.FC = () => {
     }
   };
   
-  // Group tasks by status (use raw Task objects)
+  // Sorting function
+  const sortTasks = (tasks: Task[], sortOption: SortOption): Task[] => {
+    const tasksCopy = [...tasks];
+    
+    switch (sortOption) {
+      case SortOption.A_TO_Z:
+        return tasksCopy.sort((a, b) => a.title.localeCompare(b.title));
+      
+      case SortOption.Z_TO_A:
+        return tasksCopy.sort((a, b) => b.title.localeCompare(a.title));
+      
+      case SortOption.NEWEST_TO_OLDEST:
+        return tasksCopy.sort((a, b) => {
+          // Tasks without due dates go to the end
+          if (!a.dueDate && !b.dueDate) return 0;
+          if (!a.dueDate) return 1;
+          if (!b.dueDate) return -1;
+          
+          // Sort by due date - newest (closest to today) first
+          return new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime();
+        });
+      
+      case SortOption.OLDEST_TO_NEWEST:
+        return tasksCopy.sort((a, b) => {
+          // Tasks without due dates go to the end
+          if (!a.dueDate && !b.dueDate) return 0;
+          if (!a.dueDate) return 1;
+          if (!b.dueDate) return -1;
+          
+          // Sort by due date - oldest (furthest from today) first
+          return new Date(b.dueDate).getTime() - new Date(a.dueDate).getTime();
+        });
+      
+      default:
+        return tasksCopy;
+    }
+  };
+  
+  // Group and sort tasks by status
   const groupedTasks = {
-    todo: tasks.filter(task => task.status === TaskStatus.TODO),
-    inProgress: tasks.filter(task => task.status === TaskStatus.IN_PROGRESS),
-    done: tasks.filter(task => task.status === TaskStatus.DONE)
+    todo: sortTasks(tasks.filter(task => task.status === TaskStatus.TODO), sortOptions.todo),
+    inProgress: sortTasks(tasks.filter(task => task.status === TaskStatus.IN_PROGRESS), sortOptions.inProgress),
+    done: sortTasks(tasks.filter(task => task.status === TaskStatus.DONE), sortOptions.done)
   };
 
   const handleAddTask = (column: string) => {
@@ -272,10 +389,55 @@ const TasksPage: React.FC = () => {
     }
   };
 
-  const handleColumnMenu = () => {
-    // Allow column menu functionality without showing warning
-    // TODO: Implement column menu functionality
-    console.log('Column menu clicked');
+  const handleColumnMenu = (column: 'todo' | 'inProgress' | 'done') => {
+    setOpenMenus(prev => ({
+      ...prev,
+      [column]: !prev[column],
+      // Close other menus when opening a new one
+      ...(prev[column] ? {} : {
+        todo: column === 'todo' ? true : false,
+        inProgress: column === 'inProgress' ? true : false,
+        done: column === 'done' ? true : false
+      })
+    }));
+  };
+
+  const handleSortOption = (column: 'todo' | 'inProgress' | 'done', sortOption: SortOption) => {
+    setSortOptions(prev => ({
+      ...prev,
+      [column]: sortOption
+    }));
+    
+    // Close the menu after selection
+    setOpenMenus(prev => ({
+      ...prev,
+      [column]: false
+    }));
+  };
+
+  const handleMenuBlur = (column: 'todo' | 'inProgress' | 'done', e: React.FocusEvent) => {
+    // Close menu when focus leaves the menu container
+    if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+      setOpenMenus(prev => ({
+        ...prev,
+        [column]: false
+      }));
+    }
+  };
+
+  const getSortOptionLabel = (sortOption: SortOption): string => {
+    switch (sortOption) {
+      case SortOption.A_TO_Z:
+        return 'A-Z';
+      case SortOption.Z_TO_A:
+        return 'Z-A';
+      case SortOption.NEWEST_TO_OLDEST:
+        return 'Newest to Oldest';
+      case SortOption.OLDEST_TO_NEWEST:
+        return 'Oldest to Newest';
+      default:
+        return 'A-Z';
+    }
   };
 
   const handleTaskCreated = async () => {
@@ -378,17 +540,26 @@ const TasksPage: React.FC = () => {
                     <line x1="5" y1="12" x2="19" y2="12" stroke="currentColor" strokeWidth="2"/>
                   </svg>
                 </button>
-                <button 
-                  className="column-menu-btn" 
-                  aria-label="Column menu"
-                  onClick={handleColumnMenu}
-                >
-                  <svg width="16" height="4" viewBox="0 0 16 4" fill="none">
-                    <circle cx="2" cy="2" r="2" fill="currentColor"/>
-                    <circle cx="8" cy="2" r="2" fill="currentColor"/>
-                    <circle cx="14" cy="2" r="2" fill="currentColor"/>
-                  </svg>
-                </button>
+                <div className="column-menu-container" onBlur={(e) => handleMenuBlur('todo', e)} tabIndex={-1}>
+                  <button 
+                    className="column-menu-btn" 
+                    aria-label="Sort menu"
+                    onClick={() => handleColumnMenu('todo')}
+                  >
+                    <svg width="16" height="4" viewBox="0 0 16 4" fill="none">
+                      <circle cx="2" cy="2" r="2" fill="currentColor"/>
+                      <circle cx="8" cy="2" r="2" fill="currentColor"/>
+                      <circle cx="14" cy="2" r="2" fill="currentColor"/>
+                    </svg>
+                  </button>
+                  <SortingMenu
+                    isOpen={openMenus.todo}
+                    currentSort={sortOptions.todo}
+                    column="todo"
+                    onSortSelect={handleSortOption}
+                    onBlur={handleMenuBlur}
+                  />
+                </div>
               </div>
             </div>
             <div className="column-content">
@@ -418,17 +589,26 @@ const TasksPage: React.FC = () => {
                     <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </button>
-                <button 
-                  className="column-menu-btn" 
-                  aria-label="Column menu"
-                  onClick={handleColumnMenu}
-                >
-                  <svg width="16" height="4" viewBox="0 0 16 4" fill="none">
-                    <circle cx="2" cy="2" r="2" fill="currentColor"/>
-                    <circle cx="8" cy="2" r="2" fill="currentColor"/>
-                    <circle cx="14" cy="2" r="2" fill="currentColor"/>
-                  </svg>
-                </button>
+                <div className="column-menu-container" onBlur={(e) => handleMenuBlur('inProgress', e)} tabIndex={-1}>
+                  <button 
+                    className="column-menu-btn" 
+                    aria-label="Sort menu"
+                    onClick={() => handleColumnMenu('inProgress')}
+                  >
+                    <svg width="16" height="4" viewBox="0 0 16 4" fill="none">
+                      <circle cx="2" cy="2" r="2" fill="currentColor"/>
+                      <circle cx="8" cy="2" r="2" fill="currentColor"/>
+                      <circle cx="14" cy="2" r="2" fill="currentColor"/>
+                    </svg>
+                  </button>
+                  <SortingMenu
+                    isOpen={openMenus.inProgress}
+                    currentSort={sortOptions.inProgress}
+                    column="inProgress"
+                    onSortSelect={handleSortOption}
+                    onBlur={handleMenuBlur}
+                  />
+                </div>
               </div>
             </div>
             <div className="column-content">
@@ -458,17 +638,26 @@ const TasksPage: React.FC = () => {
                     <path d="M20 6L9 17L4 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </button>
-                <button 
-                  className="column-menu-btn" 
-                  aria-label="Column menu"
-                  onClick={handleColumnMenu}
-                >
-                  <svg width="16" height="4" viewBox="0 0 16 4" fill="none">
-                    <circle cx="2" cy="2" r="2" fill="currentColor"/>
-                    <circle cx="8" cy="2" r="2" fill="currentColor"/>
-                    <circle cx="14" cy="2" r="2" fill="currentColor"/>
-                  </svg>
-                </button>
+                <div className="column-menu-container" onBlur={(e) => handleMenuBlur('done', e)} tabIndex={-1}>
+                  <button 
+                    className="column-menu-btn" 
+                    aria-label="Sort menu"
+                    onClick={() => handleColumnMenu('done')}
+                  >
+                    <svg width="16" height="4" viewBox="0 0 16 4" fill="none">
+                      <circle cx="2" cy="2" r="2" fill="currentColor"/>
+                      <circle cx="8" cy="2" r="2" fill="currentColor"/>
+                      <circle cx="14" cy="2" r="2" fill="currentColor"/>
+                    </svg>
+                  </button>
+                  <SortingMenu
+                    isOpen={openMenus.done}
+                    currentSort={sortOptions.done}
+                    column="done"
+                    onSortSelect={handleSortOption}
+                    onBlur={handleMenuBlur}
+                  />
+                </div>
               </div>
             </div>
             <div className="column-content">

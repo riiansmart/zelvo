@@ -64,6 +64,31 @@ body:not(.light-mode) .column-content {
   background-color: #141420;
 }
 
+/* Dark mode scrollbar styles */
+body:not(.light-mode) .column-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+body:not(.light-mode) .column-content::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+
+body:not(.light-mode) .column-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+body:not(.light-mode) .column-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Firefox scrollbar for dark mode */
+body:not(.light-mode) .column-content {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) rgba(255, 255, 255, 0.05);
+}
+
 /* Dark mode task cards */
 body:not(.light-mode) .task-card {
   background-color: #1a1a2e;
@@ -540,6 +565,31 @@ body:not(.light-mode) .hover\:bg-gray-50:hover {
   gap: 16px;
   overflow-y: auto;
   min-height: 0; /* Important for scrollable content */
+}
+
+/* Light mode scrollbar styles */
+.column-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.column-content::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 4px;
+}
+
+.column-content::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.column-content::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Firefox scrollbar for light mode */
+.column-content {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f1f5f9;
 }
 
 /* ===========================
@@ -1433,6 +1483,11 @@ body:not(.light-mode) .hover\:bg-gray-50:hover {
   }
 }
 
+/* Column menu container */
+.column-menu-container {
+  position: relative;
+}
+
 /* Task card menu */
 .task-menu-container {
   position: relative;
@@ -1808,5 +1863,121 @@ body:not(.light-mode) .hover\:bg-gray-50:hover {
   .warning-close svg {
     width: 12px;
     height: 12px;
+  }
+}
+
+/* ===========================
+   COLUMN SORTING MENU STYLES
+   =========================== */
+
+/* Column sorting menu */
+.column-sorting-menu {
+  position: absolute;
+  top: 32px;
+  right: 0;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  min-width: 180px;
+  overflow: hidden;
+}
+
+.sorting-menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  font-size: 14px;
+  color: #374151;
+  background: transparent;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.2s;
+  gap: 8px;
+}
+
+.sorting-menu-item:hover {
+  background: #f3f4f6;
+}
+
+.sorting-menu-item.active {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.sorting-menu-item.active:hover {
+  background: #dbeafe;
+}
+
+.sorting-option-label {
+  flex: 1;
+  font-weight: 500;
+}
+
+.check-icon {
+  color: #2563eb;
+  flex-shrink: 0;
+}
+
+/* Dark mode column sorting menu */
+body:not(.light-mode) .column-sorting-menu {
+  background-color: #141420;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+body:not(.light-mode) .sorting-menu-item {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .sorting-menu-item:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+body:not(.light-mode) .sorting-menu-item.active {
+  background-color: rgba(255, 58, 76, 0.1);
+  color: #ff3a4c;
+}
+
+body:not(.light-mode) .sorting-menu-item.active:hover {
+  background-color: rgba(255, 58, 76, 0.15);
+}
+
+body:not(.light-mode) .check-icon {
+  color: #ff3a4c;
+}
+
+/* Responsive column sorting menu */
+@media (max-width: 768px) {
+  .column-sorting-menu {
+    min-width: 160px;
+    right: -10px;
+  }
+  
+  .sorting-menu-item {
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .column-sorting-menu {
+    min-width: 150px;
+    right: -15px;
+  }
+  
+  .sorting-menu-item {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+  
+  .check-icon {
+    width: 14px;
+    height: 14px;
   }
 }
