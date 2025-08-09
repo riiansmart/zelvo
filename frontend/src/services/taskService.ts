@@ -79,7 +79,20 @@ export const getTaskById = async (id: number): Promise<Task> => {
 // Create a new task
 export const createTask = async (task: Partial<Task>): Promise<Task> => {
   const token = localStorage.getItem('token');
-  const response = await api.post('/tasks', task, {
+  
+  // Format date to match backend LocalDate format (yyyy-MM-dd)
+  let formattedDueDate = task.dueDate;
+  if (task.dueDate) {
+    // Extract just the date part (yyyy-MM-dd) from datetime string
+    formattedDueDate = task.dueDate.split('T')[0];
+  }
+  
+  const payload = {
+    ...task,
+    dueDate: formattedDueDate
+  };
+  
+  const response = await api.post('/tasks', payload, {
     headers: { Authorization: `Bearer ${token}` },
   });
   // Unwrap ApiResponse to get the actual Task
@@ -89,20 +102,42 @@ export const createTask = async (task: Partial<Task>): Promise<Task> => {
 // Update an existing task
 export const updateTask = async (id: number, task: Partial<Task>): Promise<Task> => {
   const token = localStorage.getItem('token');
+  
+  // Format date to match backend LocalDate format (yyyy-MM-dd)
+  let formattedDueDate = task.dueDate;
+  if (task.dueDate) {
+    // Extract just the date part (yyyy-MM-dd) from datetime string
+    formattedDueDate = task.dueDate.split('T')[0];
+  }
+  
   // Prepare payload matching TaskRequest DTO
   const payload = {
     title: task.title,
     description: task.description,
-    dueDate: task.dueDate,
+    dueDate: formattedDueDate,
     priority: task.priority,
+    status: task.status,
     completed: task.completed,
     categoryId: task.categoryId ?? null,
   };
-  const response = await api.put(`/tasks/${id}`, payload, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  // Unwrap ApiResponse to get the actual Task
-  return response.data.data;
+  
+  console.log(`Sending PUT request to /tasks/${id} with payload:`, JSON.stringify(payload, null, 2));
+  
+  try {
+    const response = await api.put(`/tasks/${id}`, payload, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    console.log(`Update task ${id} response:`, response.data);
+    // Unwrap ApiResponse to get the actual Task
+    return response.data.data;
+  } catch (error) {
+    console.error(`Failed to update task ${id}:`, error);
+    if (error.response) {
+      console.error('Error response data:', error.response.data);
+      console.error('Error response status:', error.response.status);
+    }
+    throw error;
+  }
 };
 
 // Delete a task

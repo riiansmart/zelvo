@@ -64,6 +64,31 @@ body:not(.light-mode) .column-content {
   background-color: #141420;
 }
 
+/* Dark mode scrollbar styles */
+body:not(.light-mode) .column-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+body:not(.light-mode) .column-content::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+
+body:not(.light-mode) .column-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+body:not(.light-mode) .column-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Firefox scrollbar for dark mode */
+body:not(.light-mode) .column-content {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) rgba(255, 255, 255, 0.05);
+}
+
 /* Dark mode task cards */
 body:not(.light-mode) .task-card {
   background-color: #1a1a2e;
@@ -540,6 +565,31 @@ body:not(.light-mode) .hover\:bg-gray-50:hover {
   gap: 16px;
   overflow-y: auto;
   min-height: 0; /* Important for scrollable content */
+}
+
+/* Light mode scrollbar styles */
+.column-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.column-content::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 4px;
+}
+
+.column-content::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.column-content::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Firefox scrollbar for light mode */
+.column-content {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f1f5f9;
 }
 
 /* ===========================
@@ -1433,6 +1483,11 @@ body:not(.light-mode) .hover\:bg-gray-50:hover {
   }
 }
 
+/* Column menu container */
+.column-menu-container {
+  position: relative;
+}
+
 /* Task card menu */
 .task-menu-container {
   position: relative;
@@ -1808,5 +1863,656 @@ body:not(.light-mode) .hover\:bg-gray-50:hover {
   .warning-close svg {
     width: 12px;
     height: 12px;
+  }
+}
+
+/* ===========================
+   COLUMN SORTING MENU STYLES
+   =========================== */
+
+/* Column sorting menu */
+.column-sorting-menu {
+  position: absolute;
+  top: 32px;
+  right: 0;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  min-width: 180px;
+  overflow: hidden;
+}
+
+.sorting-menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  font-size: 14px;
+  color: #374151;
+  background: transparent;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.2s;
+  gap: 8px;
+}
+
+.sorting-menu-item:hover {
+  background: #f3f4f6;
+}
+
+.sorting-menu-item.active {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.sorting-menu-item.active:hover {
+  background: #dbeafe;
+}
+
+.sorting-option-label {
+  flex: 1;
+  font-weight: 500;
+}
+
+.check-icon {
+  color: #2563eb;
+  flex-shrink: 0;
+}
+
+/* Dark mode column sorting menu */
+body:not(.light-mode) .column-sorting-menu {
+  background-color: #141420;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+body:not(.light-mode) .sorting-menu-item {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .sorting-menu-item:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+body:not(.light-mode) .sorting-menu-item.active {
+  background-color: rgba(255, 58, 76, 0.1);
+  color: #ff3a4c;
+}
+
+body:not(.light-mode) .sorting-menu-item.active:hover {
+  background-color: rgba(255, 58, 76, 0.15);
+}
+
+body:not(.light-mode) .check-icon {
+  color: #ff3a4c;
+}
+
+/* Responsive column sorting menu */
+@media (max-width: 768px) {
+  .column-sorting-menu {
+    min-width: 160px;
+    right: -10px;
+  }
+  
+  .sorting-menu-item {
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .column-sorting-menu {
+    min-width: 150px;
+    right: -15px;
+  }
+  
+  .sorting-menu-item {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+  
+  .check-icon {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+/* ===========================
+   TASK TRANSFER MODAL STYLES
+   =========================== */
+
+/* Modal overlay */
+.task-transfer-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+  backdrop-filter: blur(4px);
+}
+
+/* Modal container */
+.task-transfer-modal {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  width: 90%;
+  max-width: 900px;
+  max-height: 90vh;
+  overflow: hidden;
+  animation: transferModalSlideIn 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes transferModalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Modal header */
+.task-transfer-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid #f1f5f9;
+  background: #ffffff;
+  border-radius: 12px 12px 0 0;
+  flex-shrink: 0;
+}
+
+.task-transfer-modal-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #000000;
+  margin: 0;
+}
+
+.task-transfer-modal-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.task-transfer-modal-close:hover {
+  background-color: #f3f4f6;
+  color: #374151;
+}
+
+/* Modal content */
+.task-transfer-content {
+  display: flex;
+  gap: 1rem;
+  padding: 1.5rem 2rem;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Transfer columns */
+.transfer-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #f9fafb;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+}
+
+.transfer-column-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  flex-shrink: 0;
+}
+
+.transfer-column-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #374151;
+  margin: 0;
+}
+
+.transfer-column-count {
+  font-size: 0.875rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+/* Task list */
+.transfer-task-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.5rem;
+  max-height: 300px;
+}
+
+/* Light mode scrollbar styles for transfer lists */
+.transfer-task-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.transfer-task-list::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 4px;
+}
+
+.transfer-task-list::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.transfer-task-list::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Firefox scrollbar for light mode */
+.transfer-task-list {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f1f5f9;
+}
+
+.transfer-task-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.875rem;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.transfer-task-item:hover {
+  border-color: #3b82f6;
+  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.1);
+}
+
+.transfer-task-item.selected {
+  border-color: #3b82f6;
+  background: #eff6ff;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.15);
+}
+
+.transfer-task-checkbox {
+  flex-shrink: 0;
+  margin-top: 0.125rem;
+}
+
+.transfer-task-checkbox input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: #3b82f6;
+}
+
+.transfer-task-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.transfer-task-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #374151;
+  margin: 0 0 0.25rem 0;
+  line-height: 1.3;
+}
+
+.transfer-task-description {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin: 0;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Empty state */
+.transfer-empty-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 120px;
+  color: #9ca3af;
+  font-size: 0.875rem;
+  font-style: italic;
+}
+
+/* Transfer controls */
+.transfer-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1rem 0.5rem;
+  flex-shrink: 0;
+}
+
+.transfer-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 56px;
+  height: 56px;
+  background: #3b82f6;
+  color: #ffffff;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.transfer-btn:hover:not(:disabled) {
+  background: #2563eb;
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
+}
+
+.transfer-btn:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+.transfer-count {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #dc2626;
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  min-width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #ffffff;
+}
+
+/* Modal footer */
+.task-transfer-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem 1.5rem 2rem;
+  border-top: 1px solid #f1f5f9;
+  background: #ffffff;
+  flex-shrink: 0;
+}
+
+.transfer-summary {
+  flex: 1;
+}
+
+.transfer-summary-text {
+  font-size: 0.875rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+/* Dark mode styles */
+body:not(.light-mode) .task-transfer-modal-overlay {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+body:not(.light-mode) .task-transfer-modal {
+  background-color: #141420;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+body:not(.light-mode) .task-transfer-modal-header {
+  background-color: #1a1a2e;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body:not(.light-mode) .task-transfer-modal-title {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .task-transfer-modal-close {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .task-transfer-modal-close:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+}
+
+body:not(.light-mode) .transfer-column {
+  background: #1a1a2e;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body:not(.light-mode) .transfer-column-header {
+  background: #1a1a2e;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body:not(.light-mode) .transfer-column-title {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .transfer-column-count {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .transfer-task-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+body:not(.light-mode) .transfer-task-list::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+
+body:not(.light-mode) .transfer-task-list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+body:not(.light-mode) .transfer-task-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Firefox scrollbar for dark mode */
+body:not(.light-mode) .transfer-task-list {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) rgba(255, 255, 255, 0.05);
+}
+
+body:not(.light-mode) .transfer-task-item {
+  background: #1a1a2e;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body:not(.light-mode) .transfer-task-item:hover {
+  border-color: #ff3a4c;
+  box-shadow: 0 2px 4px rgba(255, 58, 76, 0.1);
+}
+
+body:not(.light-mode) .transfer-task-item.selected {
+  border-color: #ff3a4c;
+  background: rgba(255, 58, 76, 0.1);
+  box-shadow: 0 2px 8px rgba(255, 58, 76, 0.15);
+}
+
+body:not(.light-mode) .transfer-task-checkbox input[type="checkbox"] {
+  accent-color: #ff3a4c;
+}
+
+body:not(.light-mode) .transfer-task-title {
+  color: #ffffff;
+}
+
+body:not(.light-mode) .transfer-task-description {
+  color: #9b9ba7;
+}
+
+body:not(.light-mode) .transfer-empty-state {
+  color: #6b7280;
+}
+
+body:not(.light-mode) .transfer-btn {
+  background: #ff3a4c;
+  box-shadow: 0 4px 12px rgba(255, 58, 76, 0.3);
+}
+
+body:not(.light-mode) .transfer-btn:hover:not(:disabled) {
+  background: #e73347;
+  box-shadow: 0 6px 16px rgba(255, 58, 76, 0.4);
+}
+
+body:not(.light-mode) .transfer-btn:disabled {
+  background: #6b7280;
+}
+
+body:not(.light-mode) .task-transfer-modal-footer {
+  background-color: #141420;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body:not(.light-mode) .transfer-summary-text {
+  color: #9b9ba7;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .task-transfer-modal {
+    width: 95%;
+    max-height: 95vh;
+  }
+  
+  .task-transfer-modal-header {
+    padding: 1rem 1.5rem;
+  }
+  
+  .task-transfer-modal-title {
+    font-size: 1.25rem;
+  }
+  
+  .task-transfer-content {
+    flex-direction: column;
+    padding: 1rem 1.5rem;
+    gap: 1rem;
+  }
+  
+  .transfer-controls {
+    flex-direction: row;
+    justify-content: center;
+    padding: 0.75rem 0;
+  }
+  
+  .transfer-btn {
+    width: 48px;
+    height: 48px;
+  }
+  
+  .task-transfer-modal-footer {
+    padding: 1rem 1.5rem;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: stretch;
+  }
+  
+  .transfer-summary {
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .task-transfer-modal {
+    width: 100%;
+    margin: 0.5rem;
+  }
+  
+  .task-transfer-modal-header {
+    padding: 1rem;
+  }
+  
+  .task-transfer-modal-title {
+    font-size: 1.125rem;
+  }
+  
+  .task-transfer-content {
+    padding: 1rem;
+  }
+  
+  .transfer-column-header {
+    padding: 0.75rem 1rem;
+  }
+  
+  .transfer-task-list {
+    max-height: 200px;
+  }
+  
+  .transfer-task-item {
+    padding: 0.75rem;
+  }
+  
+  .transfer-task-title {
+    font-size: 0.8125rem;
+  }
+  
+  .transfer-task-description {
+    font-size: 0.6875rem;
+  }
+  
+  .transfer-btn {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .transfer-count {
+    min-width: 18px;
+    height: 18px;
+    font-size: 0.6875rem;
+    top: -6px;
+    right: -6px;
+  }
+  
+  .task-transfer-modal-footer {
+    padding: 0.75rem 1rem;
   }
 }

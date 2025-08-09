@@ -2,16 +2,17 @@
  * SettingsPage – user preferences, profile edits, and account security controls for Zelvo.
  * Some features are marked as in development and will display warnings accordingly.
  */
-import React, { useState, useEffect } from 'react';
-import { Search, Eye, EyeOff, Camera, X, Check, AlertTriangle, Sun, Moon } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { Search, Eye, EyeOff, Camera, X, AlertTriangle, Sun, Moon } from 'lucide-react';
 import Sidebar from '../components/navigation/Sidebar';
 import ProfileDropdown from '../components/ProfileDropdown';
 import { useAuth } from '../hooks/useAuth';
+import { updateProfile, changePassword } from '../services/userService';
 import { useTheme } from '../context/ThemeContext';
 import { useNavigate } from 'react-router-dom';
 import '../styles/dashboard.css';
 import '../styles/settings.css';
-import '../styles/task-page.css'; // For development warning styles
+// Removed development warning styles import
 
 interface PasswordStrength {
   score: number;
@@ -19,47 +20,10 @@ interface PasswordStrength {
   color: string;
 }
 
-// Development Warning Component
-interface DevelopmentWarningProps {
-  isVisible: boolean;
-  onClose: () => void;
-}
-
-const DevelopmentWarning: React.FC<DevelopmentWarningProps> = ({ isVisible, onClose }) => {
-  useEffect(() => {
-    if (isVisible) {
-      const timer = setTimeout(() => {
-        onClose();
-      }, 3000); // Auto-close after 3 seconds
-
-      return () => clearTimeout(timer);
-    }
-  }, [isVisible, onClose]);
-
-  if (!isVisible) return null;
-
-  return (
-    <div className="development-warning">
-      <div className="development-warning-content">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="warning-icon">
-          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          <line x1="12" y1="9" x2="12" y2="13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          <circle cx="12" cy="17" r="1" fill="currentColor"/>
-        </svg>
-        <span className="warning-text">This feature is still being developed</span>
-        <button className="warning-close" onClick={onClose}>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-            <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-            <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-          </svg>
-        </button>
-      </div>
-    </div>
-  );
-};
+// Development warning component removed
 
 const SettingsPage: React.FC = () => {
-  const { user, logout } = useAuth();
+  const { user, token, login, logout } = useAuth();
   const { isLightMode, toggleTheme } = useTheme();
   const navigate = useNavigate();
   
@@ -83,8 +47,15 @@ const SettingsPage: React.FC = () => {
   
   // UI state
   const [showPasswordConfirmation, setShowPasswordConfirmation] = useState(false);
-  const [isPersonalInfoChanged, setIsPersonalInfoChanged] = useState(false);
-  const [showDevelopmentWarning, setShowDevelopmentWarning] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState<string | null>(null);
+  const [saveError, setSaveError] = useState<string | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
+
+  // Security message state
+  const [passwordSuccess, setPasswordSuccess] = useState<string | null>(null);
+  const [passwordError, setPasswordError] = useState<string | null>(null);
+  // Removed unused personal info changed state
+  // Removed development warning state
 
   // Password strength calculation
   const calculatePasswordStrength = (password: string): PasswordStrength => {
@@ -113,15 +84,22 @@ const SettingsPage: React.FC = () => {
 
   const passwordStrength = calculatePasswordStrength(passwordData.newPassword);
 
+  const passwordMeetsCriteria = passwordStrength.score >= 4; // Require strong+
+
   // Handle profile picture upload
   const handleProfilePictureUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = (e) => {
-        setProfilePicture(e.target?.result as string);
-        // Show development warning since this doesn't actually save
-        setShowDevelopmentWarning(true);
+      reader.onload = async (e) => {
+        const base64 = e.target?.result as string;
+        setProfilePicture(base64);
+        try {
+          const { user: updatedUser, token: maybeNewToken } = await updateProfile({ avatar: base64 });
+          login(maybeNewToken ?? token!, updatedUser);
+        } catch (err) {
+          console.error('Failed to upload avatar', err);
+        }
       };
       reader.readAsDataURL(file);
     }
@@ -130,17 +108,58 @@ const SettingsPage: React.FC = () => {
   // Remove profile picture
   const removeProfilePicture = () => {
     setProfilePicture(null);
+    updateProfile({ avatar: '' }).then(({ user: updatedUser, token: maybeNewToken }) => {
+      login(maybeNewToken ?? token!, updatedUser);
+    });
   };
 
   // Handle personal info changes
   const handlePersonalInfoChange = (field: string, value: string) => {
     setPersonalInfo(prev => ({ ...prev, [field]: value }));
-    setIsPersonalInfoChanged(true);
+    // No-op for now until backend integration
   };
 
-  // Save personal information - show development warning
-  const savePersonalInfo = () => {
-    setShowDevelopmentWarning(true);
+  // Sync personal info form when user context changes (e.g., after save)
+  useEffect(() => {
+    if (!user) return;
+    setPersonalInfo({
+      firstName: (user as any)?.firstName || '',
+      lastName: (user as any)?.lastName || '',
+      email: user?.email || '',
+    });
+  }, [user]);
+
+  // Save personal information
+  const savePersonalInfo = async () => {
+    if (isSaving) return;
+    setSaveSuccess(null);
+    setSaveError(null);
+    setIsSaving(true);
+    try {
+      const payload = {
+        firstName: personalInfo.firstName || undefined,
+        lastName: personalInfo.lastName || undefined,
+        email: personalInfo.email || undefined,
+      };
+      const { user: updatedUser, token: maybeNewToken } = await updateProfile(payload);
+      if ((maybeNewToken || token) && updatedUser) {
+        login(maybeNewToken ?? token!, updatedUser);
+      }
+      // Reflect saved values in the form immediately
+      setPersonalInfo({
+        firstName: (updatedUser as any)?.firstName || '',
+        lastName: (updatedUser as any)?.lastName || '',
+        email: updatedUser?.email || '',
+      });
+      setSaveSuccess('Changes were successfully saved');
+      setTimeout(() => setSaveSuccess(null), 3000);
+    } catch (error: any) {
+      const message = error?.response?.data?.message || 'Failed to save changes';
+      setSaveError(message);
+      setTimeout(() => setSaveError(null), 4000);
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   // Handle password change
@@ -159,17 +178,31 @@ const SettingsPage: React.FC = () => {
 
   // Update security settings - show development warning
   const updateSecuritySettings = () => {
-    if (!passwordData.currentPassword || !passwordData.newPassword) return;
-    setShowDevelopmentWarning(true);
+    if (!passwordData.currentPassword || !passwordData.newPassword || !passwordMeetsCriteria) return;
+    setShowPasswordConfirmation(true);
   };
 
   // Confirm password change
-  const confirmPasswordChange = () => {
-    // TODO: Implement API call to change password
-    console.log('Changing password');
-    setShowPasswordConfirmation(false);
-    logout();
-    navigate('/');
+  const confirmPasswordChange = async () => {
+    try {
+      await changePassword(passwordData.currentPassword, passwordData.newPassword);
+      setShowPasswordConfirmation(false);
+      setPasswordSuccess('Password updated successfully');
+      setPasswordError(null);
+      // Clear inputs
+      setPasswordData({ currentPassword: '', newPassword: '', showCurrentPassword: false, showNewPassword: false });
+      // After brief delay, log out so user re-authenticates
+      setTimeout(() => {
+        setPasswordSuccess(null);
+        logout();
+        navigate('/');
+      }, 1800);
+    } catch (err: any) {
+      const msg = err?.response?.data?.message || 'Failed to update password';
+      setPasswordError(msg);
+      setPasswordSuccess(null);
+      setShowPasswordConfirmation(false);
+    }
   };
 
   // Cancel password change
@@ -198,10 +231,7 @@ const SettingsPage: React.FC = () => {
     }
   };
 
-  // Close development warning
-  const handleCloseDevelopmentWarning = () => {
-    setShowDevelopmentWarning(false);
-  };
+  // Removed development warning close handler
 
   return (
     <div className="dashboard-layout">
@@ -347,8 +377,18 @@ const SettingsPage: React.FC = () => {
                   placeholder="Enter your email address"
                 />
               </div>
-              <button className="action-btn save-btn" onClick={savePersonalInfo}>
-                Save Changes
+              {saveSuccess && (
+                <div role="status" aria-live="polite" style={{ color: '#16a34a' }}>
+                  {saveSuccess}
+                </div>
+              )}
+              {saveError && (
+                <div role="alert" style={{ color: '#dc2626' }}>
+                  {saveError}
+                </div>
+              )}
+              <button className="action-btn save-btn" onClick={savePersonalInfo} disabled={isSaving}>
+                {isSaving ? 'Saving...' : 'Save Changes'}
               </button>
             </div>
           </div>
@@ -386,6 +426,7 @@ const SettingsPage: React.FC = () => {
                     value={passwordData.newPassword}
                     onChange={(e) => handlePasswordChange('newPassword', e.target.value)}
                     placeholder="Enter your new password"
+                    disabled={!passwordData.currentPassword}
                   />
                   <button
                     type="button"
@@ -416,10 +457,20 @@ const SettingsPage: React.FC = () => {
                   </div>
                 )}
               </div>
+              {passwordSuccess && (
+                <div role="status" aria-live="polite" style={{ color: '#16a34a' }}>
+                  {passwordSuccess}
+                </div>
+              )}
+              {passwordError && (
+                <div role="alert" style={{ color: '#dc2626' }}>
+                  {passwordError}
+                </div>
+              )}
               <button 
                 className="action-btn update-security-btn full-width-btn" 
                 onClick={updateSecuritySettings}
-                disabled={!passwordData.currentPassword || !passwordData.newPassword}
+                disabled={!passwordData.currentPassword || !passwordData.newPassword || !passwordMeetsCriteria}
               >
                 Update Password
               </button>
@@ -450,11 +501,7 @@ const SettingsPage: React.FC = () => {
           </div>
         )}
 
-        {/* Development Warning */}
-        <DevelopmentWarning 
-          isVisible={showDevelopmentWarning}
-          onClose={handleCloseDevelopmentWarning}
-        />
+        {/* Development warning removed */}
       </main>
     </div>
   );

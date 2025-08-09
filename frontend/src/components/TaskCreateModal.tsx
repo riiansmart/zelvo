@@ -48,10 +48,12 @@ const TaskCreateModal: React.FC<TaskCreateModalProps> = ({ isOpen, onClose, onTa
 
   const fetchCategories = async () => {
     try {
+      console.log('TaskCreateModal: Fetching categories...');
       const fetchedCategories = await getCategories();
+      console.log('TaskCreateModal: Categories fetched:', fetchedCategories);
       setCategories(fetchedCategories);
     } catch (error) {
-      console.error('Error fetching categories:', error);
+      console.error('TaskCreateModal: Error fetching categories:', error);
     }
   };
 

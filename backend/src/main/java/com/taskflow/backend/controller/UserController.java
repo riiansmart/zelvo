@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.taskflow.backend.dto.ApiResponse;
 import com.taskflow.backend.dto.PageRequest;
+import com.taskflow.backend.dto.ProfileUpdateResponse;
 import com.taskflow.backend.dto.UserSummaryDTO;
 import com.taskflow.backend.model.User;
 import com.taskflow.backend.service.UserService;
+import com.taskflow.backend.service.JwtService;
 
 /**
  * REST controller responsible for user-centric endpoints such as profile management,
@@ -30,9 +32,11 @@ import com.taskflow.backend.service.UserService;
 public class UserController {
 
     private final UserService userService;
+    private final JwtService jwtService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, JwtService jwtService) {
         this.userService = userService;
+        this.jwtService = jwtService;
     }
 
     /**
@@ -53,8 +57,16 @@ public class UserController {
      * @return updated user entity
      */
     @PutMapping("/profile")
-    public ResponseEntity<ApiResponse<User>> updateProfile(@RequestBody User user) {
+    public ResponseEntity<ApiResponse<?>> updateProfile(@RequestBody User user) {
+        // Capture current email before update
+        String oldEmail = userService.getCurrentUser().getEmail();
         User updatedUser = userService.updateUser(user);
+        // If email changed, issue a fresh JWT so subsequent requests keep working
+        if (updatedUser.getEmail() != null && !updatedUser.getEmail().equalsIgnoreCase(oldEmail)) {
+            String newToken = jwtService.generateToken(updatedUser);
+            ProfileUpdateResponse payload = new ProfileUpdateResponse(updatedUser, newToken);
+            return ResponseEntity.ok(ApiResponse.success(payload, "Profile updated successfully"));
+        }
         return ResponseEntity.ok(ApiResponse.success(updatedUser, "Profile updated successfully"));
     }
 

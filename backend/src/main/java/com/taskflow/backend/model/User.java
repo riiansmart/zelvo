@@ -70,6 +70,10 @@ public class User {
     @Column(name = "github_id") // Keep existing githubId, will use this as providerId for GitHub
     private String githubId;
 
+    // Base64 or URL for profile avatar
+    @Column(name = "avatar", columnDefinition = "TEXT")
+    private String avatar;
+
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "jsonb")
     private Map<String, Object> settings;
@@ -227,5 +231,13 @@ public class User {
 
     public void setGithubId(String githubId) {
         this.githubId = githubId;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }

@@ -51,7 +51,7 @@ const FAQ_CONTENT: FaqItem[] = [
 const TESTIMONIALS = [
   {
     quote:
-      "Taskflow cut our stand-up time in half and replaced three different tools.",
+      "Zelvo cut my stand-up time in half and replaced three different tools.",
     name: "Samira K.",
     role: "Engineering Manager"
   },
@@ -61,7 +61,7 @@ const TESTIMONIALS = [
     role: "Full-Stack Developer"
   },
   {
-    quote: "We shipped our MVP two weeks faster after moving to Taskflow.",
+    quote: "I was able to manage many more tasks and ideas in just two weeks after moving to Zelvo.",
     name: "Jamie L.",
     role: "Startup Founder"
   }
