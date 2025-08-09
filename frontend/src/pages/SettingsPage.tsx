@@ -7,7 +7,7 @@ import { Search, Eye, EyeOff, Camera, X, AlertTriangle, Sun, Moon } from 'lucide
 import Sidebar from '../components/navigation/Sidebar';
 import ProfileDropdown from '../components/ProfileDropdown';
 import { useAuth } from '../hooks/useAuth';
-import { updateProfile } from '../services/userService';
+import { updateProfile, changePassword } from '../services/userService';
 import { useTheme } from '../context/ThemeContext';
 import { useNavigate } from 'react-router-dom';
 import '../styles/dashboard.css';
@@ -50,6 +50,10 @@ const SettingsPage: React.FC = () => {
   const [saveSuccess, setSaveSuccess] = useState<string | null>(null);
   const [saveError, setSaveError] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
+
+  // Security message state
+  const [passwordSuccess, setPasswordSuccess] = useState<string | null>(null);
+  const [passwordError, setPasswordError] = useState<string | null>(null);
   // Removed unused personal info changed state
   // Removed development warning state
 
@@ -79,6 +83,8 @@ const SettingsPage: React.FC = () => {
   };
 
   const passwordStrength = calculatePasswordStrength(passwordData.newPassword);
+
+  const passwordMeetsCriteria = passwordStrength.score >= 4; // Require strong+
 
   // Handle profile picture upload
   const handleProfilePictureUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -162,17 +168,31 @@ const SettingsPage: React.FC = () => {
 
   // Update security settings - show development warning
   const updateSecuritySettings = () => {
-    if (!passwordData.currentPassword || !passwordData.newPassword) return;
+    if (!passwordData.currentPassword || !passwordData.newPassword || !passwordMeetsCriteria) return;
     setShowPasswordConfirmation(true);
   };
 
   // Confirm password change
-  const confirmPasswordChange = () => {
-    // TODO: Implement API call to change password
-    console.log('Changing password');
-    setShowPasswordConfirmation(false);
-    logout();
-    navigate('/');
+  const confirmPasswordChange = async () => {
+    try {
+      await changePassword(passwordData.currentPassword, passwordData.newPassword);
+      setShowPasswordConfirmation(false);
+      setPasswordSuccess('Password updated successfully');
+      setPasswordError(null);
+      // Clear inputs
+      setPasswordData({ currentPassword: '', newPassword: '', showCurrentPassword: false, showNewPassword: false });
+      // After brief delay, log out so user re-authenticates
+      setTimeout(() => {
+        setPasswordSuccess(null);
+        logout();
+        navigate('/');
+      }, 1800);
+    } catch (err: any) {
+      const msg = err?.response?.data?.message || 'Failed to update password';
+      setPasswordError(msg);
+      setPasswordSuccess(null);
+      setShowPasswordConfirmation(false);
+    }
   };
 
   // Cancel password change
@@ -396,6 +416,7 @@ const SettingsPage: React.FC = () => {
                     value={passwordData.newPassword}
                     onChange={(e) => handlePasswordChange('newPassword', e.target.value)}
                     placeholder="Enter your new password"
+                    disabled={!passwordData.currentPassword}
                   />
                   <button
                     type="button"
@@ -426,10 +447,20 @@ const SettingsPage: React.FC = () => {
                   </div>
                 )}
               </div>
+              {passwordSuccess && (
+                <div role="status" aria-live="polite" style={{ color: '#16a34a' }}>
+                  {passwordSuccess}
+                </div>
+              )}
+              {passwordError && (
+                <div role="alert" style={{ color: '#dc2626' }}>
+                  {passwordError}
+                </div>
+              )}
               <button 
                 className="action-btn update-security-btn full-width-btn" 
                 onClick={updateSecuritySettings}
-                disabled={!passwordData.currentPassword || !passwordData.newPassword}
+                disabled={!passwordData.currentPassword || !passwordData.newPassword || !passwordMeetsCriteria}
               >
                 Update Password
               </button>

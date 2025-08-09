@@ -36,3 +36,13 @@ export const updateProfile = async (
   }
   return { user: payload as User };
 };
+
+// Change user password: passes current & new password as query params per backend contract
+export const changePassword = async (currentPassword: string, newPassword: string): Promise<void> => {
+  await api.put('/users/change-password', null, {
+    params: {
+      currentPassword,
+      newPassword,
+    },
+  });
+};
