@@ -7,7 +7,7 @@ import '../styles/dashboard.css';
 
 const ProfileDropdown = () => {
   const { toggleTheme } = useTheme();
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -37,7 +37,11 @@ const ProfileDropdown = () => {
         onClick={() => setOpen(prev => !prev)}
         aria-label="User menu"
       >
-        <UserCircle size={32} />
+        {user?.avatar ? (
+          <img src={user.avatar} alt="Avatar" className="h-8 w-8 rounded-full object-cover" />
+        ) : (
+          <UserCircle size={32} />
+        )}
       </button>
 
       {open && (

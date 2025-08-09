@@ -109,7 +109,11 @@ public class UserService {
         if (user.getSettings() != null) {
              currentUser.setSettings(user.getSettings());
         }
-        // Add other updatable fields as needed
+
+        // Avatar update (base64 string or remote URL)
+        if (user.getAvatar() != null) {
+             currentUser.setAvatar(user.getAvatar());
+        }
         
         // Don't update sensitive fields like password, role, provider from this method
 

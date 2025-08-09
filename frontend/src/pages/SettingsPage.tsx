@@ -91,8 +91,15 @@ const SettingsPage: React.FC = () => {
     const file = event.target.files?.[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = (e) => {
-        setProfilePicture(e.target?.result as string);
+      reader.onload = async (e) => {
+        const base64 = e.target?.result as string;
+        setProfilePicture(base64);
+        try {
+          const { user: updatedUser, token: maybeNewToken } = await updateProfile({ avatar: base64 });
+          login(maybeNewToken ?? token!, updatedUser);
+        } catch (err) {
+          console.error('Failed to upload avatar', err);
+        }
       };
       reader.readAsDataURL(file);
     }
@@ -101,6 +108,9 @@ const SettingsPage: React.FC = () => {
   // Remove profile picture
   const removeProfilePicture = () => {
     setProfilePicture(null);
+    updateProfile({ avatar: '' }).then(({ user: updatedUser, token: maybeNewToken }) => {
+      login(maybeNewToken ?? token!, updatedUser);
+    });
   };
 
   // Handle personal info changes
