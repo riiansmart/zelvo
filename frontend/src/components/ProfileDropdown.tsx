@@ -6,7 +6,7 @@ import { Sun, Settings, UserCircle, LogOut } from 'lucide-react';
 import '../styles/dashboard.css';
 
 const ProfileDropdown = () => {
-  const { toggleTheme } = useTheme();
+  const { toggleTheme, isLightMode } = useTheme();
   const { logout, user } = useAuth();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
@@ -36,11 +36,24 @@ const ProfileDropdown = () => {
         className="profile-avatar"
         onClick={() => setOpen(prev => !prev)}
         aria-label="User menu"
+        style={{
+          border: `2px solid ${isLightMode ? '#007bff' : '#ff3a4c'}`,
+          borderRadius: '9999px',
+          padding: 0,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          overflow: 'hidden',
+        }}
       >
         {user?.avatar ? (
-          <img src={user.avatar} alt="Avatar" className="h-8 w-8 rounded-full object-cover" />
+          <img
+            src={user.avatar}
+            alt="Avatar"
+            className="h-8 w-8 rounded-full object-cover"
+          />
         ) : (
-          <UserCircle size={32} />
+          <UserCircle size={32} color={isLightMode ? '#007bff' : '#ff3a4c'} />
         )}
       </button>
 
