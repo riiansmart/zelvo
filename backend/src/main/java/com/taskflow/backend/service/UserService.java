@@ -19,6 +19,9 @@ import com.taskflow.backend.exception.UnauthorizedException;
 import com.taskflow.backend.model.User;
 import com.taskflow.backend.repository.UserRepository;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+
 /**
  * Service providing user profile management, preference handling, password management and miscellaneous
  * user-related operations for Zelvo.
@@ -28,6 +31,9 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
@@ -83,14 +89,35 @@ public class UserService {
              // If legacy name field provided, still allow updating
              currentUser.setName(user.getName());
         }
+
+        // --- Email update ---
+        if (user.getEmail() != null && !user.getEmail().isBlank()) {
+             String newEmail = user.getEmail().trim();
+             // Basic pattern check
+             if (!newEmail.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
+                 throw new com.taskflow.backend.exception.ValidationException("Invalid email format");
+             }
+             // Only check uniqueness if the email actually changes
+             if (!newEmail.equalsIgnoreCase(currentUser.getEmail())) {
+                 boolean exists = userRepository.existsByEmailIgnoreCaseAndIdNot(newEmail, currentUser.getId());
+                 if (exists) {
+                     throw new com.taskflow.backend.exception.ValidationException("Email is already in use");
+                 }
+                 currentUser.setEmail(newEmail);
+             }
+        }
         if (user.getSettings() != null) {
              currentUser.setSettings(user.getSettings());
         }
         // Add other updatable fields as needed
         
-        // Don't update sensitive fields like email, password, role, provider from this method
+        // Don't update sensitive fields like password, role, provider from this method
 
-        return userRepository.save(currentUser);
+        // Persist changes immediately so we can build token with fresh values
+        User saved = userRepository.saveAndFlush(currentUser);
+        // Refresh the entity to ensure we have DB committed state (including any constraints/triggers)
+        entityManager.refresh(saved);
+        return saved;
     }
 
     /**

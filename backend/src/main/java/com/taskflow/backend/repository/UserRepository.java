@@ -36,4 +36,13 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * @return active user list
      */
     List<User> findByIsActiveTrue();
+
+    /**
+     * Checks whether another user (different id) already uses the given e-mail (case-insensitive).
+     *
+     * @param email email to test
+     * @param id    id to exclude from search (the current user)
+     * @return true if another user with different id has this email
+     */
+    boolean existsByEmailIgnoreCaseAndIdNot(String email, Long id);
 }
